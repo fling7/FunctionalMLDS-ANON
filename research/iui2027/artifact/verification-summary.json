@@ -1,0 +1,187 @@
+{
+  "benchmark_mode": "check",
+  "canonical_demonstrator": "steinpilz_brand_room",
+  "checks": [
+    {
+      "facts": {
+        "canonical_demonstrator": "steinpilz_brand_room",
+        "case_count": 3,
+        "cases": [
+          {
+            "case_id": "fitness_career_fair",
+            "required_input_count": 8,
+            "source_sha256": "d407b9c824301f1ce5fd4294c12564c1081bcb09f8831955c0b06c4edf438abf"
+          },
+          {
+            "case_id": "classroom_dinosaur",
+            "required_input_count": 8,
+            "source_sha256": "a5327d5d506a691fe1ec8a9e0b88bea791f8cbc8244219033b7f5031d9606761"
+          },
+          {
+            "case_id": "steinpilz_brand_room",
+            "required_input_count": 8,
+            "source_sha256": "be5f3a875eea8557012abaeba060a9dad6496884e7e1e1d1b52ce20195f22e78"
+          }
+        ]
+      },
+      "id": "case_inputs",
+      "issues": [],
+      "label": "Case inputs and source hashes",
+      "mandatory": true,
+      "status": "pass"
+    },
+    {
+      "facts": {
+        "case_count": 3,
+        "cases": [
+          {
+            "case_id": "fitness_career_fair",
+            "fresh_v2_sha256": "db8f2787bc86ed3cf0c89f0e1d9aefe82627429ae9e9de773bfd49d394420139",
+            "object_count": 1227,
+            "validation_error_count": 0,
+            "validation_status": "valid"
+          },
+          {
+            "case_id": "classroom_dinosaur",
+            "fresh_v2_sha256": "18a7dfbcad21919edbf156f64f90b3fd4cf9f7655b6f3094da34153082d5a90a",
+            "object_count": 1539,
+            "validation_error_count": 0,
+            "validation_status": "valid"
+          },
+          {
+            "case_id": "steinpilz_brand_room",
+            "fresh_v2_sha256": "85d9dd8bdd91fa885c9720ae5f8f7dc58088e0cd1ce82f8e250881db398d9433",
+            "object_count": 1337,
+            "validation_error_count": 0,
+            "validation_status": "valid"
+          }
+        ]
+      },
+      "id": "fresh_v2",
+      "issues": [],
+      "label": "Fresh deterministic V2 assembly",
+      "mandatory": true,
+      "status": "pass"
+    },
+    {
+      "facts": {
+        "answer_semantics_evaluated": false,
+        "api_calls": 0,
+        "case_count": 3,
+        "checked_in_v2_rejection_count": 0,
+        "direct_wiring_comparison_status": "comparable",
+        "environment_hash_count": 27,
+        "fresh_v2_acceptance_count": 3,
+        "mode": "check",
+        "runtime_corpus_probe_denominator": 459,
+        "runtime_corpus_status": "pass",
+        "schema_version": "1.3.0"
+      },
+      "id": "benchmark",
+      "issues": [],
+      "label": "IUI structural benchmark",
+      "mandatory": true,
+      "status": "pass"
+    },
+    {
+      "facts": {
+        "exit_code": 0,
+        "module_count": 1,
+        "modules": [
+          "tools.tests.test_v2_materializer_backend_contract"
+        ]
+      },
+      "id": "materialization_contract",
+      "issues": [],
+      "label": "Materialization/backend contract tests",
+      "mandatory": true,
+      "status": "pass"
+    },
+    {
+      "facts": {
+        "exit_code": 0,
+        "module_count": 3,
+        "modules": [
+          "tools.tests.test_iui2027_artifact",
+          "tools.tests.test_iui2027_frozen_regeneration",
+          "tools.tests.test_iui2027_system_benchmark"
+        ]
+      },
+      "id": "submission_tests",
+      "issues": [],
+      "label": "Targeted IUI submission tests",
+      "mandatory": true,
+      "status": "pass"
+    },
+    {
+      "facts": {
+        "batch_smoke_count_available": 3,
+        "class_file_count": 6,
+        "required_packages": {
+          "com.de-panther.webxr": "0.23.0",
+          "com.de-panther.webxr-interactions": "0.23.0",
+          "com.unity.inputsystem": "1.19.0",
+          "com.unity.nuget.newtonsoft-json": "3.2.2",
+          "com.unity.test-framework": "1.6.0",
+          "com.unity.xr.interaction.toolkit": "3.5.0"
+        },
+        "unity_version": "6000.4.5f1"
+      },
+      "id": "unity_static",
+      "issues": [],
+      "label": "Unity version, packages and smoke sources",
+      "mandatory": true,
+      "status": "pass"
+    },
+    {
+      "facts": {
+        "editor_started": false
+      },
+      "id": "unity_batch_smokes",
+      "issues": [
+        "No Unity editor was supplied; static Unity checks still ran."
+      ],
+      "label": "Optional real Unity batch smokes",
+      "mandatory": false,
+      "status": "not_run"
+    },
+    {
+      "facts": {
+        "checker_status": "not_run",
+        "pdf_present": false,
+        "reason": "No built PDF is present."
+      },
+      "id": "paper",
+      "issues": [],
+      "label": "Strict anonymous paper checker",
+      "mandatory": false,
+      "status": "not_run"
+    },
+    {
+      "facts": {
+        "file_count": 241,
+        "finding_count": 0,
+        "patterns": [
+          "email_address",
+          "local_user_path",
+          "private_key",
+          "high_confidence_api_or_access_secret"
+        ],
+        "scan_scope": "documented anonymous review bundle"
+      },
+      "id": "anonymity",
+      "issues": [],
+      "label": "Secret, identity and local-path scan",
+      "mandatory": true,
+      "status": "pass"
+    }
+  ],
+  "failed_mandatory_check_ids": [],
+  "interpretation": "A pass establishes artifact integrity and executable structural contracts only; it is not evidence of answer quality, usability, trust, or population-level effects.",
+  "model_api_used": false,
+  "network_used": false,
+  "overall_status": "pass",
+  "schema": "iui2027_artifact_verification",
+  "schema_version": "1.0.0",
+  "unity_started": false
+}

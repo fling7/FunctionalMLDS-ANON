@@ -1,0 +1,189 @@
+{
+  "api_key_required": false,
+  "command": "python research/iui2027/evaluation/run_benchmark.py",
+  "dependencies": {
+    "jsonschema": "4.25.1"
+  },
+  "git_commit": null,
+  "input_files": [
+    {
+      "case_id": "fitness_career_fair",
+      "path": "output/case_studies/fitness_career_fair/functionalmlds/functionalmlds.v2.instance.json",
+      "role": "v2",
+      "sha256": "48ad5b7c24ccc8f639efdbbecd13d66a5d0e600b6e5daae0078171ed44ec4b5e"
+    },
+    {
+      "case_id": "fitness_career_fair",
+      "path": "output/case_studies/fitness_career_fair/functionalmlds/functionalmlds.v2.assembly_report.json",
+      "role": "assembly_report",
+      "sha256": "597a2bb166a3368061175f01703088d0a07646f0981ba6cfb85ddbfb65aba9d7"
+    },
+    {
+      "case_id": "fitness_career_fair",
+      "path": "output/case_studies/fitness_career_fair/functionalmlds/functionalmlds.instance.generated.json",
+      "role": "v05",
+      "sha256": "c6a248f341157acc06c6103c56df12c9a5b9b18517ae4869cd9deb01bbd3d2a1"
+    },
+    {
+      "case_id": "fitness_career_fair",
+      "path": "output/case_studies/fitness_career_fair/intermediate/scene_semantics.json",
+      "role": "scene_semantics",
+      "sha256": "81a76712eafc96ae21aff368b51e5eb132f5648e5bff811b35c18fd80a8b44dc"
+    },
+    {
+      "case_id": "fitness_career_fair",
+      "path": "output/case_studies/fitness_career_fair/intermediate/agent_roles.generated.json",
+      "role": "agent_roles",
+      "sha256": "c66cb3428008e391c43b17049141d99063a6ecf3fe29d84ac4d8d55562e1b2de"
+    },
+    {
+      "case_id": "fitness_career_fair",
+      "path": "output/case_studies/fitness_career_fair/intermediate/handoff_matrix.json",
+      "role": "handoff_matrix",
+      "sha256": "08d10263d03fbdfbf270ac1a27fb430e6e2603c544c9ec2e3354a18d29357fdf"
+    },
+    {
+      "case_id": "classroom_dinosaur",
+      "path": "output/case_studies/classroom_dinosaur/functionalmlds/functionalmlds.v2.instance.json",
+      "role": "v2",
+      "sha256": "0f430211197bae2f664e994672f9d7a5fe3fbbb0aaa565f9a683ec0c1b27440b"
+    },
+    {
+      "case_id": "classroom_dinosaur",
+      "path": "output/case_studies/classroom_dinosaur/functionalmlds/functionalmlds.v2.assembly_report.json",
+      "role": "assembly_report",
+      "sha256": "196ca594bfd04bf14f9440b63bb84b8884db1148a22d7b804ecf3dc909220f4e"
+    },
+    {
+      "case_id": "classroom_dinosaur",
+      "path": "output/case_studies/classroom_dinosaur/functionalmlds/functionalmlds.instance.generated.json",
+      "role": "v05",
+      "sha256": "1f5a9cec25c8c6a48eb6be430b70288736ec53d5a45a0cf19875bf803e9c1541"
+    },
+    {
+      "case_id": "classroom_dinosaur",
+      "path": "output/case_studies/classroom_dinosaur/intermediate/scene_semantics.json",
+      "role": "scene_semantics",
+      "sha256": "ee6fe3dd98c16994bd11f38a2e2922bbaa947c0615f76ca4669dc33efbf67ef3"
+    },
+    {
+      "case_id": "classroom_dinosaur",
+      "path": "output/case_studies/classroom_dinosaur/intermediate/agent_roles.generated.json",
+      "role": "agent_roles",
+      "sha256": "b5076acd874e933d36e1ba86b989db9a365f14b33014d2c02e27bc99b5bd1353"
+    },
+    {
+      "case_id": "classroom_dinosaur",
+      "path": "output/case_studies/classroom_dinosaur/intermediate/handoff_matrix.json",
+      "role": "handoff_matrix",
+      "sha256": "4769a00b5e133d2753c68a054022943abb428fe7e8c2ce3bedfba0470d3cc01a"
+    },
+    {
+      "case_id": "steinpilz_brand_room",
+      "path": "output/case_studies/steinpilz_brand_room/functionalmlds/functionalmlds.v2.instance.json",
+      "role": "v2",
+      "sha256": "632c0d69d3c67e5e1032402ed75786851c72453068ee93c3cba6d1a4e0f193b8"
+    },
+    {
+      "case_id": "steinpilz_brand_room",
+      "path": "output/case_studies/steinpilz_brand_room/functionalmlds/functionalmlds.v2.assembly_report.json",
+      "role": "assembly_report",
+      "sha256": "6e95d4f06a966eb5ab31cb7bb03b1eb07b7d3045599bbf1ecf732c3c6e32dfca"
+    },
+    {
+      "case_id": "steinpilz_brand_room",
+      "path": "output/case_studies/steinpilz_brand_room/functionalmlds/functionalmlds.instance.generated.json",
+      "role": "v05",
+      "sha256": "d35a47561684e652cb1169021b5d5471fe180f29ac983ab50623846856720805"
+    },
+    {
+      "case_id": "steinpilz_brand_room",
+      "path": "output/case_studies/steinpilz_brand_room/intermediate/scene_semantics.json",
+      "role": "scene_semantics",
+      "sha256": "ff509fe7ec471a2401cafb5235cd2e1794ac0c23b2528a4df35f5042b9fd2417"
+    },
+    {
+      "case_id": "steinpilz_brand_room",
+      "path": "output/case_studies/steinpilz_brand_room/intermediate/agent_roles.generated.json",
+      "role": "agent_roles",
+      "sha256": "00f2b0213c842979cb8b83d5012d54885373ec57d63a574ffec4f78db7a590c8"
+    },
+    {
+      "case_id": "steinpilz_brand_room",
+      "path": "output/case_studies/steinpilz_brand_room/intermediate/handoff_matrix.json",
+      "role": "handoff_matrix",
+      "sha256": "481443ecd5469744e3d2ab2affc2bc042f9138e5af84a1a8b0ff165956136d29"
+    }
+  ],
+  "network_required": false,
+  "platform": {
+    "machine": "AMD64",
+    "release": "11",
+    "system": "Windows"
+  },
+  "python": {
+    "implementation": "CPython",
+    "version": "3.12.8"
+  },
+  "runtime_measurement": {
+    "adjustable": false,
+    "alternating_execution_order": true,
+    "clock": "time.perf_counter_ns",
+    "clock_implementation": "QueryPerformanceCounter()",
+    "clock_resolution_seconds": 1e-07,
+    "json_io_included": false,
+    "monotonic": true,
+    "repetitions_per_case": 40,
+    "v05_to_v2_generation_included": false,
+    "warmups_per_case": 4
+  },
+  "schema": "iui2027_benchmark_environment",
+  "schema_version": "1.3.0",
+  "session_store_runtime_corpus": {
+    "api_calls": 0,
+    "contract_snapshot_cache": "one validated materialized contract per case",
+    "network_guard": "socket and urllib entry points blocked",
+    "one_session_per_case": true,
+    "project_materialization": "isolated copy, model-equality checked against fresh V2",
+    "response_provider": "deterministic structured-response stub",
+    "state_restored_after_each_probe": true
+  },
+  "validator_and_benchmark_sources": [
+    {
+      "path": "tools/dynamic_functional_mlds_v2_model.py",
+      "sha256": "0710b7353459fe64de0692d18ac904b930d07161f6782544ac48d3d4dbaa8dd7"
+    },
+    {
+      "path": "tools/validate_dynamic_functional_mlds_v2.py",
+      "sha256": "82e2fe0c506629a4222795d6a81e94f606d7eb1244cc0d594ab14b7e98b989c3"
+    },
+    {
+      "path": "tools/case_study_pipeline/project_materializer.py",
+      "sha256": "eae58667c5ad6923686d6fb4896fdb3ce4f48fcacd4cfedb35dc09f2d89f5ec0"
+    },
+    {
+      "path": "tools/case_study_pipeline/functionalmlds_v2_assembler.py",
+      "sha256": "55e895d7d26c8080160942a1ae71e84f50bf27be72c7579d675063a05292154d"
+    },
+    {
+      "path": "InteractivAgents/openai_unity_expert_npcs_pycharm/InteractiveAgents/backend/functionalmlds_v2_runtime.py",
+      "sha256": "a59ccf55ceb935c56f724ce095334232004b79378dc0d33f6abd81286584d5c4"
+    },
+    {
+      "path": "InteractivAgents/openai_unity_expert_npcs_pycharm/InteractiveAgents/backend/state.py",
+      "sha256": "ebb01cf0ebc5def0df3c84f4322ad9dc50a907c126fd84bb29340eb777b38e4d"
+    },
+    {
+      "path": "InteractivAgents/openai_unity_expert_npcs_pycharm/InteractiveAgents/backend/projects.py",
+      "sha256": "6cfffdb5341a91e67f8be4a55f6f6a59ef2b7099a80175175153d7d45272c58d"
+    },
+    {
+      "path": "InteractivAgents/openai_unity_expert_npcs_pycharm/InteractiveAgents/backend/kb.py",
+      "sha256": "5898faa9935da357f3801ea570f43bb4c5534e8b3a35afea98f56992c3f23d57"
+    },
+    {
+      "path": "research/iui2027/evaluation/run_benchmark.py",
+      "sha256": "3bbeb5dc3b62f83855892f530860721c3ad8200f784592bb6dbbe350fd864905"
+    }
+  ]
+}

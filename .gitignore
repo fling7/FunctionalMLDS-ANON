@@ -1,0 +1,51 @@
+# Secrets and machine-local configuration
+.env
+.env.*
+config.json
+*.pem
+*.key
+*.token
+
+# Python and test caches
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+
+# Runtime and build products
+runtime_logs/
+**/runtime_logs/
+Library/
+Temp/
+Obj/
+Build/
+Builds/
+Logs/
+UserSettings/
+*.log
+
+# Content intentionally outside this review bundle
+*.pdf
+*.zip
+*.fbx
+*.glb
+*.tif
+*.png
+*.csv
+*.sqlite
+*.sqlite3
+*.db
+
+# IDE and OS metadata
+.idea/
+.vscode/
+.vs/
+*.sln
+*.csproj
+*.user
+.DS_Store
+Thumbs.db
+desktop.ini
