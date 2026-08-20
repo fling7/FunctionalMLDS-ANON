@@ -39,6 +39,9 @@ UserSettings/
 *.sqlite3
 *.db
 
+# Deterministic metamodel figures are part of the review artifact
+!output/metamodel_v2/generated/*.png
+
 # IDE and OS metadata
 .idea/
 .vscode/

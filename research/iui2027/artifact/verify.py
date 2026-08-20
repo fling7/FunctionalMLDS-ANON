@@ -96,8 +96,10 @@ TEXT_SUFFIXES = {
     ".json",
     ".md",
     ".meta",
+    ".mmd",
     ".py",
     ".sha256",
+    ".svg",
     ".txt",
 }
 TEXT_FILENAMES = {".gitignore"}
@@ -219,6 +221,96 @@ def execute_check(check: Check, operation: Callable[[], Mapping[str, Any]]) -> N
     except Exception as exc:  # Each failed check must still reach the summary.
         check.status = "fail"
         check.issues.append(safe_text(exc))
+
+
+def check_metamodel_artifacts() -> Mapping[str, Any]:
+    if str(REPOSITORY_ROOT) not in sys.path:
+        sys.path.insert(0, str(REPOSITORY_ROOT))
+    tools_root = REPOSITORY_ROOT / "tools"
+    if str(tools_root) not in sys.path:
+        sys.path.insert(0, str(tools_root))
+
+    from tools.dynamic_functional_mlds_v2_model import MODEL
+    from tools.generate_dynamic_functional_mlds_v2 import (
+        managed_file_names,
+        sha256_bytes,
+        stable_json,
+        validate_model,
+    )
+    from tools.validate_dynamic_functional_mlds_v2_diagrams import (
+        validate as validate_diagrams,
+    )
+
+    model_errors = validate_model()
+    if model_errors:
+        raise VerificationError(
+            "Canonical metamodel validation failed: " + "; ".join(model_errors[:8])
+        )
+
+    generated = REPOSITORY_ROOT / "output" / "metamodel_v2" / "generated"
+    manifest_path = generated / "generation_manifest.sha256.json"
+    if not manifest_path.is_file():
+        raise VerificationError("Metamodel generation manifest is missing.")
+
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8-sig"))
+    expected = set(managed_file_names())
+    actual = {path.name for path in generated.iterdir() if path.is_file()}
+    if actual != expected:
+        raise VerificationError(
+            "Generated metamodel file set differs from the canonical generator: "
+            f"missing={sorted(expected - actual)}, extra={sorted(actual - expected)}"
+        )
+    if set(manifest.get("managed_files") or []) != expected:
+        raise VerificationError("Metamodel manifest managed_files is stale.")
+
+    artifact_entries = manifest.get("artifacts") or []
+    expected_artifacts = expected - {manifest_path.name}
+    if {str(entry.get("path") or "") for entry in artifact_entries} != expected_artifacts:
+        raise VerificationError("Metamodel manifest artifact list is incomplete or stale.")
+    if sha256_bytes(stable_json(artifact_entries).encode("utf-8")) != str(
+        manifest.get("artifact_set_sha256") or ""
+    ).upper():
+        raise VerificationError("Metamodel artifact-set hash is stale.")
+
+    def verify_entry(entry: Mapping[str, Any], base: Path) -> None:
+        relative = Path(str(entry.get("path") or ""))
+        if not relative.parts or relative.is_absolute() or ".." in relative.parts:
+            raise VerificationError("Metamodel manifest contains an unsafe path.")
+        path = base / relative
+        if not path.is_file():
+            raise VerificationError(f"Manifest file is missing: {relative.as_posix()}")
+        if path.stat().st_size != int(entry.get("bytes") or -1):
+            raise VerificationError(f"Manifest byte count is stale: {relative.as_posix()}")
+        if sha256_file(path).upper() != str(entry.get("sha256") or "").upper():
+            raise VerificationError(f"Manifest hash is stale: {relative.as_posix()}")
+
+    for entry in manifest.get("source_files") or []:
+        verify_entry(entry, REPOSITORY_ROOT)
+    for entry in artifact_entries:
+        verify_entry(entry, generated)
+
+    model_document = json.loads(
+        (generated / "dynamic_functional_mlds_v2.model.json").read_text(
+            encoding="utf-8-sig"
+        )
+    )
+    if canonical_sha256(model_document) != canonical_sha256(MODEL):
+        raise VerificationError("Generated model JSON differs from the canonical MODEL.")
+
+    diagram_report = validate_diagrams(generated)
+    if diagram_report.get("status") != "PASS":
+        raise VerificationError("Generated metamodel diagram QA failed.")
+
+    return {
+        "model_version": MODEL["metadata"]["model_version"],
+        "class_count": len(MODEL["classes"]),
+        "association_count": len(MODEL["associations"]),
+        "invariant_count": len(MODEL["invariants"]),
+        "view_count": len(MODEL["views"]),
+        "generated_file_count": len(actual),
+        "artifact_set_sha256": manifest.get("artifact_set_sha256"),
+        "diagram_status": diagram_report.get("status"),
+    }
 
 
 def check_case_inputs() -> Mapping[str, Any]:
@@ -778,6 +870,11 @@ def main(argv: Sequence[str] | None = None) -> int:
         execute_check(check, operation)
         checks.append(check)
 
+    add(
+        "metamodel",
+        "Canonical metamodel, generated specification and diagrams",
+        check_metamodel_artifacts,
+    )
     add("case_inputs", "Case inputs and source hashes", check_case_inputs)
     add("fresh_v2", "Fresh deterministic V2 assembly", check_fresh_v2)
     add(

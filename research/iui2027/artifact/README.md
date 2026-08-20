@@ -23,6 +23,8 @@ python research/iui2027/artifact/verify.py
 
 The verifier checks:
 
+- the canonical V2 metamodel, its generated JSON/specification, all eight diagram
+  views in Mermaid/SVG/PNG, manifest hashes, and diagram geometry;
 - all expected case inputs and their source-hash manifests;
 - deterministic in-memory V2 regeneration and canonical validation;
 - the committed structural benchmark and all recorded implementation/input hashes;

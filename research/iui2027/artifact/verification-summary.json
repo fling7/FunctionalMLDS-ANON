@@ -4,6 +4,23 @@
   "checks": [
     {
       "facts": {
+        "artifact_set_sha256": "AF6B248D133F41583B3EE0644825B96B1BF0F913168F5B3499BD3B3457B7F5F8",
+        "association_count": 157,
+        "class_count": 118,
+        "diagram_status": "PASS",
+        "generated_file_count": 27,
+        "invariant_count": 74,
+        "model_version": "2.0.0-model",
+        "view_count": 8
+      },
+      "id": "metamodel",
+      "issues": [],
+      "label": "Canonical metamodel, generated specification and diagrams",
+      "mandatory": true,
+      "status": "pass"
+    },
+    {
+      "facts": {
         "canonical_demonstrator": "steinpilz_brand_room",
         "case_count": 3,
         "cases": [
@@ -159,7 +176,7 @@
     },
     {
       "facts": {
-        "file_count": 241,
+        "file_count": 260,
         "finding_count": 0,
         "patterns": [
           "email_address",
