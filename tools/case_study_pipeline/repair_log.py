@@ -55,7 +55,7 @@ def _entry(
         "schema_version": SCHEMA_VERSION,
         "case_id": case_id,
         "stage": stage.get("stage_id"),
-        "fehler": issue,
+        "error": issue,
         "repair_type": repair_type,
         "versuch": attempt,
         "ergebnis": result,

@@ -4338,7 +4338,7 @@
         "student_seating_arrangement"
       ],
       "voice": "sage",
-      "voice_gender": "weiblich",
+      "voice_gender": "female",
       "voice_style": "clear and encouraging",
       "tts_model": "gpt-4o-mini-tts",
       "responsible_zone_ids": [
@@ -4433,7 +4433,7 @@
         "reading_area_usage"
       ],
       "voice": "fable",
-      "voice_gender": "maennlich",
+      "voice_gender": "male",
       "voice_style": "warm and inviting",
       "tts_model": "gpt-4o-mini-tts",
       "responsible_zone_ids": [
@@ -4500,7 +4500,7 @@
         "dinosaur_education"
       ],
       "voice": "nova",
-      "voice_gender": "weiblich",
+      "voice_gender": "female",
       "voice_style": "enthusiastic and clear",
       "tts_model": "gpt-4o-mini-tts",
       "responsible_zone_ids": [
@@ -4552,7 +4552,7 @@
         "decorative_zone"
       ],
       "voice": "coral",
-      "voice_gender": "weiblich",
+      "voice_gender": "female",
       "voice_style": "soft and pleasant",
       "tts_model": "gpt-4o-mini-tts",
       "responsible_zone_ids": [

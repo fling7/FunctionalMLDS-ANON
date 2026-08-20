@@ -3487,7 +3487,7 @@
         "navigation"
       ],
       "voice": "sage",
-      "voice_gender": "weiblich",
+      "voice_gender": "female",
       "voice_style": "warm and clear",
       "tts_model": "gpt-4o-mini-tts",
       "responsible_zone_ids": [
@@ -3545,7 +3545,7 @@
         "interactive_terminals"
       ],
       "voice": "coral",
-      "voice_gender": "weiblich",
+      "voice_gender": "female",
       "voice_style": "informative and friendly",
       "tts_model": "gpt-4o-mini-tts",
       "responsible_zone_ids": [
@@ -3609,7 +3609,7 @@
         "career_opportunities"
       ],
       "voice": "onyx",
-      "voice_gender": "maennlich",
+      "voice_gender": "male",
       "voice_style": "professional and clear",
       "tts_model": "gpt-4o-mini-tts",
       "responsible_zone_ids": [
@@ -3673,7 +3673,7 @@
         "interactive_kiosks"
       ],
       "voice": "fable",
-      "voice_gender": "maennlich",
+      "voice_gender": "male",
       "voice_style": "enthusiastic and engaging",
       "tts_model": "gpt-4o-mini-tts",
       "responsible_zone_ids": [
@@ -3751,7 +3751,7 @@
         "lounge_services"
       ],
       "voice": "ash",
-      "voice_gender": "maennlich",
+      "voice_gender": "male",
       "voice_style": "warm and caring",
       "tts_model": "gpt-4o-mini-tts",
       "responsible_zone_ids": [

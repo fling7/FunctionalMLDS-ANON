@@ -9,7 +9,7 @@
   "sourceContract": {
     "schema": "functionalmlds_case_study",
     "metamodelVersion": "v0.5",
-    "semanticProjectionSha256": "7f6a439fc94c127894f595dba6a60fe0c534a1f92801537a604f1ba84929fb68"
+    "semanticProjectionSha256": "ae192b8b2e53cd07851ab3ed280199c420569387f987d2e9270d713fbe338f10"
   },
   "objects": [
     {
@@ -1301,7 +1301,7 @@
         "booth_navigation"
       ],
       "voice": "fable",
-      "voiceGender": "maennlich",
+      "voiceGender": "male",
       "voiceStyle": "warm and approachable",
       "ttsModel": "gpt-4o-mini-tts",
       "playsActor": [
@@ -1354,7 +1354,7 @@
         "customer_engagement"
       ],
       "voice": "sage",
-      "voiceGender": "weiblich",
+      "voiceGender": "female",
       "voiceStyle": "enthusiastic and clear",
       "ttsModel": "gpt-4o-mini-tts",
       "playsActor": [
@@ -1410,7 +1410,7 @@
         "sustainability"
       ],
       "voice": "onyx",
-      "voiceGender": "maennlich",
+      "voiceGender": "male",
       "voiceStyle": "professional and informative",
       "ttsModel": "gpt-4o-mini-tts",
       "playsActor": [
@@ -1460,7 +1460,7 @@
         "technical_support"
       ],
       "voice": "coral",
-      "voiceGender": "weiblich",
+      "voiceGender": "female",
       "voiceStyle": "clear and supportive",
       "ttsModel": "gpt-4o-mini-tts",
       "playsActor": [
@@ -1507,7 +1507,7 @@
         "company_culture"
       ],
       "voice": "ballad",
-      "voiceGender": "maennlich",
+      "voiceGender": "male",
       "voiceStyle": "motivational and empathetic",
       "ttsModel": "gpt-4o-mini-tts",
       "playsActor": [
@@ -1555,7 +1555,7 @@
         "hospitality"
       ],
       "voice": "ash",
-      "voiceGender": "maennlich",
+      "voiceGender": "male",
       "voiceStyle": "relaxed and friendly",
       "ttsModel": "gpt-4o-mini-tts",
       "playsActor": [

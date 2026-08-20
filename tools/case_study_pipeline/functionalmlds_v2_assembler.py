@@ -1600,8 +1600,16 @@ def write_v2_artifacts(
         # Filesystem provenance belongs to the execution report, not to the
         # portable deterministic model document.
         report["source_v05_path"] = Path(source_v05_path).name
-    instance_path.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    validation_path.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    instance_path.write_text(
+        json.dumps(payload, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+        newline="\n",
+    )
+    validation_path.write_text(
+        json.dumps(report, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+        newline="\n",
+    )
     return {"instance": instance_path, "validation": validation_path}
 
 
@@ -1674,7 +1682,11 @@ def main(argv: Sequence[str] | None = None) -> int:
     source = json.loads(args.input.read_text(encoding="utf-8-sig"))
     instance = assemble_functionalmlds_v2_instance(source)
     args.output.parent.mkdir(parents=True, exist_ok=True)
-    args.output.write_text(json.dumps(instance, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    args.output.write_text(
+        json.dumps(instance, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+        newline="\n",
+    )
     return 0
 
 

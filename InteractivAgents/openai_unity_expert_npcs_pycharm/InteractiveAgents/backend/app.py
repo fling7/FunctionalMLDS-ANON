@@ -42,12 +42,12 @@ def _project_root() -> Path:
 
 
 def _print_setup_instructions(root: Path) -> None:
-    print("\n[Setup] Projekt-Setup")
+    print("\n[Setup] Project setup")
     print(f"- Lege deine Konfiguration an: {root / 'config.json'}")
     print("  (Vorlage: config.example.json im Projektroot)")
-    print("- Beim Start kannst du wählen, ob du eigene Dateien oder das Beispiel nutzt.")
-    print("- Wissensbasis: Lege Dateien in kb/<tag>/... ab, z. B. kb/common/intro.txt")
-    print("- Agenten/Room-Plan: Nutze examples/agents.example.json und examples/room_plan.example.json")
+    print("- At startup, choose between custom files and the bundled example.")
+    print("- Knowledge base: place files under kb/<tag>/..., for example kb/common/intro.txt")
+    print("- Agents/room plan: use examples/agents.example.json and examples/room_plan.example.json")
     print("- API-Check: GET /health auf dem Server")
 
 
@@ -60,32 +60,32 @@ def _prompt_choice(prompt: str, options: Dict[str, str], default: str) -> str:
             return default
         if raw in options:
             return raw
-        print(f"Ungültige Auswahl: '{raw}'. Bitte erneut versuchen.")
+        print(f"Invalid selection: '{raw}'. Please try again.")
 
 
 def _prompt_rel_path(root: Path, label: str, default_rel: str) -> str:
     while True:
-        raw = input(f"{label} (relativ zum Projekt) [Default: {default_rel}]: ").strip()
+        raw = input(f"{label} (relative to the project) [default: {default_rel}]: ").strip()
         rel = raw or default_rel
         candidate = (root / rel).resolve()
         if root in candidate.parents or candidate == root:
             if candidate.exists():
                 return rel
-            print(f"Datei nicht gefunden: {rel}")
+            print(f"File not found: {rel}")
         else:
-            print("Ungültiger Pfad (außerhalb Projekt).")
+            print("Invalid path outside the project.")
 
 
 def _select_setup_paths(root: Path) -> tuple[str, str]:
-    print("\n[Setup] Datenquelle wählen")
-    options = {"1": "Beispiel-Daten", "2": "Eigene Dateien"}
-    choice = _prompt_choice("Bitte wählen", options, default="1")
+    print("\n[Setup] Select a data source")
+    options = {"1": "Example data", "2": "Custom files"}
+    choice = _prompt_choice("Select", options, default="1")
     default_room = "examples/room_plan.example.json"
     default_agents = "examples/agents.example.json"
     if choice == "1":
-        print("[Setup] Beispiel-Daten aktiviert.")
+        print("[Setup] Example data enabled.")
         return default_room, default_agents
-    print("[Setup] Eigene Dateien auswählen.")
+    print("[Setup] Select custom files.")
     room_path = _prompt_rel_path(root, "Pfad zur room_plan.json", default_room)
     agents_path = _prompt_rel_path(root, "Pfad zur agents.json", default_agents)
     return room_path, agents_path
@@ -104,7 +104,7 @@ def _load_openai_key_override() -> Optional[str]:
     key_file = _env_text("OPENAI_API_KEY_FILE")
     if direct_key and key_file:
         raise ValueError(
-            "OPENAI_API_KEY und OPENAI_API_KEY_FILE duerfen nicht gleichzeitig gesetzt sein."
+            "OPENAI_API_KEY and OPENAI_API_KEY_FILE must not be set at the same time."
         )
     if direct_key:
         return direct_key
@@ -116,10 +116,10 @@ def _load_openai_key_override() -> Optional[str]:
         secret = secret_path.read_text(encoding="utf-8").strip()
     except (OSError, UnicodeError) as exc:
         raise ValueError(
-            f"OPENAI_API_KEY_FILE konnte nicht gelesen werden: {secret_path}"
+            f"OPENAI_API_KEY_FILE could not be read: {secret_path}"
         ) from exc
     if not secret:
-        raise ValueError("OPENAI_API_KEY_FILE enthaelt keinen API-Key.")
+        raise ValueError("OPENAI_API_KEY_FILE does not contain an API key.")
     return secret
 
 
@@ -127,24 +127,24 @@ def _parse_server_port(value: Any) -> int:
     try:
         port = int(str(value).strip())
     except (TypeError, ValueError) as exc:
-        raise ValueError("SERVER_PORT/server_port muss eine Ganzzahl sein.") from exc
+        raise ValueError("SERVER_PORT/server_port must be an integer.") from exc
     if not 1 <= port <= 65535:
-        raise ValueError("SERVER_PORT/server_port muss zwischen 1 und 65535 liegen.")
+        raise ValueError("SERVER_PORT/server_port must be between 1 and 65535.")
     return port
 
 
 def _prompt_openai_key() -> str:
     print("\n[Setup] OpenAI API Key fehlt in config.json.")
-    print("Du kannst ihn jetzt eingeben oder den Prozess mit OPENAI_API_KEY bzw. OPENAI_API_KEY_FILE neu starten.")
+    print("Enter it now or restart the process with OPENAI_API_KEY or OPENAI_API_KEY_FILE.")
     try:
-        key = getpass("OpenAI API Key eingeben (Eingabe bleibt unsichtbar): ").strip()
+        key = getpass("Enter the OpenAI API key (input remains hidden): ").strip()
         if key:
             return key
-        print("[Setup] Keine Eingabe erkannt. Fallback auf sichtbare Eingabe.")
+        print("[Setup] No hidden input received. Falling back to visible input.")
     except (KeyboardInterrupt, EOFError):
         raise
     except Exception:
-        print("[Setup] Unsichtbare Eingabe nicht verfügbar. Fallback auf sichtbare Eingabe.")
+        print("[Setup] Hidden input is unavailable. Falling back to visible input.")
     return input("OpenAI API Key eingeben (sichtbar): ").strip()
 
 
@@ -153,7 +153,7 @@ def load_config() -> AppConfig:
     cfg_path = root / "config.json"
     if not cfg_path.exists():
         _print_setup_instructions(root)
-        raise FileNotFoundError(f"config.json nicht gefunden: {cfg_path}")
+        raise FileNotFoundError(f"config.json not found: {cfg_path}")
 
     raw = json.loads(cfg_path.read_text(encoding="utf-8-sig"))
 
@@ -164,7 +164,7 @@ def load_config() -> AppConfig:
     configured_openai_key = str(_get("openai_api_key", "")).strip()
     server_host = _env_text("SERVER_HOST") or str(_get("server_host", "127.0.0.1")).strip()
     if not server_host:
-        raise ValueError("SERVER_HOST/server_host darf nicht leer sein.")
+        raise ValueError("SERVER_HOST/server_host must not be empty.")
     server_port_override = _env_text("SERVER_PORT")
     server_port = _parse_server_port(
         server_port_override if server_port_override is not None else _get("server_port", 8787)
@@ -193,21 +193,21 @@ def load_config() -> AppConfig:
     # entered explicitly at an interactive prompt is persisted for backwards
     # compatibility with the local setup flow.
     if not cfg.openai_api_key:
-        print("Du kannst ihn jetzt einmalig eingeben (wird in config.json gespeichert).")
+        print("You can enter it once now; it will be stored in config.json.")
         try:
             key = _prompt_openai_key()
         except (KeyboardInterrupt, EOFError):
-            print("\nAbgebrochen. Bitte trage openai_api_key in config.json ein.")
+            print("\nCancelled. Add openai_api_key to config.json.")
             sys.exit(1)
 
         if not key:
-            print("Kein Key eingegeben. Bitte trage openai_api_key in config.json ein.")
+            print("No key entered. Add openai_api_key to config.json.")
             sys.exit(1)
 
         raw["openai_api_key"] = key
         cfg_path.write_text(json.dumps(raw, indent=2, ensure_ascii=False), encoding="utf-8")
         cfg.openai_api_key = key
-        print("[Setup] Key gespeichert in config.json\n")
+        print("[Setup] Key saved in config.json\n")
 
     return cfg
 
@@ -217,10 +217,10 @@ def run() -> None:
         cfg = load_config()
     except FileNotFoundError as exc:
         print(f"[Setup] {exc}")
-        print("[Setup] Bitte config.json anlegen und erneut starten.\n")
+        print("[Setup] Create config.json and restart.\n")
         sys.exit(1)
     except ValueError as exc:
-        print(f"[Setup] Ungueltige Konfiguration: {exc}")
+        print(f"[Setup] Invalid configuration: {exc}")
         sys.exit(1)
     root = _project_root()
     _print_setup_instructions(root)
@@ -231,11 +231,11 @@ def run() -> None:
         except EOFError:
             default_room_plan_path = "examples/room_plan.example.json"
             default_agents_path = "examples/agents.example.json"
-            print("[Setup] Keine interaktive Eingabe verfuegbar, nutze Beispiel-Daten.")
+            print("[Setup] Interactive input is unavailable; using example data.")
     else:
         default_room_plan_path = "examples/room_plan.example.json"
         default_agents_path = "examples/agents.example.json"
-        print("[Setup] Kein interaktives Terminal erkannt, nutze Beispiel-Daten.")
+        print("[Setup] No interactive terminal detected; using example data.")
 
     kb = KnowledgeBase(root / cfg.kb_root, chunk_chars=cfg.kb_chunk_chars)
     project_manager = ProjectManager(
@@ -264,7 +264,7 @@ def run() -> None:
         default_memory_mode=cfg.memory_mode,
     )
 
-    print("[Backend] KnowledgeBase geladen:", kb.summary())
+    print("[Backend] Knowledge base loaded:", kb.summary())
     print(f"[Backend] Version {BACKEND_VERSION}")
     print(f"[Backend] Starte HTTP Server auf http://{cfg.server_host}:{cfg.server_port}")
     start_http_server(host=cfg.server_host, port=cfg.server_port, store=store)

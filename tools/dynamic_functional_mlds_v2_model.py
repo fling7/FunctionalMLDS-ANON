@@ -836,8 +836,8 @@ INVARIANTS: list[dict[str, str]] = [
 VIEWS: dict[str, dict[str, Any]] = {
     "dynamic_functional_mlds_v2_metamodel": {
         "kind": "overview",
-        "title": "Kompaktes Metamodell für Dynamic Functional MLDS (V2.0)",
-        "description": "Zentrale EAST-ADL-konforme A/B/C-Gesamtansicht; die sieben Fachsichten liefern die vollständigen Details.",
+        "title": "Compact metamodel for Dynamic Functional MLDS (V2.0)",
+        "description": "Central EAST-ADL-conformant A/B/C overview; the seven detailed views provide the complete specification.",
         "rows": [
             [
                 f"{P_CORE}::DynamicFunctionalModel",
@@ -887,9 +887,9 @@ VIEWS: dict[str, dict[str, Any]] = {
         ],
     },
     "01_east_adl_infrastructure": {
-        "title": "EAST-ADL V2.1.12 – verwendeter Infrastruktur-Ausschnitt",
+        "title": "EAST-ADL V2.1.12 – selected infrastructure subset",
         "description": "Exact selected infrastructure, datatype and value inheritance.",
-        "row_labels": ["Element- und Typbasen", "Werte und Datentypen", "Identifizierbare Elemente", "Paketierbare Elemente", "Kontexte"],
+        "row_labels": ["Element and type bases", "Values and datatypes", "Identifiable elements", "Packageable elements", "Contexts"],
         "rows": [
             [f"{P_ELEMENTS}::Referrable", f"{P_ELEMENTS}::EAType", f"{P_ELEMENTS}::EAPrototype", f"{P_ELEMENTS}::EAPort", f"{P_ELEMENTS}::EAConnector", f"{P_VALUES}::EAValue"],
             [f"{P_DATATYPES}::EADatatype", f"{P_DATATYPES}::EADatatypePrototype", f"{P_VALUES}::EAExpression", f"{P_VALUES}::EANumericalValue"],
@@ -900,9 +900,9 @@ VIEWS: dict[str, dict[str, Any]] = {
         "diagram_association_ids": ["EAElement_ownedComment", "Context_ownedRelationship", "Context_traceableSpecification", "EADatatypePrototype_type", "EAValue_type"],
     },
     "02_east_adl_requirements_usecases": {
-        "title": "EAST-ADL Requirements/UseCases – verwendeter Ausschnitt",
+        "title": "EAST-ADL Requirements/UseCases – selected subset",
         "description": "Unmodified Requirements and UseCases metaclasses plus their exact infrastructure bases.",
-        "row_labels": ["EAST-ADL-Basen", "Requirements und UseCases", "UseCase-Beziehungen", "Requirements-Beziehungen"],
+        "row_labels": ["EAST-ADL bases", "Requirements and use cases", "Use-case relations", "Requirement relations"],
         "rows": [
             [f"{P_ELEMENTS}::Context", f"{P_ELEMENTS}::TraceableSpecification", f"{P_ELEMENTS}::EAElement"],
             [f"{P_REQUIREMENTS}::RequirementsModel", f"{P_REQUIREMENTS}::Requirement", f"{P_USECASES}::Actor", f"{P_USECASES}::UseCase", f"{P_ELEMENTS}::Relationship", f"{P_USECASES}::RedefinableElement"],
@@ -916,9 +916,9 @@ VIEWS: dict[str, dict[str, Any]] = {
         ],
     },
     "03_east_adl_function_system_behavior": {
-        "title": "EAST-ADL Function/System/Behavior – verwendeter Ausschnitt",
+        "title": "EAST-ADL Function/System/Behavior – selected subset",
         "description": "Exact type/prototype, FAA/FDA root, connector and behavior semantics.",
-        "row_labels": ["EAST-ADL-Basen", "Generische Funktionsstruktur", "Analysis und Design", "Architekturkontexte"],
+        "row_labels": ["EAST-ADL bases", "Generic function structure", "Analysis and design", "Architecture contexts"],
         "rows": [
             [f"{P_ELEMENTS}::EAType", f"{P_ELEMENTS}::EAPrototype", f"{P_ELEMENTS}::EAElement", f"{P_ELEMENTS}::EAPort", f"{P_ELEMENTS}::EAConnector", f"{P_ELEMENTS}::Context"],
             [f"{P_FUNCTION}::FunctionType", f"{P_FUNCTION}::FunctionPrototype", f"{P_FUNCTION}::FunctionPort", f"{P_FUNCTION}::FunctionConnector", f"{P_FUNCTION}::PortGroup", f"{P_FUNCTION}::FunctionFlowPort", f"{P_BEHAVIOR}::FunctionBehavior"],
@@ -932,16 +932,16 @@ VIEWS: dict[str, dict[str, Any]] = {
         ],
     },
     "04_dfmlds_scenario_flow": {
-        "title": "DFMLDS V2 – konservativer Szenario- und Ablaufkern",
+        "title": "DFMLDS V2 – conservative scenario and control-flow core",
         "description": "UseCase binding, actor/entity separation, typed events/conditions and canonical control flow.",
         "row_labels": [
-            "EAST-ADL-Basen",
-            "UseCase- und Rollenbindung",
-            "Szenario",
-            "Ablauf",
-            "Ereignisse, Bedingungen und Wahrscheinlichkeiten",
-            "Abstrakte Aussagebasis",
-            "Spezialisierte Aussagearten",
+            "EAST-ADL bases",
+            "Use-case and role binding",
+            "Scenario",
+            "Control flow",
+            "Events, conditions, and probabilities",
+            "Abstract assertion base",
+            "Specialized assertion types",
         ],
         "rows": [
             [f"{P_ELEMENTS}::Context", f"{P_ELEMENTS}::TraceableSpecification", f"{P_ELEMENTS}::Relationship", f"{P_ELEMENTS}::Identifiable", f"{P_TIMING}::Event", f"{P_VALUES}::EAExpression"],
@@ -964,9 +964,9 @@ VIEWS: dict[str, dict[str, Any]] = {
     },
     "05_dfmlds_capability_runtime": {
         "layout": "capability_runtime",
-        "title": "DFMLDS V2 – Capability-, Function- und Runtime-Bridge",
+        "title": "DFMLDS V2 – capability, function, and runtime bridge",
         "description": "EAType/EAPrototype capability pattern, optional exact function mapping and ordered runtime realization.",
-        "row_labels": ["EAST-ADL-Basen", "Capability-Kern", "Technische Runtime-Realisierung", "Verhaltens- und Funktionsabbildung", "EAST-ADL-Funktionsziele"],
+        "row_labels": ["EAST-ADL bases", "Capability core", "Technical runtime realization", "Behavior and function mapping", "EAST-ADL function targets"],
         "rows": [
             [f"{P_ELEMENTS}::Identifiable", f"{P_ELEMENTS}::EAType", f"{P_ELEMENTS}::EAPrototype", f"{P_ELEMENTS}::EAElement", f"{P_ELEMENTS}::TraceableSpecification", f"{P_ELEMENTS}::Relationship"],
             [f"{P_CORE}::Entity", f"{P_CORE}::Agent", f"{P_CORE}::CapabilityUse", f"{P_CORE}::Capability", f"{P_CORE}::Effect", f"{P_CORE}::Assertion"],
@@ -985,7 +985,7 @@ VIEWS: dict[str, dict[str, Any]] = {
     "06_east_adl_dfmlds_verification_validation": {
         "title": "EAST-ADL / DFMLDS V2 – Verification & Validation",
         "description": "Exact V&V container ownership with DFMLDS specializations, logs and distinct subject/target semantics.",
-        "row_labels": ["Requirements- und Infrastrukturbezug", "EAST-ADL V&V-Container", "EAST-ADL V&V-Ablauf", "DFMLDS-Spezialisierungen", "Bindungen, Aussagen und Ergebnisse"],
+        "row_labels": ["Requirements and infrastructure", "EAST-ADL V&V container", "EAST-ADL V&V flow", "DFMLDS specializations", "Bindings, assertions, and results"],
         "rows": [
             [f"{P_ELEMENTS}::Context", f"{P_ELEMENTS}::TraceableSpecification", f"{P_ELEMENTS}::Identifiable", f"{P_REQUIREMENTS}::RequirementsRelationship", f"{P_REQUIREMENTS}::Requirement", f"{P_VV}::Verify"],
             [f"{P_VV}::VerificationValidation"],
@@ -1009,9 +1009,9 @@ VIEWS: dict[str, dict[str, Any]] = {
     },
     "07_optional_annex_feature_knowledge": {
         "layout": "optional_modules",
-        "title": "DFMLDS V2 – optionale Annex-C-, Feature- und Wissensmodule",
+        "title": "DFMLDS V2 – optional Annex C, feature, and knowledge modules",
         "description": "Optional one-way bridges; Annex C is preliminary and TransitionEvent is not Timing::Event.",
-        "row_labels": ["Kern-Anker", "Optionale Brücken", "Annex C", "Zielmodelle und Wissen"],
+        "row_labels": ["Core anchors", "Optional bridges", "Annex C", "Target models and knowledge"],
         "rows": [
             [f"{P_CORE}::ScenarioStep", f"{P_CORE}::StepRelation", f"{P_CORE}::ScenarioEvent", f"{P_CORE}::StateAssertion", f"{P_CORE}::Capability", f"{P_CORE}::Agent", f"{P_CORE}::Entity"],
             [f"{P_ANNEX_BRIDGE}::ScenarioAnnexMapping", f"{P_ANNEX_BEHAVIOR}::BehaviorConstraintTargetBinding", f"{P_ANNEX_BEHAVIOR}::BehaviorConstraintType", f"{P_FEATURE_BRIDGE}::CapabilityFeatureMapping", f"{P_KNOWLEDGE}::AgentKnowledgeBinding"],

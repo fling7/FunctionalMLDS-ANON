@@ -1,19 +1,24 @@
 # scene_semantics_v1
 
-Du analysierst eine normalisierte MLDS- oder RoomPlan-Szene fuer eine wissenschaftliche
-Case Study. Die Analyse muss raeumlich geerdet sein: Objekt-IDs duerfen nur aus der
-bereitgestellten Liste stammen.
+Analyze a normalized MLDS or RoomPlan scene for a scientific case study. The
+analysis must remain spatially grounded: object identifiers may only come from
+the supplied list.
 
-Ziel der Ausgabe:
-- Erkenne die Domaene und den Zweck des Raums.
-- Leite typische Besucherziele ab.
-- Bilde kompakte semantische Zonen aus Objektgruppen und wichtigen Einzelobjekten.
-- Markiere Objekte, die fuer Interaktion, Erklaerung oder Navigation wichtig sind.
-- Schlage Agentenrollen vor, die spaeter in Interactive Agents umgesetzt werden koennen.
+Objectives:
 
-Regeln:
-- Keine neuen Objekt-IDs erfinden.
-- Keine Runtime-Endpunkte, Requirements oder FunctionalMLDS-Elemente erzeugen; diese Stufen folgen spaeter.
-- Zonen muessen fachlich erklaerbar sein und mindestens ein vorhandenes Objekt referenzieren.
-- Agentenrollenkandidaten muessen aus Raumfunktion, Besucherzielen und Zonen abgeleitet sein.
-- Antworte ausschliesslich im verlangten JSON-Schema.
+- Identify the room's domain and purpose.
+- Derive typical visitor goals.
+- Form compact semantic zones from object groups and important individual
+  objects.
+- Mark objects relevant to interaction, explanation, or navigation.
+- Propose agent roles that can later be implemented in Interactive Agents.
+
+Rules:
+
+- Do not invent object identifiers.
+- Do not create runtime endpoints, requirements, or FunctionalMLDS elements;
+  later stages handle them.
+- Make every zone semantically explainable and reference at least one existing
+  object.
+- Derive every role candidate from the room function, visitor goals, and zones.
+- Return only the requested JSON schema.

@@ -156,7 +156,7 @@ def _attr_lines(item: dict[str, Any], limit: int = 3) -> list[str]:
     if item.get("element_kind") == "datatype" and "min" in item:
         lines.append(f"Wertebereich [{item['min']}, {item['max']}]")
     if not lines:
-        lines.append("keine lokalen Attribute")
+        lines.append("no local attributes")
     return lines
 
 
@@ -361,7 +361,7 @@ def _build_detail_scene(model: dict[str, Any], view: dict[str, Any]) -> Scene:
     ledger = [_association_entry(item, "[Diagramm]") for item in all_associations if item["id"] in selected_ids]
     ledger.extend(_association_entry(item, "[Sicht]") for item in all_associations if item["id"] not in selected_ids)
     ledger.extend(
-        f"[Vererbung] {_simple(derived)} → {_simple(base)}"
+        f"[Inheritance] {_simple(derived)} → {_simple(base)}"
         for derived, base in generalizations_for_view(model, view)
     )
     ledger_top = int(y + 8)
@@ -390,14 +390,14 @@ def _build_overview_scene(model: dict[str, Any], view: dict[str, Any]) -> Scene:
         "RequirementsModel": ["requirement: Requirement [*]", "useCase: UseCase [*]"],
         "Requirement": ["/text: String [0..1] {inherited}", "formalism / url: String [0..1]"],
         "Satisfy": ["satisfiedBy: Identifiable [1..*]", "{xor Requirement / UseCase}", "{excludes Requirement / RequirementContainer}"],
-        "Actor": ["externe Rolle", "keine physische Entität"],
+        "Actor": ["external role", "not a physical entity"],
         "ActorParticipation": ["actor: Actor [1]", "useCase: UseCase [1]"],
         "UseCase": ["/text: String [0..1] {inherited}", "usage / captured functionality"],
         "UseCaseScenarioSpecification": ["useCase: UseCase [1]", "scenario: Scenario [1]"],
-        "ExtensionPoint": ["/name: String [0..1] {inherited}", "gehört zum erweiterten UseCase"],
+        "ExtensionPoint": ["/name: String [0..1] {inherited}", "belongs to the extended UseCase"],
         "Include": ["addition: UseCase [1]", "mandatory insertion"],
         "Extend": ["extendedCase: UseCase [1]", "extensionLocation: ExtensionPoint [1..*]"],
-        "ConditionalExtend": ["condition: ScenarioCondition [1]", "spezialisiert EAST-ADL Extend"],
+        "ConditionalExtend": ["condition: ScenarioCondition [1]", "specializes EAST-ADL Extend"],
         "ScenarioEvent": ["«Event, EAExpression»", "kind: temporal | spatial | signal | user | environment", "extern: ScenarioExternalEvent <: ExternalEvent"],
         "Scenario": ["kind: main | alternative | exception", "variantOf / pre- / postcondition"],
         "ScenarioCondition": ["«EAElement, EAExpression»", "kind: guard | precondition | postcondition", "spatial | timing · expressionText: String [1]"],
@@ -405,10 +405,10 @@ def _build_overview_scene(model: dict[str, Any], view: dict[str, Any]) -> Scene:
         "StepRelation": ["kind: sequence | alternative | exception", "fork | join | loop · sourceStep / targetStep", "guard: ScenarioCondition [0..1]", "probability: ProbabilityValue [0..1]"],
         "ParallelGroup": ["memberStep: ScenarioStep [2..*]", "{ordered}"],
         "Assertion": ["«abstract» · subject: Identifiable [1]", "expression: EAExpression [1]", "severity: AssertionSeverity [0..1]", "State / Event / Output / Grounding / Relation"],
-        "StateAssertion": ["<: Assertion", "v0.5-kompatible Spezialisierung"],
+        "StateAssertion": ["<: Assertion", "v0.5-compatible specialization"],
         "ProbabilityValue": ["EANumericalValue", "type: Probability [1]"],
         "CapabilityUse": ["«EAPrototype, EAElement»", "type: Capability [1] «isOfType»", "provider: Entity [0..1] (Core) / [1] (exec)", "target: Identifiable [*] · parameter [*]"],
-        "Agent": ["spezialisierte Entity", "Unity-Rollen, Grounding und Handoff bleiben"],
+        "Agent": ["specialized Entity", "Unity roles, grounding, and handoff are preserved"],
         "Entity": ["kind / sourceId / entityRole / purpose", "playsActor: Actor [*]", "providedCapability: Capability [*]"],
         "Capability": ["«EAType, TraceableSpecification»", "text: String [0..1]", "precondition [*] · effect [1..*]"],
         "Effect": ["text: String [0..1]", "specifiedBy: Assertion [1..*]"],
@@ -419,7 +419,7 @@ def _build_overview_scene(model: dict[str, Any], view: dict[str, Any]) -> Scene:
         "RuntimeValidationTarget": ["<: VVTarget", "platform: String [1]", "runtimeBinding [*] · environmentRef [0..1]"],
         "ValidationCase": ["<: EAST-ADL VVCase", "vvSubject / vvTarget [*]", "procedure / log [*]"],
         "RuntimeValidationProcedure": ["<: VVProcedure", "stimuli / intended outcomes [*]"],
-        "RuntimeStimulus": ["<: VVStimuli", "ScenarioEvent oder RuntimeAction"],
+        "RuntimeStimulus": ["<: VVStimuli", "ScenarioEvent or RuntimeAction"],
         "StateAssertionOutcome": ["<: AssertionOutcome <: VVIntendedOutcome", "assertion: Assertion [1..*]"],
         "RuntimeValidationLog": ["<: VVLog", "actual outcomes [*]"],
         "RuntimeActualOutcome": ["<: VVActualOutcome", "result: AssertionResult [1..*]"],
@@ -539,10 +539,10 @@ def _build_overview_scene(model: dict[str, Any], view: dict[str, Any]) -> Scene:
     edge([port("RuntimeActualOutcome", "top", 100), (2610, 2120), (2790, 2120), port("AssertionResult", "top", -100)], "result [1..*]", "composition", label_pos=(2700, 2112))
 
     panels = [
-        Panel(30, 180, 3140, 620, "A. EAST-ADL Requirements / UseCases – unverfälschter Kern", "#FCFDFF", "#C9D7E5"),
-        Panel(30, 820, 3140, 700, "B. Scenario Layer – geordnete, bedingte und parallele Abläufe", "#FCFEFD", "#C9DED2"),
-        Panel(30, 1540, 3140, 950, "C. Capability / Runtime / V&V – Domänenfähigkeit vor Technikbindung", "#FDFCFD", "#DDD2E4"),
-        Panel(60, 2110, 3080, 350, "EAST-ADL VerificationValidation «Context» – genau ein Container", "#FAF8FC", "#CFC0D9"),
+        Panel(30, 180, 3140, 620, "A. EAST-ADL Requirements / UseCases – unmodified core", "#FCFDFF", "#C9D7E5"),
+        Panel(30, 820, 3140, 700, "B. Scenario layer – ordered, conditional, and parallel flow", "#FCFEFD", "#C9DED2"),
+        Panel(30, 1540, 3140, 950, "C. Capability / Runtime / V&V – domain capability before technical binding", "#FDFCFD", "#DDD2E4"),
+        Panel(60, 2110, 3080, 350, "EAST-ADL VerificationValidation «Context» – exactly one container", "#FAF8FC", "#CFC0D9"),
     ]
     notes = [
         Note(
@@ -553,7 +553,7 @@ def _build_overview_scene(model: dict[str, Any], view: dict[str, Any]) -> Scene:
             "DynamicFunctionalModel «Context»",
             [
                 "requirementsModel[1] (INV-063) · verificationValidation[1] (INV-034) · actor / scenario / event / condition / assertion / entity / capability / runtimeBinding [*]",
-                "UML-Dreieck = normative Generalisierung; vollständige Vererbungsketten stehen in den sieben Fachsichten.",
+                "UML triangle = normative generalization; the seven detailed views show complete inheritance chains.",
             ],
             "#EEF4FB",
             "#7590AE",
@@ -563,12 +563,12 @@ def _build_overview_scene(model: dict[str, Any], view: dict[str, Any]) -> Scene:
             850,
             720,
             190,
-            "Normative Kontrollflussregeln",
+            "Normative control-flow rules",
             [
-                "StepRelation ist die einzige Quelle der Ablaufsemantik.",
-                "Scenario.step ist nur Containment; stepNumber ist Anzeige.",
-                "Beide Enden liegen im selben Scenario; ParallelGroup liegt zwischen Fork/Join.",
-                "Probability nur auf alternative/exception; vollständige Verzweigung summiert sich zu 1.",
+                "StepRelation is the only source of control-flow semantics.",
+                "Scenario.step is containment only; stepNumber is for display.",
+                "Both ends belong to the same Scenario; ParallelGroup lies between fork and join.",
+                "Probability is allowed only on alternative/exception edges; a complete branch sums to 1.",
             ],
             "#F4FAF6",
             "#78A58C",
@@ -578,12 +578,12 @@ def _build_overview_scene(model: dict[str, Any], view: dict[str, Any]) -> Scene:
             1850,
             1010,
             190,
-            "Technische Details bleiben vollständig erhalten",
+            "Technical details are preserved completely",
             [
-                "RuntimeAction besitzt locator[1], input/outputSchema[0..1] und runtimeParameter[*].",
+                "RuntimeAction has locator[1], input/outputSchema[0..1], and runtimeParameter[*].",
                 "CapabilityFunctionMapping bildet optional auf echte Analysis-/Design-FunctionType/-Prototype ab.",
-                "Unity-Felder source*, persona, expertise, knowledgeTag, voice*, Grounding und Handoff bleiben unverändert.",
-                "Invariant: keine direkte ScenarioStep→RuntimeAction-Kante.",
+                "Unity fields source*, persona, expertise, knowledgeTag, voice*, grounding, and handoff remain unchanged.",
+                "Invariant: no direct ScenarioStep→RuntimeAction edge.",
             ],
             "#F5F2F8",
             "#A68DB6",
@@ -593,7 +593,7 @@ def _build_overview_scene(model: dict[str, Any], view: dict[str, Any]) -> Scene:
             2365,
             1450,
             100,
-            "Requirements- und UseCase-Bezug",
+            "Requirements and use-case relation",
             [
                 "Verify(Requirement[1..*], VVCase[1..*])",
                 "ValidationCaseUseCaseBinding(ValidationCase[1], UseCase[1])",
@@ -606,11 +606,11 @@ def _build_overview_scene(model: dict[str, Any], view: dict[str, Any]) -> Scene:
             2365,
             1380,
             100,
-            "Ausführbare V&V-Spezialisierung",
+            "Executable V&V specialization",
             [
-                "RuntimeStimulus: ScenarioEvent[0..1] oder RuntimeAction[0..1], mindestens eines",
+                "RuntimeStimulus: ScenarioEvent[0..1] or RuntimeAction[0..1], at least one",
                 "AssertionOutcome.assertion[1..*] · RuntimeActualOutcome.result[1..*]",
-                "vvSubject/VVTarget bleiben getrennte EAST-ADL-Rollen; keine direkte Spezialkante zum RuntimeBinding.",
+                "vvSubject/VVTarget remain distinct EAST-ADL roles; there is no direct specialization edge to RuntimeBinding.",
             ],
             "#FFFFFF",
             "#BCA9C8",
@@ -773,15 +773,15 @@ def _build_optional_modules_scene(model: dict[str, Any], view: dict[str, Any]) -
     ledger = [_association_entry(item, "[Diagramm]") for item in all_associations if item["id"] in selected_ids]
     ledger.extend(_association_entry(item, "[Sicht]") for item in all_associations if item["id"] not in selected_ids)
     ledger.extend(
-        f"[Vererbung] {_simple(derived)} → {_simple(base)}"
+        f"[Inheritance] {_simple(derived)} → {_simple(base)}"
         for derived, base in generalizations_for_view(model, view)
     )
     ledger_top = 1370
     rows = max(1, math.ceil(len(ledger) / 3))
     height = ledger_top + 100 + rows * 23 + 42
     panels = [
-        Panel(25, 90, 1700, 1240, "Annex C – optional und vorläufig", "#FFFCF4", "#D7BD7B"),
-        Panel(1745, 90, 580, 1240, "Feature-Mapping – optionale Einbahnbrücke", "#FFFDF7", "#D7BD7B"),
+        Panel(25, 90, 1700, 1240, "Annex C – optional and preliminary", "#FFFCF4", "#D7BD7B"),
+        Panel(1745, 90, 580, 1240, "Feature mapping – optional one-way bridge", "#FFFDF7", "#D7BD7B"),
         Panel(2345, 90, 630, 1240, "Agent Knowledge – optional", "#FFFDF7", "#D7BD7B"),
     ]
     return Scene(3000, height, view["title"], view["description"], boxes, edges, panels, [], ledger_top, ledger)
@@ -921,7 +921,7 @@ def _build_capability_runtime_scene(model: dict[str, Any], view: dict[str, Any])
     ledger = [_association_entry(item, "[Diagramm]") for item in all_associations if item["id"] in selected_ids]
     ledger.extend(_association_entry(item, "[Sicht]") for item in all_associations if item["id"] not in selected_ids)
     ledger.extend(
-        f"[Vererbung] {_simple(derived)} → {_simple(base)}"
+        f"[Inheritance] {_simple(derived)} → {_simple(base)}"
         for derived, base in generalizations_for_view(model, view)
     )
     ledger_top = 1690
@@ -929,8 +929,8 @@ def _build_capability_runtime_scene(model: dict[str, Any], view: dict[str, Any])
     height = ledger_top + 100 + rows * 23 + 42
     panels = [
         Panel(25, 90, 2650, 230, "EAST-ADL-Basen", "#FBFDFF", "#CBD9E8"),
-        Panel(25, 345, 2650, 800, "Capability- und Runtime-Bridge", "#F8FCFA", "#BCD9C8"),
-        Panel(25, 1170, 2650, 485, "Optionale Funktions- und Verhaltensabbildung", "#FCFBFD", "#D8CFE0"),
+        Panel(25, 345, 2650, 800, "Capability and runtime bridge", "#F8FCFA", "#BCD9C8"),
+        Panel(25, 1170, 2650, 485, "Optional function and behavior mapping", "#FCFBFD", "#D8CFE0"),
     ]
     return Scene(2700, height, view["title"], view["description"], boxes, edges, panels, [], ledger_top, ledger)
 
@@ -1021,7 +1021,7 @@ def _render_svg_scene(scene: Scene) -> str:
         top = scene.ledger_top
         parts.append(f'<line x1="34" y1="{top}" x2="{scene.width - 34}" y2="{top}" stroke="#C5D2DF"/>')
         _svg_text(parts, 34, top + 31, "Beziehungsnachweis", 18, "#263B53", weight=700)
-        _svg_text(parts, 34, top + 54, "[Diagramm] sichtbar geroutet · [Sicht] im exakten Modell enthalten · [Vererbung] in den Kartenköpfen", 12, "#60758B")
+        _svg_text(parts, 34, top + 54, "[Diagram] visibly routed · [View] included in the exact model · [Inheritance] shown in card headers", 12, "#60758B")
         columns = 3 if scene.width >= 2100 else 2
         rows_per_column = max(1, math.ceil(len(scene.ledger_entries) / columns))
         column_width = (scene.width - 68) / columns
@@ -1176,7 +1176,7 @@ def _render_png_scene(scene: Scene, path: Path) -> None:
         top = scene.ledger_top
         draw.line((34, top, scene.width - 34, top), fill="#C5D2DF", width=1)
         draw.text((34, top + 10), "Beziehungsnachweis", font=ledger_title_font, fill="#263B53")
-        draw.text((34, top + 38), "[Diagramm] sichtbar geroutet · [Sicht] im exakten Modell enthalten · [Vererbung] in den Kartenköpfen", font=small_font, fill="#60758B")
+        draw.text((34, top + 38), "[Diagram] visibly routed · [View] included in the exact model · [Inheritance] shown in card headers", font=small_font, fill="#60758B")
         columns = 3 if scene.width >= 2100 else 2
         rows_per_column = max(1, math.ceil(len(scene.ledger_entries) / columns))
         column_width = (scene.width - 68) / columns

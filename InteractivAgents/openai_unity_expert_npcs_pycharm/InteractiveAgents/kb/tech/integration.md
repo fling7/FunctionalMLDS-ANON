@@ -1,19 +1,24 @@
-# Technik & Integration (tech)
+# Technology and integration (tech)
 
-## Architektur
-- Python-HTTP-Server (Standardbibliothek)
-- Unity-Client via REST (`/setup`, `/chat`)
-- Strukturierte JSON-Ausgaben (Schema)
+## Architecture
 
-## Integrationen
-- Unity: WebRequest/HttpClient für Setup und Chat
-- Externe Systeme: via JSON-Bridge möglich
+- Python HTTP server built with the standard library
+- Unity client using the `/setup` and `/chat` REST endpoints
+- structured JSON responses validated against schemas
 
-## Betrieb & Sicherheit
-- Kein DB-Setup notwendig
-- API Key in `config.json` oder via `OPENAI_API_KEY`
-- CORS ist für WebGL aktiviert
+## Integrations
 
-## Performance-Notizen
-- KB-Suche über Keywords, schnell für kleine/mittlere Datenmengen
-- Mehrere Agenten pro Session möglich
+- Unity through WebRequest or HttpClient
+- external systems through a JSON bridge
+
+## Operation and security
+
+- no database setup required
+- API credentials supplied through an ignored `config.json` or the
+  `OPENAI_API_KEY` environment variable
+- CORS support for WebGL clients
+
+## Performance notes
+
+- keyword retrieval suited to small and medium knowledge collections
+- multiple agents supported in one session

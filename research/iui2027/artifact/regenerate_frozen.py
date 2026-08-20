@@ -870,6 +870,7 @@ def _rewrite_json_tree(root: Path, replacements: Sequence[tuple[str, str]]) -> N
             path.write_text(
                 json.dumps(rewritten, ensure_ascii=False, indent=2) + "\n",
                 encoding="utf-8",
+                newline="\n",
             )
 
 
@@ -928,6 +929,7 @@ def _refresh_regenerated_manifest_entries(
     manifest_path.write_text(
         json.dumps(manifest, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",
+        newline="\n",
     )
 
 

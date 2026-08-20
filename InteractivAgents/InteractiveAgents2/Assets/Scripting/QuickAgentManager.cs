@@ -39,7 +39,7 @@ public class QuickAgentManager : MonoBehaviour
     public string backendBaseUrl = "http://127.0.0.1:8787";
     public string roomPlanPath = "examples/room_plan.example.json";
     public string agentsPath = "examples/agents.example.json";
-    [Tooltip("shared_history = gemeinsames Chatgedaechtnis; agent_private_history = privates Agentengedaechtnis mit Handoff-Brief.")]
+    [Tooltip("shared_history = shared chat memory; agent_private_history = private agent memory with a handoff brief.")]
     public string memoryMode = "shared_history";
 
     [Header("Spawn")]
@@ -485,7 +485,7 @@ public class QuickAgentManager : MonoBehaviour
     private Vector3 spatialSelectionHitPosition;
     private float spatialSelectionDistance;
     private string currentModelSha256 = "";
-    private string interactionEvidenceStatus = "Noch keine modellgebundene Interaktionsbewertung.";
+    private string interactionEvidenceStatus = "No model-bound interaction assessment yet.";
     private string statusMessage = "";
     private string chatInput = "";
     private const string ChatInputControlName = "chatInputField";
@@ -795,14 +795,14 @@ public class QuickAgentManager : MonoBehaviour
     {
         if (useProjectSelection && string.IsNullOrWhiteSpace(selectedProjectId))
         {
-            statusMessage = "Kein Projekt ausgewählt.";
+            statusMessage = "No project selected.";
             yield break;
         }
 
-        statusMessage = "Setup läuft...";
+        statusMessage = "Setup is running...";
         ClearSpatialTarget("A new setup is being loaded.", "setup", false);
         currentModelSha256 = "";
-        interactionEvidenceStatus = "Noch keine modellgebundene Interaktionsbewertung.";
+        interactionEvidenceStatus = "No model-bound interaction assessment yet.";
         var setupStartedAt = Time.realtimeSinceStartupAsDouble;
         var url = $"{backendBaseUrl}/setup";
         var payload = new SetupRequestPaths
@@ -824,7 +824,7 @@ public class QuickAgentManager : MonoBehaviour
 
             if (req.result != UnityWebRequest.Result.Success)
             {
-                statusMessage = "Setup fehlgeschlagen: " + req.error;
+                statusMessage = "Setup failed: " + req.error;
                 chatLog.Add(statusMessage + " | " + req.downloadHandler.text);
                 yield break;
             }
@@ -833,7 +833,7 @@ public class QuickAgentManager : MonoBehaviour
             var resp = JsonUtility.FromJson<SetupResponse>(setupJson);
             if (resp == null)
             {
-                statusMessage = "Setup fehlgeschlagen: ungültige JSON-Antwort.";
+                statusMessage = "Setup failed: invalid JSON response.";
                 chatLog.Add(statusMessage);
                 yield break;
             }
@@ -851,7 +851,7 @@ public class QuickAgentManager : MonoBehaviour
             catch (Exception exception)
             {
                 sessionId = "";
-                statusMessage = "Setup verworfen: FunctionalMLDS-Vertrag ist ungültig: " + exception.Message;
+                statusMessage = "Setup rejected: the FunctionalMLDS contract is invalid: " + exception.Message;
                 chatLog.Add(statusMessage);
                 yield break;
             }
@@ -868,7 +868,7 @@ public class QuickAgentManager : MonoBehaviour
                     if (modelRequest.result != UnityWebRequest.Result.Success)
                     {
                         sessionId = "";
-                        statusMessage = "Setup verworfen: V2-Modell konnte nicht geladen werden: " + modelRequest.error;
+                        statusMessage = "Setup rejected: the V2 model could not be loaded: " + modelRequest.error;
                         chatLog.Add(statusMessage + " | " + modelRequest.downloadHandler.text);
                         yield break;
                     }
@@ -888,7 +888,7 @@ public class QuickAgentManager : MonoBehaviour
                     catch (Exception exception)
                     {
                         sessionId = "";
-                        statusMessage = "Setup verworfen: V2-Modell/Trace ist inkonsistent: " + exception.Message;
+                        statusMessage = "Setup rejected: the V2 model and trace are inconsistent: " + exception.Message;
                         chatLog.Add(statusMessage);
                         yield break;
                     }
@@ -900,7 +900,7 @@ public class QuickAgentManager : MonoBehaviour
                 && !ValidateExecutableAgentPlacements(lastAgents, out var placementError))
             {
                 sessionId = "";
-                statusMessage = "Setup verworfen: V2-Agentenplatzierung ist ungültig: " + placementError;
+                statusMessage = "Setup rejected: V2 agent placement is invalid: " + placementError;
                 chatLog.Add(statusMessage);
                 yield break;
             }
@@ -932,7 +932,7 @@ public class QuickAgentManager : MonoBehaviour
 
             if (useProjectSelection)
             {
-                statusMessage = $"Setup OK. Projekt: {selectedProjectId} | Memory: {memoryMode} | Agents: {lastAgents.Length}";
+                statusMessage = $"Setup OK. Project: {selectedProjectId} | Memory: {memoryMode} | Agents: {lastAgents.Length}";
             }
             if (!spatialBindingRegistry.IsValid)
             {
@@ -946,7 +946,7 @@ public class QuickAgentManager : MonoBehaviour
 
     private IEnumerator RefreshProjects()
     {
-        statusMessage = "Projekte laden...";
+        statusMessage = "Loading projects...";
         var url = $"{backendBaseUrl}/projects";
         using (var req = UnityWebRequest.Get(url))
         {
@@ -954,14 +954,14 @@ public class QuickAgentManager : MonoBehaviour
 
             if (req.result != UnityWebRequest.Result.Success)
             {
-                statusMessage = "Projektliste fehlgeschlagen: " + req.error;
+                statusMessage = "Project list failed: " + req.error;
                 yield break;
             }
 
             var resp = JsonUtility.FromJson<ProjectListResponse>(req.downloadHandler.text);
             projects = resp?.projects ?? Array.Empty<ProjectSummary>();
             UpdateProjectSelection();
-            statusMessage = $"Projekte geladen: {projects.Length}";
+            statusMessage = $"Projects loaded: {projects.Length}";
         }
     }
 
@@ -1030,13 +1030,13 @@ public class QuickAgentManager : MonoBehaviour
 
         var idleClips = LoadAllClipsFromFolder(animationResourceFolder);
         if (idleClips.Length == 0)
-            Debug.LogWarning($"[QuickAgentManager] Keine AnimationClips in Resources/{animationResourceFolder} gefunden.");
+            Debug.LogWarning($"[QuickAgentManager] No animation clips found in Resources/{animationResourceFolder}.");
 
         var characterPrefabs = LoadCharacterPrefabs();
         var useCharacters = characterPrefabs.Length > 0;
         if (!useCharacters)
         {
-            Debug.LogWarning("[QuickAgentManager] Keine Prefabs in Resources/Characters – nutze Würfel als Fallback.");
+            Debug.LogWarning("[QuickAgentManager] No prefabs found in Resources/Characters; using cubes as fallback.");
         }
 
         for (var i = 0; i < agents.Length; i++)
@@ -1182,11 +1182,11 @@ public class QuickAgentManager : MonoBehaviour
 
         if (result.Count == 0)
         {
-            Debug.LogWarning("[QuickAgentManager] Gefilterte Character-Liste ist leer - fallback auf ungefilterte Resources/Characters Assets.");
+            Debug.LogWarning("[QuickAgentManager] The filtered character list is empty; falling back to unfiltered Resources/Characters assets.");
             return assets;
         }
 
-        Debug.Log($"[QuickAgentManager] Character-Prefabs geladen: {result.Count} (gefiltert: {skipped}).");
+        Debug.Log($"[QuickAgentManager] Character prefabs loaded: {result.Count} (filtered: {skipped}).");
         return result.ToArray();
     }
 
@@ -1284,29 +1284,29 @@ public class QuickAgentManager : MonoBehaviour
             var id = agent == null ? "" : (agent.id ?? "").Trim();
             if (string.IsNullOrEmpty(id) || !ids.Add(id))
             {
-                error = $"Agent {index} hat keine eindeutige ID.";
+                error = $"Agent {index} has no unique ID.";
                 return false;
             }
             if (agent.position == null || agent.forward == null)
             {
-                error = $"Agent '{id}' benötigt Position und Blickrichtung.";
+                error = $"Agent '{id}' requires position and facing direction.";
                 return false;
             }
             if (!IsFinite(agent.position.x) || !IsFinite(agent.position.y) || !IsFinite(agent.position.z)
                 || !IsFinite(agent.forward.x) || !IsFinite(agent.forward.y) || !IsFinite(agent.forward.z))
             {
-                error = $"Agent '{id}' enthält nicht-endliche Koordinaten.";
+                error = $"Agent '{id}' contains non-finite coordinates.";
                 return false;
             }
             if (Mathf.Abs(agent.position.y) > 0.001f || Mathf.Abs(agent.forward.y) > 0.001f)
             {
-                error = $"Agent '{id}' muss planar auf X/Z platziert sein.";
+                error = $"Agent '{id}' must be placed on the X/Z plane.";
                 return false;
             }
             var forwardLength = new Vector2(agent.forward.x, agent.forward.z).magnitude;
             if (Mathf.Abs(forwardLength - 1f) > 0.002f)
             {
-                error = $"Blickrichtung von Agent '{id}' ist nicht normalisiert.";
+                error = $"The facing direction of agent '{id}' is not normalized.";
                 return false;
             }
         }
@@ -1602,7 +1602,7 @@ public class QuickAgentManager : MonoBehaviour
             true,
             selectedSpatialTargetColor,
             selectedSpatialTargetEmission);
-        statusMessage = $"Raumziel: {binding.DisplayName} ({binding.SourceObjectId})";
+        statusMessage = $"Room target: {binding.DisplayName} ({binding.SourceObjectId})";
         LogSpatialEvent(
             "target_selection_resolved",
             spatialSelectionState,
@@ -1654,7 +1654,7 @@ public class QuickAgentManager : MonoBehaviour
         spatialSelectionCandidates = UniqueSorted(candidateEntityIds);
         spatialSelectionHitPosition = Vector3.zero;
         spatialSelectionDistance = 0f;
-        statusMessage = "Raumziel mehrdeutig: " + spatialSelectionReason;
+        statusMessage = "Room target is ambiguous: " + spatialSelectionReason;
         LogSpatialEvent(
             "target_selection_ambiguous",
             spatialSelectionState,
@@ -1687,7 +1687,7 @@ public class QuickAgentManager : MonoBehaviour
         spatialSelectionDistance = 0f;
         if (logEvent)
         {
-            statusMessage = "Kein Raumziel: " + spatialSelectionReason;
+            statusMessage = "No room target: " + spatialSelectionReason;
             LogSpatialEvent(
                 "target_selection_no_target",
                 spatialSelectionState,
@@ -1907,13 +1907,13 @@ public class QuickAgentManager : MonoBehaviour
     {
         if (string.IsNullOrEmpty(sessionId))
         {
-            statusMessage = "Kein sessionId. Setup zuerst ausführen.";
+            statusMessage = "No sessionId. Run setup first.";
             yield break;
         }
 
         if (string.IsNullOrEmpty(activeAgentId))
         {
-            statusMessage = "Kein aktiver Agent ausgewählt.";
+            statusMessage = "No active agent selected.";
             yield break;
         }
 
@@ -1922,7 +1922,7 @@ public class QuickAgentManager : MonoBehaviour
         // for ordinary, non-deictic chat.
         if (spatialSelectionState == FunctionalMldsSpatialTargetStates.Ambiguous)
         {
-            statusMessage = "Chat blockiert: Raumziel ist mehrdeutig. "
+            statusMessage = "Chat blocked: the room target is ambiguous. "
                 + spatialSelectionReason;
             chatLog.Add(statusMessage);
             yield break;
@@ -1981,7 +1981,7 @@ public class QuickAgentManager : MonoBehaviour
                         req.error,
                         spatialSelectionCandidates);
                 }
-                statusMessage = "Chat fehlgeschlagen: " + req.error;
+                statusMessage = "Chat failed: " + req.error;
                 chatLog.Add(statusMessage + " | " + req.downloadHandler.text);
                 if (functionalMldsV2Bridge != null)
                 {
@@ -2009,7 +2009,7 @@ public class QuickAgentManager : MonoBehaviour
             }
             catch (JsonException exception)
             {
-                statusMessage = "Chat fehlgeschlagen: ungültige JSON-Antwort.";
+                statusMessage = "Chat failed: invalid JSON response.";
                 chatLog.Add(statusMessage);
                 if (functionalMldsV2Bridge != null)
                 {
@@ -2027,7 +2027,7 @@ public class QuickAgentManager : MonoBehaviour
             }
             if (resp == null)
             {
-                statusMessage = "Chat fehlgeschlagen: ungültige JSON-Antwort.";
+                statusMessage = "Chat failed: invalid JSON response.";
                 chatLog.Add(statusMessage);
                 if (functionalMldsV2Bridge != null)
                 {
@@ -2046,7 +2046,7 @@ public class QuickAgentManager : MonoBehaviour
             if (spatialContext != null
                 && !ValidateGroundedResponse(resp, spatialContext, out var groundingError))
             {
-                statusMessage = "Chat-Antwort verworfen: " + groundingError;
+                statusMessage = "Chat response rejected: " + groundingError;
                 chatLog.Add(statusMessage);
                 LogSpatialEvent(
                     "grounded_response_failed",
@@ -2321,7 +2321,7 @@ public class QuickAgentManager : MonoBehaviour
         }
         catch (Exception exception)
         {
-            interactionEvidenceStatus = $"FunctionalMLDS-Evidenzfehler: {exception.Message}";
+            interactionEvidenceStatus = $"FunctionalMLDS evidence error: {exception.Message}";
             statusMessage = $"FunctionalMLDS V2 Logging blockiert {actionKind}: {exception.Message}";
             chatLog.Add(statusMessage);
             return false;
@@ -2468,7 +2468,7 @@ public class QuickAgentManager : MonoBehaviour
                     var followUp = parsed.rueckfrage.Trim();
                     if (!string.IsNullOrWhiteSpace(followUp))
                     {
-                        parts.Add($"Rückfrage: {followUp}");
+                        parts.Add($"Follow-up question: {followUp}");
                     }
                 }
                 if (parts.Count > 0)
@@ -2507,7 +2507,7 @@ public class QuickAgentManager : MonoBehaviour
 
         if (!string.IsNullOrWhiteSpace(rueckfrage))
         {
-            parts.Add($"Rückfrage: {rueckfrage.Trim()}");
+            parts.Add($"Follow-up question: {rueckfrage.Trim()}");
         }
 
         return string.Join("\n\n", parts);
@@ -2561,11 +2561,11 @@ public class QuickAgentManager : MonoBehaviour
         GUILayout.Label($"Status: {statusMessage}");
         GUILayout.Label($"Session: {sessionId}");
         GUILayout.Label($"Aktiv: {activeAgentId}");
-        GUILayout.Label("Raumziel: " + GetSpatialTargetLabel());
+        GUILayout.Label("Room target: " + GetSpatialTargetLabel());
         if (functionalMldsV2Bridge != null)
             GUILayout.Label(interactionEvidenceStatus);
         if (spatialSelectionState != FunctionalMldsSpatialTargetStates.None
-            && GUILayout.Button("Raumziel aufheben"))
+            && GUILayout.Button("Clear room target"))
         {
             ClearSelectedSpatialTarget();
         }
@@ -2577,15 +2577,15 @@ public class QuickAgentManager : MonoBehaviour
         memoryMode = memoryIndex == 0 ? "shared_history" : "agent_private_history";
 
         GUILayout.Space(6);
-        GUILayout.Label("Projekt auswählen:");
+        GUILayout.Label("Select project:");
         var sourceIndex = useProjectSelection ? 0 : 1;
-        sourceIndex = GUILayout.Toolbar(sourceIndex, new[] { "Projekt", "Pfade" });
+        sourceIndex = GUILayout.Toolbar(sourceIndex, new[] { "Project", "Paths" });
         useProjectSelection = sourceIndex == 0;
 
         if (useProjectSelection)
         {
             GUILayout.BeginHorizontal();
-            if (GUILayout.Button("Projektliste laden"))
+            if (GUILayout.Button("Load project list"))
             {
                 StartCoroutine(RefreshProjects());
             }
@@ -2593,7 +2593,7 @@ public class QuickAgentManager : MonoBehaviour
 
             if (projects.Length == 0)
             {
-                GUILayout.Label("Keine Projekte geladen.");
+                GUILayout.Label("No projects loaded.");
             }
             else
             {
@@ -2622,7 +2622,7 @@ public class QuickAgentManager : MonoBehaviour
                 if (selectedProjectIndex >= 0)
                 {
                     var selected = projects[selectedProjectIndex];
-                    GUILayout.Label($"Aktuelles Projekt: {selected.display_name} ({selected.id})");
+                    GUILayout.Label($"Current project: {selected.display_name} ({selected.id})");
                 }
             }
         }
@@ -2630,7 +2630,7 @@ public class QuickAgentManager : MonoBehaviour
         {
             GUILayout.Label("Room-Plan Pfad:");
             roomPlanPath = GUILayout.TextField(roomPlanPath);
-            GUILayout.Label("Agenten Pfad:");
+            GUILayout.Label("Agents path:");
             agentsPath = GUILayout.TextField(agentsPath);
         }
 
@@ -2640,7 +2640,7 @@ public class QuickAgentManager : MonoBehaviour
         }
 
         GUILayout.Space(6);
-        GUILayout.Label("Agenten wählen:");
+        GUILayout.Label("Select agents:");
         agentScroll = GUILayout.BeginScrollView(agentScroll, GUILayout.Height(120));
         if (lastAgents != null)
         {
@@ -2684,7 +2684,7 @@ public class QuickAgentManager : MonoBehaviour
                 {
                     StopVoiceRecordingAndSend();
                 }
-                GUILayout.Label("Aufnahme laeuft...");
+                GUILayout.Label("Recording... ");
             }
             else
             {
@@ -2692,7 +2692,7 @@ public class QuickAgentManager : MonoBehaviour
                 {
                     StartVoiceRecording();
                 }
-                GUILayout.Label(sttInFlight ? "Transkription laeuft..." : $"{voiceRecordKey} halten = sprechen");
+                GUILayout.Label(sttInFlight ? "Transcribing..." : $"Hold {voiceRecordKey} to speak");
             }
             GUILayout.EndHorizontal();
         }
@@ -2707,7 +2707,7 @@ public class QuickAgentManager : MonoBehaviour
         GUILayout.EndScrollView();
 
         GUILayout.Space(6);
-        GUILayout.Label("Interaktion: Linksklick wählt Agent oder semantisches Raumobjekt.");
+        GUILayout.Label("Interaction: left-click selects an agent or semantic room object.");
         GUILayout.Label("Freie Kamera: WASD + QE, rechte Maustaste zum Umschauen.");
         GUILayout.Space(6);
         GUILayout.Label($"FPV Maussensitivitaet: {fpvMouseSensitivity:0.00}");
@@ -2881,7 +2881,7 @@ public class QuickAgentManager : MonoBehaviour
         if (string.IsNullOrEmpty(targetAgentId) || !agentObjects.ContainsKey(targetAgentId))
         {
             ClearPendingHandoff();
-            statusMessage = "Weiterleitungsziel nicht gefunden.";
+            statusMessage = "Handoff target not found.";
             return;
         }
 
@@ -2890,7 +2890,7 @@ public class QuickAgentManager : MonoBehaviour
 
         _pendingHandoffAgentId = targetAgentId;
         _pendingHandoffEvents = targetEvents;
-        statusMessage = $"Weiterleitung zu: {GetAgentDisplayName(targetAgentId)}";
+        statusMessage = $"Handoff to: {GetAgentDisplayName(targetAgentId)}";
     }
 
     private string ResolvePendingHandoffTargetId(ChatResponse resp)
@@ -4302,20 +4302,20 @@ public class QuickAgentManager : MonoBehaviour
         var key = $"{agentId}::{text}";
         if (ttsCache.TryGetValue(key, out var cachedClip))
         {
-            Debug.Log($"[TTS] Cache hit für Agent {agentId} (text_len={text.Length}).");
+            Debug.Log($"[TTS] Cache hit for agent {agentId} (text_len={text.Length}).");
             PlayAgentClip(agentId, cachedClip);
             yield break;
         }
 
         if (ttsInFlight.Contains(key))
         {
-            Debug.Log($"[TTS] Anfrage bereits in-flight für Agent {agentId} (text_len={text.Length}).");
+            Debug.Log($"[TTS] Request already in flight for agent {agentId} (text_len={text.Length}).");
             yield break;
         }
 
         if (IsTtsRateLimited(agentId))
         {
-            Debug.Log($"[TTS] Rate limit aktiv für Agent {agentId} (text_len={text.Length}).");
+            Debug.Log($"[TTS] Rate limit active for agent {agentId} (text_len={text.Length}).");
             yield break;
         }
 
@@ -4333,7 +4333,7 @@ public class QuickAgentManager : MonoBehaviour
         var json = JsonUtility.ToJson(payload);
         var url = $"{backendBaseUrl}/tts";
         Debug.Log(
-            "[TTS] Sende Anfrage: "
+            "[TTS] Sending request: "
             + $"agent={agentId}, text_len={text.Length}, voice={payload.voice}, model={payload.tts_model}"
         );
 
@@ -4349,16 +4349,16 @@ public class QuickAgentManager : MonoBehaviour
 
             if (req.result != UnityWebRequest.Result.Success)
             {
-                statusMessage = "TTS fehlgeschlagen: " + req.error;
+                statusMessage = "TTS failed: " + req.error;
                 // DownloadHandlerAudioClip intentionally does not support string
                 // access. Reading .text here used to hide the real HTTP/TTS error
                 // behind a NotSupportedException.
                 var responseSummary = req.responseCode > 0
                     ? $"HTTP {req.responseCode}"
-                    : "keine HTTP-Antwort";
+                    : "no HTTP response";
                 chatLog.Add(statusMessage + " | " + responseSummary);
                 Debug.LogWarning(
-                    $"[TTS] Fehler: agent={agentId}, error={req.error}, "
+                    $"[TTS] Error: agent={agentId}, error={req.error}, "
                     + $"response={responseSummary}, bytes={req.downloadedBytes}");
                 yield break;
             }
@@ -4366,14 +4366,14 @@ public class QuickAgentManager : MonoBehaviour
             var clip = DownloadHandlerAudioClip.GetContent(req);
             if (clip == null)
             {
-                statusMessage = "TTS fehlgeschlagen: Kein AudioClip.";
+                statusMessage = "TTS failed: no audio clip.";
                 chatLog.Add(statusMessage);
                 Debug.LogWarning($"[TTS] Kein AudioClip: agent={agentId}");
                 yield break;
             }
 
             ttsCache[key] = clip;
-            Debug.Log($"[TTS] AudioClip erhalten: agent={agentId}, length={clip.length:0.00}s");
+            Debug.Log($"[TTS] Audio clip received: agent={agentId}, length={clip.length:0.00}s");
             PlayAgentClip(agentId, clip);
         }
     }
@@ -4435,7 +4435,7 @@ public class QuickAgentManager : MonoBehaviour
     {
         if (sttInFlight)
         {
-            statusMessage = "Transkription laeuft bereits.";
+            statusMessage = "Transcription is already running.";
             return;
         }
 
@@ -4446,14 +4446,14 @@ public class QuickAgentManager : MonoBehaviour
 
         if (Microphone.devices == null || Microphone.devices.Length == 0)
         {
-            statusMessage = "Kein Mikrofon gefunden.";
+            statusMessage = "No microphone found.";
             chatLog.Add(statusMessage);
             return;
         }
 
         if (string.IsNullOrEmpty(sessionId) || string.IsNullOrEmpty(activeAgentId))
         {
-            statusMessage = "Kein aktiver Agent fuer Voice Chat.";
+            statusMessage = "No active agent for voice chat.";
             return;
         }
 
@@ -4463,13 +4463,13 @@ public class QuickAgentManager : MonoBehaviour
         voiceRecordingClip = Microphone.Start(voiceRecordingDevice, false, seconds, sampleRate);
         if (voiceRecordingClip == null)
         {
-            statusMessage = "Mikrofonaufnahme konnte nicht gestartet werden.";
+            statusMessage = "Microphone recording could not be started.";
             return;
         }
 
         isVoiceRecording = true;
         voiceRecordingStartedAt = Time.time;
-        statusMessage = $"Aufnahme laeuft... {voiceRecordKey} loslassen zum Senden.";
+        statusMessage = $"Recording... release {voiceRecordKey} to send.";
     }
 
 #if UNITY_WEBGL && !UNITY_EDITOR
@@ -4477,21 +4477,21 @@ public class QuickAgentManager : MonoBehaviour
     {
         if (IAVoice_IsSupported() == 0)
         {
-            statusMessage = "Browser-Mikrofon wird nicht unterstuetzt.";
+            statusMessage = "The browser microphone is not supported.";
             chatLog.Add(statusMessage);
             return;
         }
 
         if (string.IsNullOrEmpty(sessionId) || string.IsNullOrEmpty(activeAgentId))
         {
-            statusMessage = "Kein aktiver Agent fuer Voice Chat.";
+            statusMessage = "No active agent for voice chat.";
             return;
         }
 
         isVoiceRecording = true;
         sttInFlight = false;
         voiceRecordingStartedAt = Time.time;
-        statusMessage = $"Browser-Aufnahme laeuft... {voiceRecordKey} loslassen zum Senden.";
+        statusMessage = $"Browser recording... release {voiceRecordKey} to send.";
         IAVoice_StartRecording(
             gameObject.name,
             BrowserVoiceTranscriptMethod,
@@ -4513,7 +4513,7 @@ public class QuickAgentManager : MonoBehaviour
 #if UNITY_WEBGL && !UNITY_EDITOR
         isVoiceRecording = false;
         sttInFlight = true;
-        statusMessage = "Transkription laeuft...";
+        statusMessage = "Transcribing...";
         IAVoice_StopRecording();
         return;
 #endif
@@ -4536,7 +4536,7 @@ public class QuickAgentManager : MonoBehaviour
 
         if (clip == null)
         {
-            statusMessage = "Aufnahme fehlgeschlagen.";
+            statusMessage = "Recording failed.";
             return;
         }
 
@@ -4561,12 +4561,12 @@ public class QuickAgentManager : MonoBehaviour
     {
         if (wavBytes == null || wavBytes.Length == 0)
         {
-            statusMessage = "Keine Audiodaten fuer Transkription.";
+            statusMessage = "No audio data available for transcription.";
             yield break;
         }
 
         sttInFlight = true;
-        statusMessage = "Transkription laeuft...";
+        statusMessage = "Transcribing...";
 
         var url = $"{backendBaseUrl}/stt";
         var form = new WWWForm();
@@ -4587,7 +4587,7 @@ public class QuickAgentManager : MonoBehaviour
 
             if (req.result != UnityWebRequest.Result.Success)
             {
-                statusMessage = "Transkription fehlgeschlagen: " + req.error;
+                statusMessage = "Transcription failed: " + req.error;
                 chatLog.Add(statusMessage + " | " + req.downloadHandler.text);
                 yield break;
             }
@@ -4596,7 +4596,7 @@ public class QuickAgentManager : MonoBehaviour
             var transcript = resp == null ? "" : (resp.text ?? "").Trim();
             if (string.IsNullOrWhiteSpace(transcript))
             {
-                statusMessage = "Keine Sprache erkannt.";
+                statusMessage = "No speech detected.";
                 chatLog.Add(statusMessage);
                 yield break;
             }
@@ -4614,7 +4614,7 @@ public class QuickAgentManager : MonoBehaviour
         var transcript = resp == null ? "" : (resp.text ?? "").Trim();
         if (string.IsNullOrWhiteSpace(transcript))
         {
-            statusMessage = "Keine Sprache erkannt.";
+            statusMessage = "No speech detected.";
             chatLog.Add(statusMessage);
             return;
         }
@@ -4626,8 +4626,8 @@ public class QuickAgentManager : MonoBehaviour
     {
         isVoiceRecording = false;
         sttInFlight = false;
-        var detail = string.IsNullOrWhiteSpace(message) ? "Unbekannter Browser-Mikrofonfehler." : message;
-        statusMessage = "Voice fehlgeschlagen: " + detail;
+        var detail = string.IsNullOrWhiteSpace(message) ? "Unknown browser microphone error." : message;
+        statusMessage = "Voice failed: " + detail;
         chatLog.Add(statusMessage);
     }
 
@@ -5393,7 +5393,7 @@ public class QuickAgentManager : MonoBehaviour
 
         GUI.Box(
             new Rect(Screen.width * 0.5f - width * 0.5f, 12f, width, 28f),
-            "Raumziel: " + GetSpatialTargetLabel(),
+            "Room target: " + GetSpatialTargetLabel(),
             style);
     }
 
@@ -5494,7 +5494,7 @@ public class QuickAgentManager : MonoBehaviour
             var labelStyle = new GUIStyle(GUI.skin.label) { fontSize = 12 };
             labelStyle.normal.textColor = new Color(0.8f, 0.8f, 0.8f);
             GUI.Label(new Rect(panelX, panelY + 2f, panelW, 20f),
-                $"Gespräch mit: {agentName}  |  Enter = Senden  |  Esc = Schließen", labelStyle);
+                $"Conversation with: {agentName}  |  Enter = Send  |  Esc = Close", labelStyle);
 
             GUI.SetNextControlName(FpvChatControlName);
             _fpvChatInput = GUI.TextField(
@@ -5566,7 +5566,7 @@ public class QuickAgentManager : MonoBehaviour
         {
             var voiceStyle = new GUIStyle(GUI.skin.box) { fontSize = 14, fontStyle = FontStyle.Bold, alignment = TextAnchor.MiddleCenter };
             voiceStyle.normal.textColor = isVoiceRecording ? new Color(1f, 0.9f, 0.2f) : new Color(0.55f, 0.85f, 1f);
-            var voiceText = isVoiceRecording ? "Aufnahme laeuft... Taste loslassen zum Senden" : "Transkription laeuft...";
+            var voiceText = isVoiceRecording ? "Recording... release the key to send" : "Transcribing...";
             GUI.Box(new Rect(sw * 0.5f - 210f, sh - 104f, 420f, 30f), voiceText, voiceStyle);
         }
     }

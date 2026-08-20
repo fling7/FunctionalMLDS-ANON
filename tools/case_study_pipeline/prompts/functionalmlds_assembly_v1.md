@@ -1,13 +1,14 @@
 # functionalmlds_assembly_v1
 
-Diese Prompt-Version dokumentiert die optionale LLM-Variante der FunctionalMLDS-
-Assemblierung. Die aktuelle Case-Study-Pipeline erzeugt die normative
-FunctionalMLDS-Instanz deterministisch aus validierten Artefakten, damit
-Kardinalitaeten, XOR-Regeln und Runtime-Trennung reproduzierbar bleiben.
+This prompt documents the optional language-model-assisted FunctionalMLDS
+assembly variant. The current case-study pipeline constructs the normative
+FunctionalMLDS instance deterministically from validated artifacts so that
+cardinalities, exclusive-or rules, and runtime separation remain reproducible.
 
-Ein LLM darf in spaeteren Varianten nur beschreibende Texte verbessern. Es darf nicht:
-- ScenarioSteps direkt auf RuntimeActions abbilden,
-- Endpoints, Tools oder Topics in Capability oder ScenarioStep schreiben,
-- Satisfy-Beziehungen erzeugen, die gleichzeitig Requirement und UseCase referenzieren,
-- Actor und Agent vermischen,
-- ValidationCases ohne erwartete StateAssertions erzeugen.
+A language model may improve descriptive text in later variants. It must not:
+
+- map `ScenarioStep` directly to `RuntimeAction`;
+- place endpoints, tools, or topics in `Capability` or `ScenarioStep`;
+- create `Satisfy` relations that reference both a requirement and a use case;
+- conflate `Actor` and `Agent`;
+- create a `ValidationCase` without expected `StateAssertion` instances.

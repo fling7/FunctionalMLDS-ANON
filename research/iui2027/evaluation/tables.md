@@ -6,9 +6,9 @@ All values below are computed without API calls. Routing is structural; answer s
 
 | Case | V2 SHA-256 | Objects | Agents | Scene objects | Groups | Zones |
 |---|---|---:|---:|---:|---:|---:|
-| fitness_career_fair | `48ad5b7c24ccc8f639efdbbecd13d66a5d0e600b6e5daae0078171ed44ec4b5e` | 1227 | 5 | 27 | 12 | 6 |
-| classroom_dinosaur | `0f430211197bae2f664e994672f9d7a5fe3fbbb0aaa565f9a683ec0c1b27440b` | 1539 | 4 | 36 | 5 | 4 |
-| steinpilz_brand_room | `632c0d69d3c67e5e1032402ed75786851c72453068ee93c3cba6d1a4e0f193b8` | 1337 | 6 | 30 | 9 | 8 |
+| fitness_career_fair | `87ceb41d9a23f6cae1bd943ce5361b2c5f54d122a0ef56bc248b4bcbd0e0b516` | 1227 | 5 | 27 | 12 | 6 |
+| classroom_dinosaur | `79a80ff84e312f286706dd398188602488cde95b42a9cb600a07f327dea38ee0` | 1539 | 4 | 36 | 5 | 4 |
+| steinpilz_brand_room | `270004d4bc96731eb963fb226e1cfba2ed627ec7f13ecd52b973c6a4ef26ee87` | 1337 | 6 | 30 | 9 | 8 |
 
 ## Complete asset-specific interaction chains (RQ1)
 
@@ -91,9 +91,9 @@ Common denominators contain only the three semantically equivalent mutations: mi
 
 | Case | Repetitions | Direct median [Q1, Q3] ns | Direct min-max ns | Fresh V2 median [Q1, Q3] ns | Fresh V2 min-max ns | V2/direct median ratio | Deterministic outputs |
 |---|---:|---:|---:|---:|---:|---:|---|
-| fitness_career_fair | 40 | 552150 [533275.0, 564125.0] | 510900-646100 | 3162150 [3111875.0, 3238100.0] | 3045500-3584800 | 5.726976 | true |
-| classroom_dinosaur | 40 | 509700 [494775.0, 535525.0] | 474200-808000 | 3352550 [3280900.0, 3490750.0] | 3175200-4634800 | 6.577497 | true |
-| steinpilz_brand_room | 40 | 1032750 [996225.0, 1085600.0] | 940200-1582200 | 4931800 [4763075.0, 5257300.0] | 4694700-7652500 | 4.775405 | true |
+| fitness_career_fair | 40 | 325450 [310400.0, 338575.0] | 294900-1047700 | 1891750 [1845150.0, 2034825.0] | 1771600-2977000 | 5.812721 | true |
+| classroom_dinosaur | 40 | 627550 [614400.0, 658125.0] | 599200-1107000 | 3991150 [3841575.0, 4131025.0] | 3699400-5380700 | 6.359892 | true |
+| steinpilz_brand_room | 40 | 800400 [755325.0, 874025.0] | 703300-4807500 | 3806050 [3649425.0, 4513125.0] | 3517700-7182700 | 4.755185 | true |
 
 ## V2-only validator behavior
 

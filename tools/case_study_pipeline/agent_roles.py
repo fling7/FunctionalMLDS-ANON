@@ -16,17 +16,17 @@ REPAIR_PROMPT_PATH = Path(__file__).resolve().parent / "prompts" / f"{REPAIR_PRO
 ALLOWED_VOICES = ["alloy", "ash", "ballad", "coral", "echo", "fable", "nova", "onyx", "sage", "shimmer", "verse"]
 DEFAULT_TTS_MODEL = "gpt-4o-mini-tts"
 VOICE_GENDER_BY_VOICE = {
-    "coral": "weiblich",
-    "nova": "weiblich",
-    "shimmer": "weiblich",
-    "sage": "weiblich",
-    "alloy": "maennlich",
-    "ash": "maennlich",
-    "ballad": "maennlich",
-    "echo": "maennlich",
-    "fable": "maennlich",
-    "onyx": "maennlich",
-    "verse": "maennlich",
+    "coral": "female",
+    "nova": "female",
+    "shimmer": "female",
+    "sage": "female",
+    "alloy": "male",
+    "ash": "male",
+    "ballad": "male",
+    "echo": "male",
+    "fable": "male",
+    "onyx": "male",
+    "verse": "male",
 }
 
 
@@ -43,7 +43,7 @@ def _unique(seq: Iterable[str]) -> List[str]:
 
 def voice_gender_for_voice(voice: str) -> str:
     voice = str(voice or "").strip().lower()
-    return VOICE_GENDER_BY_VOICE.get(voice, "weiblich" if voice in {"coral", "nova", "shimmer", "sage"} else "maennlich")
+    return VOICE_GENDER_BY_VOICE.get(voice, "female" if voice in {"coral", "nova", "shimmer", "sage"} else "male")
 
 
 def _zone_object_map(scene_semantics: Dict[str, Any]) -> Dict[str, List[str]]:

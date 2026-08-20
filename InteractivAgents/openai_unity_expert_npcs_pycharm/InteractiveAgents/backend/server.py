@@ -47,12 +47,12 @@ def _content_length(
     try:
         length = int(raw_length)
     except (TypeError, ValueError) as exc:
-        raise ValueError("Content-Length ist ungültig.") from exc
+        raise ValueError("Content-Length is invalid.") from exc
     if length < 0:
-        raise ValueError("Content-Length darf nicht negativ sein.")
+        raise ValueError("Content-Length must not be negative.")
     if length > maximum_bytes:
         raise ValueError(
-            f"{body_kind}-Body ist zu groß "
+            f"{body_kind} body is too large "
             f"(maximal {maximum_bytes} Bytes)."
         )
     return length
@@ -75,7 +75,7 @@ def _read_json(handler: BaseHTTPRequestHandler) -> Dict[str, Any]:
 def _read_multipart(handler: BaseHTTPRequestHandler) -> Tuple[Dict[str, Any], Dict[str, Dict[str, Any]]]:
     content_type = handler.headers.get("Content-Type", "")
     if "multipart/form-data" not in content_type.lower():
-        raise ValueError("Content-Type muss multipart/form-data sein.")
+        raise ValueError("Content-Type must be multipart/form-data.")
 
     length = _content_length(
         handler,
@@ -90,7 +90,7 @@ def _read_multipart(handler: BaseHTTPRequestHandler) -> Tuple[Dict[str, Any], Di
         b"Content-Type: " + content_type.encode("utf-8") + b"\r\nMIME-Version: 1.0\r\n\r\n" + raw
     )
     if not msg.is_multipart():
-        raise ValueError("Multipart-Body konnte nicht gelesen werden.")
+        raise ValueError("The multipart body could not be read.")
 
     fields: Dict[str, Any] = {}
     files: Dict[str, Dict[str, Any]] = {}
@@ -158,32 +158,32 @@ def start_http_server(host: str, port: int, store: SessionStore) -> None:
                     return self._send_json(
                         200,
                         {
-                            "message": "Backend läuft.",
+                            "message": "Backend is running.",
                             "endpoints": {
                                 "GET /health": "Status-Check",
                                 "GET /version": "Backend-Version",
-                                "POST /setup": "Session/Agenten Setup",
+                                "POST /setup": "Session and agent setup",
                                 "POST /chat": "Chat mit Agent",
                                 "GET /projects": "Projekte auflisten",
-                                "POST /projects/create": "Projekt erstellen",
+                                "POST /projects/create": "Create project",
                                 "POST /projects/arrow/analyze": "MLDSI analysieren",
                                 "POST /projects/arrow/chat": "MLDSI-Chat fortsetzen",
-                                "POST /projects/arrow/commit": "Projekt aus MLDSI erstellen",
-                                "POST /projects/arrow/placement": "Agentenpositionen im Wizard aktualisieren",
-                                "POST /projects/arrow/authoring/inspect": "Aktuellen Placement-Authoring-Stand laden",
-                                "POST /projects/arrow/authoring/preview": "Strukturierte Placement-Änderung prüfen",
-                                "POST /projects/arrow/authoring/apply": "Placement anwenden, regenerieren und validieren",
-                                "POST /projects/arrow/authoring/accept": "Validierte Placement-Änderung akzeptieren",
-                                "POST /projects/arrow/authoring/discard": "Offene Placement-Änderung verwerfen",
-                                "POST /projects/arrow/authoring/undo": "Letzte akzeptierte Placement-Änderung rückgängig machen",
-                                "GET /projects/{id}": "Projekt-Details laden",
-                                "GET /projects/{id}/functionalmlds-v2": "Native FunctionalMLDS-V2-Instanz laden",
-                                "POST /projects/{id}/metadata": "Projekt-Metadaten speichern",
-                                "POST /projects/{id}/agents": "Agenten speichern",
-                                "POST /projects/{id}/room-plan": "Room-Plan speichern",
-                                "GET /projects/{id}/knowledge": "Wissensliste",
-                                "POST /projects/{id}/knowledge": "Wissen erstellen/aktualisieren/löschen",
-                                "POST /projects/{id}/knowledge/read": "Wissen laden",
+                                "POST /projects/arrow/commit": "Create project from MLDSI",
+                                "POST /projects/arrow/placement": "Update agent positions in the wizard",
+                                "POST /projects/arrow/authoring/inspect": "Load current placement-authoring state",
+                                "POST /projects/arrow/authoring/preview": "Preview structured placement change",
+                                "POST /projects/arrow/authoring/apply": "Apply, regenerate, and validate placement",
+                                "POST /projects/arrow/authoring/accept": "Accept validated placement change",
+                                "POST /projects/arrow/authoring/discard": "Discard open placement change",
+                                "POST /projects/arrow/authoring/undo": "Undo last accepted placement change",
+                                "GET /projects/{id}": "Load project details",
+                                "GET /projects/{id}/functionalmlds-v2": "Load native FunctionalMLDS V2 instance",
+                                "POST /projects/{id}/metadata": "Save project metadata",
+                                "POST /projects/{id}/agents": "Save agents",
+                                "POST /projects/{id}/room-plan": "Save room plan",
+                                "GET /projects/{id}/knowledge": "Knowledge list",
+                                "POST /projects/{id}/knowledge": "Create, update, or delete knowledge",
+                                "POST /projects/{id}/knowledge/read": "Load knowledge",
                                 "POST /stt": "Speech-to-Text transkribieren",
                                 "POST /tts": "Text-to-Speech erzeugen",
                             },
@@ -203,26 +203,26 @@ def start_http_server(host: str, port: int, store: SessionStore) -> None:
                 if len(parts) >= 2 and parts[0] == "projects":
                     project_id = parts[1]
                     if len(parts) == 2:
-                        self._log_action(f"Projekt laden: {project_id}")
+                        self._log_action(f"Load project: {project_id}")
                         details = store.project_manager.get_project_details(project_id)
                         return self._send_json(200, details)
                     if len(parts) == 3 and parts[2] == "functionalmlds-v2":
-                        self._log_action(f"FunctionalMLDS V2 laden: {project_id}")
+                        self._log_action(f"Load FunctionalMLDS V2: {project_id}")
                         return self._send_binary(
                             200,
                             store.functionalmlds_v2_bytes(project_id),
                             "application/json; charset=utf-8",
                         )
                     if len(parts) == 3 and parts[2] == "knowledge":
-                        self._log_action(f"Wissenliste laden: {project_id}")
+                        self._log_action(f"Load knowledge list: {project_id}")
                         knowledge = store.project_manager.list_knowledge(project_id)
                         return self._send_json(200, {"knowledge": knowledge})
                 return self._send_json(404, {"error": "Not found", "path": path})
             except ValueError as exc:
-                self._log_action(f"Fehler GET {path}: {exc}")
+                self._log_action(f"GET error {path}: {exc}")
                 return self._send_json(400, {"error": str(exc)})
             except Exception as exc:
-                self._log_action(f"Fehler GET {path}: {exc}")
+                self._log_action(f"GET error {path}: {exc}")
                 return self._send_json(500, {"error": "Server error", "details": str(exc)})
 
         def do_POST(self) -> None:  # noqa: N802
@@ -239,10 +239,10 @@ def start_http_server(host: str, port: int, store: SessionStore) -> None:
                     out = store.stt(fields, files)
                     return self._send_json(200, out)
                 except ValueError as exc:
-                    self._log_action(f"Fehler POST {path}: {exc}")
+                    self._log_action(f"POST error {path}: {exc}")
                     return self._send_json(400, {"error": str(exc)})
                 except Exception as exc:
-                    self._log_action(f"Fehler POST {path}: {exc}")
+                    self._log_action(f"POST error {path}: {exc}")
                     return self._send_json(500, {"error": "Server error", "details": str(exc)})
 
             try:
@@ -250,7 +250,7 @@ def start_http_server(host: str, port: int, store: SessionStore) -> None:
             except json.JSONDecodeError as e:
                 return self._send_json(400, {"error": "Invalid JSON", "details": str(e)})
             except ValueError as e:
-                self._log_action(f"Fehler POST {path}: {e}")
+                self._log_action(f"POST error {path}: {e}")
                 return self._send_json(400, {"error": str(e)})
 
             try:
@@ -443,7 +443,7 @@ def start_http_server(host: str, port: int, store: SessionStore) -> None:
                         raise ValueError("display_name fehlt.")
                     project_id = str(payload.get("project_id") or "").strip() or None
                     description = str(payload.get("description") or "").strip()
-                    self._log_action(f"Projekt erstellen: name='{display_name}', id='{project_id or ''}'")
+                    self._log_action(f"Create project: name='{display_name}', id='{project_id or ''}'")
                     out = store.project_manager.create_project(
                         display_name=display_name,
                         project_id=project_id,
@@ -459,35 +459,35 @@ def start_http_server(host: str, port: int, store: SessionStore) -> None:
                     out = store.arrow_chat(payload)
                     return self._send_json(200, out)
                 if path == "/projects/arrow/commit":
-                    self._log_action("Projekt aus MLDSI erstellen")
+                    self._log_action("Create project from MLDSI")
                     out = store.commit_arrow_project(payload)
                     return self._send_json(200, out)
                 if path == "/projects/arrow/placement":
-                    self._log_action("MLDSI-Agentenplatzierung aktualisieren")
+                    self._log_action("Update MLDSI agent placement")
                     out = store.update_arrow_placement(payload)
                     return self._send_json(200, out)
                 if path == "/projects/arrow/authoring/inspect":
-                    self._log_action("Placement-Authoring-Stand laden")
+                    self._log_action("Load placement-authoring state")
                     out = store.inspect_arrow_authoring(payload)
                     return self._send_json(200, out)
                 if path == "/projects/arrow/authoring/preview":
-                    self._log_action("Placement-Änderung prüfen")
+                    self._log_action("Preview placement change")
                     out = store.preview_arrow_authoring(payload)
                     return self._send_json(200, out)
                 if path == "/projects/arrow/authoring/apply":
-                    self._log_action("Placement-Änderung anwenden und validieren")
+                    self._log_action("Apply and validate placement change")
                     out = store.apply_arrow_authoring(payload)
                     return self._send_json(200, out)
                 if path == "/projects/arrow/authoring/accept":
-                    self._log_action("Placement-Änderung akzeptieren")
+                    self._log_action("Accept placement change")
                     out = store.accept_arrow_authoring(payload)
                     return self._send_json(200, out)
                 if path == "/projects/arrow/authoring/discard":
-                    self._log_action("Placement-Änderung verwerfen")
+                    self._log_action("Discard placement change")
                     out = store.discard_arrow_authoring(payload)
                     return self._send_json(200, out)
                 if path == "/projects/arrow/authoring/undo":
-                    self._log_action("Placement-Änderung rückgängig machen")
+                    self._log_action("Undo placement change")
                     out = store.undo_arrow_authoring(payload)
                     return self._send_json(200, out)
                 parts = [p for p in path.split("/") if p]
@@ -496,21 +496,21 @@ def start_http_server(host: str, port: int, store: SessionStore) -> None:
                     if len(parts) == 3 and parts[2] == "metadata":
                         display_name = payload.get("display_name")
                         description = payload.get("description")
-                        self._log_action(f"Metadaten speichern: {project_id}")
+                        self._log_action(f"Save metadata: {project_id}")
                         out = store.project_manager.update_metadata(project_id, display_name=display_name, description=description)
                         return self._send_json(200, {"project": out})
                     if len(parts) == 3 and parts[2] == "agents":
                         agents = payload.get("agents") or []
                         if not isinstance(agents, list):
-                            raise ValueError("agents muss eine Liste sein.")
-                        self._log_action(f"Agenten speichern: {project_id} ({len(agents)})")
+                            raise ValueError("agents must be a list.")
+                        self._log_action(f"Save agents: {project_id} ({len(agents)})")
                         store.project_manager.save_agents(project_id, agents)
                         return self._send_json(200, {"status": "ok"})
                     if len(parts) == 3 and parts[2] == "room-plan":
                         room_plan = payload.get("room_plan") or {}
                         if not isinstance(room_plan, dict):
-                            raise ValueError("room_plan muss ein Objekt sein.")
-                        self._log_action(f"Room-Plan speichern: {project_id}")
+                            raise ValueError("room_plan must be an object.")
+                        self._log_action(f"Save room plan: {project_id}")
                         store.project_manager.save_room_plan(project_id, room_plan)
                         return self._send_json(200, {"status": "ok"})
                     if len(parts) == 3 and parts[2] == "knowledge":
@@ -518,13 +518,13 @@ def start_http_server(host: str, port: int, store: SessionStore) -> None:
                         tag = str(payload.get("tag") or "").strip()
                         name = str(payload.get("name") or "").strip()
                         if action == "delete":
-                            self._log_action(f"Wissen löschen: {project_id} {tag}/{name}")
+                            self._log_action(f"Delete knowledge: {project_id} {tag}/{name}")
                             store.project_manager.delete_knowledge(project_id, tag=tag, name=name)
                             store.refresh_project_kb(project_id)
                             return self._send_json(200, {"status": "ok"})
                         text = str(payload.get("text") or "")
                         overwrite = bool(payload.get("overwrite", True))
-                        self._log_action(f"Wissen speichern: {project_id} {tag}/{name}")
+                        self._log_action(f"Save knowledge: {project_id} {tag}/{name}")
                         entry = store.project_manager.upsert_knowledge(
                             project_id=project_id,
                             tag=tag,
@@ -537,15 +537,15 @@ def start_http_server(host: str, port: int, store: SessionStore) -> None:
                     if len(parts) == 4 and parts[2] == "knowledge" and parts[3] == "read":
                         tag = str(payload.get("tag") or "").strip()
                         name = str(payload.get("name") or "").strip()
-                        self._log_action(f"Wissen laden: {project_id} {tag}/{name}")
+                        self._log_action(f"Load knowledge: {project_id} {tag}/{name}")
                         entry = store.project_manager.read_knowledge(project_id, tag=tag, name=name)
                         return self._send_json(200, entry)
                 return self._send_json(404, {"error": "Not found", "path": path})
             except ValueError as e:
-                self._log_action(f"Fehler POST {path}: {e}")
+                self._log_action(f"POST error {path}: {e}")
                 return self._send_json(400, {"error": str(e)})
             except Exception as e:
-                self._log_action(f"Fehler POST {path}: {e}")
+                self._log_action(f"POST error {path}: {e}")
                 return self._send_json(500, {"error": "Server error", "details": str(e)})
 
     httpd = ThreadingHTTPServer((host, port), Handler)

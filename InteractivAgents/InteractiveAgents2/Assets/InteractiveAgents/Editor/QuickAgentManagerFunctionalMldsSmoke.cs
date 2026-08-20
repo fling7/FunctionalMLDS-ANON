@@ -215,7 +215,7 @@ public static class QuickAgentManagerFunctionalMldsSmoke
 
     private static void RunChatSmoke(string backendBaseUrl, QuickAgentManager manager, string sessionId, string activeAgentId)
     {
-        var message = "Welche Ausstattung gibt es im Unterrichtsbereich? Antworte kurz und nenne nur Dinge aus dem Raumwissen.";
+        var message = "What equipment is available in the instruction area? Answer briefly and mention only items from the room knowledge.";
         var payload = QuickAgentManager.SerializeChatRequest(new QuickAgentManager.ChatRequest
         {
             session_id = sessionId,
@@ -251,7 +251,7 @@ public static class QuickAgentManagerFunctionalMldsSmoke
         if (!combinedText.Contains("tafel")
             && !combinedText.Contains("chalkboard")
             && !combinedText.Contains("schuel")
-            && !combinedText.Contains("schül")
+            && !combinedText.Contains("student")
             && !combinedText.Contains("desk")
             && !combinedText.Contains("pult"))
         {
@@ -277,7 +277,7 @@ public static class QuickAgentManagerFunctionalMldsSmoke
             backendBaseUrl,
             sessionId,
             activeAgentId,
-            "Welche Ausstattung gibt es im Unterrichtsbereich? Antworte kurz und nenne nur Dinge aus dem Raumwissen.");
+            "What equipment is available in the instruction area? Answer briefly and mention only items from the room knowledge.");
         AppendResponse(manager, roomResponse);
 
         var chatLog = GetPrivate<List<string>>(manager, "chatLog");
@@ -299,7 +299,7 @@ public static class QuickAgentManagerFunctionalMldsSmoke
             backendBaseUrl,
             roomResponse.session_id,
             activeAgentId,
-            "Was kannst du mir ueber das Dinosaurierskelett sagen?");
+            "What can you tell me about the dinosaur skeleton?");
         AppendResponse(manager, handoffResponse);
 
         if (handoffResponse.handoff == null || string.IsNullOrWhiteSpace(handoffResponse.handoff.to))

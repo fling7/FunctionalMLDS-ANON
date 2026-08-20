@@ -9,7 +9,7 @@
   "sourceContract": {
     "schema": "functionalmlds_case_study",
     "metamodelVersion": "v0.5",
-    "semanticProjectionSha256": "6c655c14f2e6019ac8bc5c81e5ce8e768dcd7787b46bb48313f3c2825b837432"
+    "semanticProjectionSha256": "c6c0d48054b25399813063fe3833ab4f9ae11d599d841203153797bfdaeaede7"
   },
   "objects": [
     {
@@ -1382,7 +1382,7 @@
         "student_seating_arrangement"
       ],
       "voice": "sage",
-      "voiceGender": "weiblich",
+      "voiceGender": "female",
       "voiceStyle": "clear and encouraging",
       "ttsModel": "gpt-4o-mini-tts",
       "playsActor": [
@@ -1448,7 +1448,7 @@
         "reading_area_usage"
       ],
       "voice": "fable",
-      "voiceGender": "maennlich",
+      "voiceGender": "male",
       "voiceStyle": "warm and inviting",
       "ttsModel": "gpt-4o-mini-tts",
       "playsActor": [
@@ -1499,7 +1499,7 @@
         "dinosaur_education"
       ],
       "voice": "nova",
-      "voiceGender": "weiblich",
+      "voiceGender": "female",
       "voiceStyle": "enthusiastic and clear",
       "ttsModel": "gpt-4o-mini-tts",
       "playsActor": [
@@ -1541,7 +1541,7 @@
         "decorative_zone"
       ],
       "voice": "coral",
-      "voiceGender": "weiblich",
+      "voiceGender": "female",
       "voiceStyle": "soft and pleasant",
       "ttsModel": "gpt-4o-mini-tts",
       "playsActor": [

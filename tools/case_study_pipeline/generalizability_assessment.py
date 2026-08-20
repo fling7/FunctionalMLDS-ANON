@@ -226,9 +226,9 @@ def render_generalizability_markdown(report: Mapping[str, Any]) -> str:
             "",
             "## Interpretation",
             "",
-            "Die Pipeline kann als domaenenuebergreifend anwendbar bewertet werden, wenn dieselben Stufen fuer alle "
-            "Cases erfolgreich laufen, die Domaenenbegriffe ausserhalb des Python-Codes liegen und die Runtime-Checks "
-            "ueber alle Domaenen hinweg erfolgreich bleiben.",
+            "The pipeline can be considered applicable across domains when the same stages succeed for every case, "
+            "domain terminology remains outside the Python code, and runtime checks continue to pass across all "
+            "domains.",
             "",
         ]
     )

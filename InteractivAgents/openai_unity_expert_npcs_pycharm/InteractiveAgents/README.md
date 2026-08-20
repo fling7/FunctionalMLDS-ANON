@@ -10,8 +10,10 @@ preconfigured service deployment.
   materialization support, knowledge lookup, and trace handling;
 - `main.py`: local service entry point;
 - `config.example.json`: configuration template with no credentials;
-- `examples/` and `kb/`: small synthetic examples and knowledge snippets;
-- `docs/`: backend-specific documentation.
+- `examples/` and `kb/`: small English-language synthetic examples and
+  knowledge snippets;
+- [`docs/knowledge-management.md`](docs/knowledge-management.md): knowledge
+  loading, retrieval, session-memory, and handoff behavior.
 
 Generated backend projects are intentionally absent. The benchmark materializes
 fresh projects in temporary directories from the three synthetic fixtures under

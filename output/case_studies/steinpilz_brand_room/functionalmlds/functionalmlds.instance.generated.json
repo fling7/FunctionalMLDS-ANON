@@ -3807,7 +3807,7 @@
         "booth_navigation"
       ],
       "voice": "fable",
-      "voice_gender": "maennlich",
+      "voice_gender": "male",
       "voice_style": "warm and approachable",
       "tts_model": "gpt-4o-mini-tts",
       "responsible_zone_ids": [
@@ -3873,7 +3873,7 @@
         "customer_engagement"
       ],
       "voice": "sage",
-      "voice_gender": "weiblich",
+      "voice_gender": "female",
       "voice_style": "enthusiastic and clear",
       "tts_model": "gpt-4o-mini-tts",
       "responsible_zone_ids": [
@@ -3947,7 +3947,7 @@
         "sustainability"
       ],
       "voice": "onyx",
-      "voice_gender": "maennlich",
+      "voice_gender": "male",
       "voice_style": "professional and informative",
       "tts_model": "gpt-4o-mini-tts",
       "responsible_zone_ids": [
@@ -4013,7 +4013,7 @@
         "technical_support"
       ],
       "voice": "coral",
-      "voice_gender": "weiblich",
+      "voice_gender": "female",
       "voice_style": "clear and supportive",
       "tts_model": "gpt-4o-mini-tts",
       "responsible_zone_ids": [
@@ -4067,7 +4067,7 @@
         "company_culture"
       ],
       "voice": "ballad",
-      "voice_gender": "maennlich",
+      "voice_gender": "male",
       "voice_style": "motivational and empathetic",
       "tts_model": "gpt-4o-mini-tts",
       "responsible_zone_ids": [
@@ -4127,7 +4127,7 @@
         "hospitality"
       ],
       "voice": "ash",
-      "voice_gender": "maennlich",
+      "voice_gender": "male",
       "voice_style": "relaxed and friendly",
       "tts_model": "gpt-4o-mini-tts",
       "responsible_zone_ids": [

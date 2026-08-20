@@ -165,7 +165,7 @@ def build_knowledge_payload(
         "room_question_requirement": (
             "Knowledge entries must allow an agent to answer questions such as "
             "'Welche Objekte gibt es hier?', 'Welche Bereiche/Zonen gibt es?' and "
-            "'Wofuer sind diese Objekte im Raum relevant?' using object groups, zones, purpose and approximate positions."
+            "'Why are these objects relevant in the room?' using object groups, zones, purpose, and approximate positions."
         ),
         "visitor_goals": scene_semantics.get("visitor_goals"),
         "semantic_zones": scene_semantics.get("semantic_zones"),

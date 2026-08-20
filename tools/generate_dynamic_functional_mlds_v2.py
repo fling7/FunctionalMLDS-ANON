@@ -452,7 +452,7 @@ def svg_for_view(view: dict[str, Any]) -> str:
         attrs = display_attributes(item)
         if not attrs:
             parts.append(
-                f'<text x="{box["x"] + 13:.1f}" y="{attr_y:.1f}" font-family="Arial" font-size="12" fill="#708195">(keine lokalen Attribute)</text>'
+                f'<text x="{box["x"] + 13:.1f}" y="{attr_y:.1f}" font-family="Arial" font-size="12" fill="#708195">(no local attributes)</text>'
             )
         for attr in attrs:
             parts.append(
@@ -464,7 +464,7 @@ def svg_for_view(view: dict[str, Any]) -> str:
     parts.extend(
         [
             f'<line x1="48" y1="{relation_top}" x2="{width - 48}" y2="{relation_top}" stroke="#C7D3E0"/>',
-            f'<text x="48" y="{relation_top + 31}" font-family="Arial" font-size="18" font-weight="700" fill="#263A52">Assoziationen dieser Sicht</text>',
+            f'<text x="48" y="{relation_top + 31}" font-family="Arial" font-size="18" font-weight="700" fill="#263A52">Associations in this view</text>',
         ]
     )
     columns = 2 if width >= 1600 else 1
@@ -489,7 +489,7 @@ def svg_for_view(view: dict[str, Any]) -> str:
         )
     if not associations:
         parts.append(
-            f'<text x="48" y="{relation_top + 61}" font-family="Arial" font-size="12" fill="#708195">Keine lokalen Assoziationen in dieser Sicht.</text>'
+            f'<text x="48" y="{relation_top + 61}" font-family="Arial" font-size="12" fill="#708195">No local associations in this view.</text>'
         )
     parts.append("</svg>")
     return "\n".join(parts) + "\n"
@@ -634,12 +634,12 @@ def render_png(view: dict[str, Any], path: Path) -> None:
         draw.line((box["x"], box["y"] + 62, box["x"] + box["w"], box["y"] + 62), fill=stroke, width=1)
         attrs = display_attributes(item)
         if not attrs:
-            draw.text((box["x"] + 13, box["y"] + 72), "(keine lokalen Attribute)", font=attr_font, fill="#708195")
+            draw.text((box["x"] + 13, box["y"] + 72), "(no local attributes)", font=attr_font, fill="#708195")
         for index, attr in enumerate(attrs):
             draw.text((box["x"] + 13, box["y"] + 72 + index * 19), attr, font=attr_font, fill="#31475E")
 
     draw.line((48, relation_top, width - 48, relation_top), fill="#C7D3E0", width=1)
-    draw.text((48, relation_top + 11), "Assoziationen dieser Sicht", font=relation_title_font, fill="#263A52")
+    draw.text((48, relation_top + 11), "Associations in this view", font=relation_title_font, fill="#263A52")
     columns = 2 if width >= 1600 else 1
     column_width = (width - 96) / columns
     rows_per_column = math.ceil(len(associations) / columns) if associations else 0
@@ -656,7 +656,7 @@ def render_png(view: dict[str, Any], path: Path) -> None:
             label = label[:89] + "…"
         draw.text((x, y), label, font=relation_font, fill="#425970")
     if not associations:
-        draw.text((48, relation_top + 50), "Keine lokalen Assoziationen in dieser Sicht.", font=relation_font, fill="#708195")
+        draw.text((48, relation_top + 50), "No local associations in this view.", font=relation_font, fill="#708195")
     image.save(path, format="PNG", optimize=False, compress_level=9)
 
 
@@ -685,42 +685,42 @@ def specification_markdown() -> str:
         by_package[item["package"]].append((qualified_name, item))
 
     lines: list[str] = [
-        f"# {metadata['name']} – Metamodell-Spezifikation",
+        f"# {metadata['name']} – metamodel specification",
         "",
-        f"Modellversion: `{metadata['model_version']}`  ",
-        f"Namespace: `{metadata['namespace']}`  ",
-        f"Status: `{metadata['status']}`  ",
-        f"EAST-ADL-Bezug: V{metadata['east_adl_version']}  ",
-        f"Kanonische Quelle: `{metadata['canonical_source']}`",
+        f"Model version: `{metadata['model_version']}`",
+        f"Namespace: `{metadata['namespace']}`",
+        f"Status: `{metadata['status']}`",
+        f"EAST-ADL reference: V{metadata['east_adl_version']}",
+        f"Canonical source: `{metadata['canonical_source']}`",
         "",
-        "## 1. Abgrenzung und Konformitätsregel",
+        "## 1. Scope and conformance rule",
         "",
-        "Die blau dargestellten EAST-ADL-Metaklassen sind ein ausgewählter, unverändert übernommener Ausschnitt der EAST-ADL-Spezifikation V2.1.12. Auslassungen sind Auslassungen des Ausschnitts, keine Änderungen an EAST-ADL. Sämtliche projektspezifischen Klassen und Beziehungen liegen im Namespace `DFMLDS::V2`.",
+        "The EAST-ADL metaclasses shown in blue form a selected, unmodified subset of the EAST-ADL V2.1.12 specification. Omissions delimit the subset and do not modify EAST-ADL. All project-specific classes and relations are located in the `DFMLDS::V2` namespace.",
         "",
-        "Die Abhängigkeit ist strikt einseitig: DFMLDS importiert EAST-ADL. Keine EAST-ADL-Metaklasse erhält durch V2 eine neue Eigenschaft, Pflichtassoziation oder Rückabhängigkeit. Annex C, Feature-Mapping und AgentKnowledge sind optionale Module; Annex C ist in V2.1.12 vorläufig.",
+        "The dependency is strictly one-way: DFMLDS imports EAST-ADL. V2 adds no property, mandatory association, or reverse dependency to an EAST-ADL metaclass. Annex C, feature mapping, and AgentKnowledge are optional modules; Annex C is preliminary in V2.1.12.",
         "",
-        "V2 ist eine reine Modellfassung. Unity, Backend, Pipeline und die v0.5-Serialisierung werden nicht verändert.",
+        "V2 is a model-only revision. It does not change Unity, the backend, the pipeline, or v0.5 serialization.",
         "",
-        "## 2. Pakete",
+        "## 2. Packages",
         "",
-        "| Paket | Art | normativ | Imports | Zweck |",
+        "| Package | Kind | Normative | Imports | Purpose |",
         "| --- | --- | --- | --- | --- |",
     ]
     for package_name, package in MODEL["packages"].items():
         imports = ", ".join(f"`{item}`" for item in package.get("imports", [])) or "—"
-        normative = "ja" if package.get("normative") else "nein"
+        normative = "yes" if package.get("normative") else "no"
         if package.get("preliminary"):
-            normative += "; vorläufig"
+            normative += "; preliminary"
         lines.append(
             f"| `{package_name}` | {package['kind']} | {normative} | {imports} | {markdown_cell(package['description'])} |"
         )
 
-    lines.extend(["", "## 3. Enumerationen", "", "| Enumeration | Literale | Quelle |", "| --- | --- | --- |"])
+    lines.extend(["", "## 3. Enumerations", "", "| Enumeration | Literals | Source |", "| --- | --- | --- |"])
     for qualified_name, enum in MODEL["enums"].items():
         literals = ", ".join(f"`{item}`" for item in enum["literals"])
         lines.append(f"| `{qualified_name}` | {literals} | {enum.get('east_adl_source', 'DFMLDS V2')} |")
 
-    lines.extend(["", "## 4. Klassen und Datentypen", ""])
+    lines.extend(["", "## 4. Classes and datatypes", ""])
     for package_name in MODEL["packages"]:
         package_items = sorted(by_package.get(package_name, []), key=lambda pair: pair[1]["name"])
         if not package_items:
@@ -729,7 +729,7 @@ def specification_markdown() -> str:
             [
                 f"### {package_name}",
                 "",
-                "| Element | Basis/Basen | lokal definierte Attribute | Beschreibung | EAST-ADL-Quelle |",
+                "| Element | Base(s) | Locally defined attributes | Description | EAST-ADL source |",
                 "| --- | --- | --- | --- | --- |",
             ]
         )
@@ -751,11 +751,11 @@ def specification_markdown() -> str:
 
     lines.extend(
         [
-            "## 5. Assoziationen",
+            "## 5. Associations",
             "",
-            "Die Multiplizität steht jeweils am referenzierten Ende. `{ordered}` kennzeichnet eine semantisch geordnete Sammlung; `{composite}` genau einen Kompositionsbesitzer.",
+            "Multiplicity is shown at the referenced end. `{ordered}` denotes a semantically ordered collection; `{composite}` denotes exactly one composition owner.",
             "",
-            "| ID | Paket | Quelle | Ziel/Rolle | Multiplizitäten | Eigenschaften |",
+            "| ID | Package | Source | Target/role | Multiplicities | Properties |",
             "| --- | --- | --- | --- | --- | --- |",
         ]
     )
@@ -776,11 +776,11 @@ def specification_markdown() -> str:
     lines.extend(
         [
             "",
-            "## 6. Nummerierte Invarianten",
+            "## 6. Numbered invariants",
             "",
-            "Die nachfolgende Liste ist kanonisch. Diagramme, Tests und Kompatibilitätsnachweise referenzieren diese IDs.",
+            "The following list is canonical. Diagrams, tests, and compatibility evidence reference these identifiers.",
             "",
-            "| ID | Profil | Scope | Prüfausdruck | Bedeutung |",
+            "| ID | Profile | Scope | Check expression | Meaning |",
             "| --- | --- | --- | --- | --- |",
         ]
     )
@@ -793,51 +793,51 @@ def specification_markdown() -> str:
     lines.extend(
         [
             "",
-            "## 7. Verlustfreie v0.5-Kompatibilitätssicht",
+            "## 7. Lossless v0.5 compatibility view",
             "",
-            f"Die technische Sicht heißt `{contract['projection_name']}`. {contract['canonical_v2_independence']}",
+            f"The technical view is named `{contract['projection_name']}`. {contract['canonical_v2_independence']}",
             "",
-            "Projektionsgesetze:",
+            "Projection laws:",
             "",
         ]
     )
     lines.extend(f"- `{law}`" for law in contract["laws"])
-    lines.extend(["", "Der Ledger bewahrt:", ""])
+    lines.extend(["", "The ledger preserves:", ""])
     lines.extend(f"- {item}" for item in contract["ledger_preserves"])
     lines.extend(
         [
             "",
-            "Verbindliche fachlich-technische Kette:",
+            "Required domain-to-technical chain:",
             "",
             "```text",
             " -> ".join(contract["required_chain"]),
             "```",
             "",
-            f"Verbotene Abkürzung: `{contract['forbidden_shortcut']}`.",
+            f"Forbidden shortcut: `{contract['forbidden_shortcut']}`.",
             "",
-            "`CapabilityUse.provider` ist im rückwärtskompatiblen Core `[0..1]`, weil die vorhandenen v0.5-Daten keinen eindeutigen Anbieter enthalten. Das ausführbare Authoring-Profil fordert über `INV-065` genau einen Provider; dieser muss den owning `ScenarioStep` ausführen und den Capability-Typ bereitstellen. `CapabilityUse.target [*]` benennt die betroffenen identifizierbaren Objekte, ohne Parameter zu missbrauchen.",
+            "`CapabilityUse.provider` is `[0..1]` in the backward-compatible core because existing v0.5 data does not identify a unique provider. Through `INV-065`, the executable authoring profile requires exactly one provider; it must perform the owning `ScenarioStep` and provide the capability type. `CapabilityUse.target [*]` identifies affected objects without misusing parameters.",
             "",
-            "`Assertion` verallgemeinert prüfbare Zustands-, Ereignis-, Ausgabe-, Grounding- und Relationsaussagen. `StateAssertion` bleibt als verlustfrei projizierbare Spezialisierung erhalten. Effekte werden normativ durch `specifiedBy: Assertion [1..*]` beschrieben; das alte Feld `evidencedBy` bleibt ausschließlich der Name in der v0.5-Kompatibilitätssicht.",
+            "`Assertion` generalizes verifiable state, event, output, grounding, and relation statements. `StateAssertion` remains a losslessly projectable specialization. Effects are normatively described through `specifiedBy: Assertion [1..*]`; the old field name `evidencedBy` exists only in the v0.5 compatibility view.",
             "",
-            "`StepRelation` ist die einzige Quelle der Kontrollflusssemantik. `Scenario.step` ist Containment, `stepNumber` nur Anzeige. Wahrscheinlichkeiten sind normativ nur auf `alternative`-/`exception`-Kanten zulässig; vollständig annotierte, wechselseitig ausschließende Verzweigungen summieren sich auf 1. Nicht passende Legacy-Werte bleiben unverändert im Projektionsledger.",
+            "`StepRelation` is the only source of control-flow semantics. `Scenario.step` is containment, and `stepNumber` is display-only. Probabilities are normatively allowed only on `alternative` or `exception` edges; fully annotated, mutually exclusive branches sum to 1. Nonconforming legacy values remain unchanged in the projection ledger.",
             "",
             "## 8. Verification & Validation",
             "",
-            "`DynamicFunctionalModel` besitzt genau einen unveränderten `VerificationValidation`-Container. Dieser besitzt `VVCase`- und `VVTarget`-Instanzen sowie `Verify`-Beziehungen. `ValidationCase` wird ausschließlich über `VerificationValidation.vvCase` komponiert. `RuntimeActualOutcome` liegt ausschließlich in einem `RuntimeValidationLog`/`VVLog`.",
+            "`DynamicFunctionalModel` owns exactly one unmodified `VerificationValidation` container. It owns `VVCase` and `VVTarget` instances as well as `Verify` relations. `ValidationCase` is composed exclusively through `VerificationValidation.vvCase`. `RuntimeActualOutcome` exists exclusively in a `RuntimeValidationLog`/`VVLog`.",
             "",
-            "`VVCase.vvSubject` bezeichnet das primäre Prüfobjekt. `VVTarget.element` bezeichnet Elemente, die die konkrete Testumgebung realisiert. Die Rollen sind semantisch getrennt, dürfen aber zufällig dieselben Elemente referenzieren.",
+            "`VVCase.vvSubject` identifies the primary verification subject. `VVTarget.element` identifies elements realized by the concrete test environment. The roles are semantically distinct but may happen to reference the same elements.",
             "",
-            "`RuntimeValidationTarget` konkretisiert die Testumgebung durch `platform [1]`, optionale `environmentRef` und die konfigurierten `runtimeBinding [*]`; diese Bindings sind zugleich Elemente des geerbten `VVTarget.element`. Zulässige DFMLDS-Subjects sind `ScenarioStep`, `Capability`, `RuntimeBinding` und `Entity`, ohne die EAST-ADL-Assoziation zu verändern.",
+            "`RuntimeValidationTarget` specifies the test environment through `platform [1]`, optional `environmentRef`, and configured `runtimeBinding [*]`; these bindings are also elements of the inherited `VVTarget.element`. Valid DFMLDS subjects are `ScenarioStep`, `Capability`, `RuntimeBinding`, and `Entity`, without changing the EAST-ADL association.",
             "",
-            "`RuntimeActualOutcome` enthält mindestens ein strukturiertes `AssertionResult`. Jedes Resultat referenziert genau eine Assertion und erfasst Verdict, optionalen typisierten Beobachtungswert, Evidence-Referenz und Zeitstempel.",
+            "`RuntimeActualOutcome` contains at least one structured `AssertionResult`. Each result references exactly one assertion and records a verdict, optional typed observation value, evidence reference, and timestamp.",
             "",
-            "Der v0.5-Wert `ValidationCase.level` wird nicht aus `abstractVVCase` geraten. Er bleibt explizit im Kompatibilitäts-Ledger erhalten.",
+            "The v0.5 value `ValidationCase.level` is not inferred from `abstractVVCase`; it remains explicit in the compatibility ledger.",
             "",
-            "## 9. Optionales Annex-C-Mapping",
+            "## 9. Optional Annex C mapping",
             "",
-            "Annex C ist in EAST-ADL V2.1.12 vorläufig. Die folgenden Abbildungen sind deshalb semantische Optionen und keine Core-Gültigkeitsbedingungen:",
+            "Annex C is preliminary in EAST-ADL V2.1.12. The following mappings are therefore semantic options rather than core validity conditions:",
             "",
-            "| DFMLDS-Quelle | Annex-C-Ziel | Abbildungsart | Status |",
+            "| DFMLDS source | Annex C target | Mapping kind | Status |",
             "| --- | --- | --- | --- |",
         ]
     )
@@ -846,13 +846,13 @@ def specification_markdown() -> str:
     lines.extend(
         [
             "",
-            "Wesentlich: Annex-C-`TransitionEvent` generalisiert `EAElement` und `BehaviorConstraintParameter`, **nicht** `Timing::Event`. Die Verbindung erfolgt ausschließlich über `TransitionEvent.occurredExecutionEvent: Timing::Event [*]`.",
+            "Important: Annex C `TransitionEvent` generalizes `EAElement` and `BehaviorConstraintParameter`, **not** `Timing::Event`. The connection exists exclusively through `TransitionEvent.occurredExecutionEvent: Timing::Event [*]`.",
             "",
-            "## 10. Generierte Sichten",
+            "## 10. Generated views",
             "",
-            "Jede Sicht wird aus derselben Modellbeschreibung als Mermaid, SVG und PNG erzeugt. Eine zentrale A/B/C-Gesamtansicht zeigt das kompakte Metamodell; sieben ergänzende Fachsichten liefern die vollständigen Details und Beziehungsnachweise.",
+            "Every view is generated from the same model description as Mermaid, SVG, and PNG. A central A/B/C overview presents the compact metamodel; seven detailed views provide the complete detail and relation evidence.",
             "",
-            "| Präfix | Titel | Zweck |",
+            "| Prefix | Title | Purpose |",
             "| --- | --- | --- |",
         ]
     )
@@ -861,9 +861,9 @@ def specification_markdown() -> str:
     lines.extend(
         [
             "",
-            "## 11. Reproduzierbarkeit",
+            "## 11. Reproducibility",
             "",
-            "Der Generator validiert Referenzen, Paketabhängigkeiten, eindeutige Association-/Invariant-IDs, die lückenlose Invariantenfolge und alle View-Mitglieder vor dem Schreiben. JSON wird schlüsselsortiert ausgegeben; alle Artefakte enthalten keine Laufzeitstempel. `generation_manifest.sha256.json` enthält die SHA-256-Werte aller verwalteten Ausgaben.",
+            "Before writing, the generator validates references, package dependencies, unique association and invariant identifiers, the gap-free invariant sequence, and every view member. JSON output is key-sorted, and artifacts contain no runtime timestamps. `generation_manifest.sha256.json` records the SHA-256 values of all managed outputs.",
             "",
         ]
     )

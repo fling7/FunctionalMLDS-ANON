@@ -298,9 +298,9 @@ class FunctionalMldsAdapter:
         output = output_root.resolve() if output_root else (workspace / DEFAULT_OUTPUT_RELATIVE_ROOT).resolve()
 
         if not backend.exists():
-            raise FileNotFoundError(f"Backend root nicht gefunden: {backend}")
+            raise FileNotFoundError(f"Backend root not found: {backend}")
         if not pipeline.exists():
-            raise FileNotFoundError(f"FunctionalMLDS-Pipeline nicht gefunden: {pipeline}")
+            raise FileNotFoundError(f"FunctionalMLDS pipeline not found: {pipeline}")
 
         return cls(
             FunctionalMldsAdapterPaths(
@@ -324,7 +324,7 @@ class FunctionalMldsAdapter:
         self.ensure_pipeline_importable()
         ingestion = self.import_pipeline_module("mlds_ingestion")
         if not hasattr(ingestion, "initialize_case") or not hasattr(ingestion, "run_ingestion_for_case"):
-            raise RuntimeError("mlds_ingestion stellt die erwarteten Funktionen nicht bereit.")
+            raise RuntimeError("mlds_ingestion does not provide the expected functions.")
         return {
             "workspace_root": str(self.paths.workspace_root),
             "backend_root": str(self.paths.backend_root),
@@ -369,7 +369,7 @@ class FunctionalMldsAdapter:
 
     def initialize_case_from_payload(self, payload: Dict[str, Any], *, case_id: str) -> Dict[str, str]:
         if not isinstance(payload, dict):
-            raise ValueError("MLDS-Payload muss ein Objekt sein.")
+            raise ValueError("The MLDS payload must be an object.")
         safe_case_id = require_safe_case_id(case_id)
         self.ensure_case_can_be_written(payload, safe_case_id)
         source_path = self.write_source_payload(payload, safe_case_id)
@@ -418,20 +418,20 @@ class FunctionalMldsAdapter:
             if payload_hash(existing_payload) == new_hash:
                 return
             raise FileExistsError(
-                f"Case-Verzeichnis existiert bereits mit anderem MLDS-Payload: {case_dir}. "
-                "Bitte andere Projekt-ID waehlen oder bewusstes Ueberschreiben implementieren."
+                f"The case directory already exists with a different MLDS payload: {case_dir}. "
+                "Select another project ID or implement explicit overwrite handling."
             )
 
         existing_hash_path = case_dir / "input" / "source_mlds.sha256"
         if existing_hash_path.exists():
             raise FileExistsError(
-                f"Case-Verzeichnis existiert bereits, aber source_mlds.json fehlt: {case_dir}. "
-                "Bitte andere Projekt-ID waehlen oder bewusstes Ueberschreiben implementieren."
+                f"The case directory already exists but source_mlds.json is missing: {case_dir}. "
+                "Select another project ID or implement explicit overwrite handling."
             )
 
         if any(case_dir.iterdir()):
             raise FileExistsError(
-                f"Case-Verzeichnis existiert bereits und besitzt keinen vergleichbaren Source-Hash: {case_dir}."
+                f"The case directory already exists without a comparable source hash: {case_dir}."
             )
 
     def run_stage(self, case_dir: Path, stage_id: str, **kwargs: Any) -> Dict[str, Any]:
@@ -940,7 +940,7 @@ class FunctionalMldsAdapter:
                     artifact_report["json_status"] = "valid"
                 except Exception as exc:
                     artifact_report["json_status"] = "invalid"
-                    errors.append(f"Analyze-Artefakt ist kein gueltiges JSON: {artifact_id} ({exc})")
+                    errors.append(f"Analyze artifact is not valid JSON: {artifact_id} ({exc})")
             artifacts[artifact_id] = artifact_report
 
         for validation_id, relative_path in ANALYZE_VALIDATION_ARTIFACTS.items():
@@ -965,7 +965,7 @@ class FunctionalMldsAdapter:
                 validation_report["status"] = "invalid_json"
                 validation_report["errors"] = [str(exc)]
                 validation_report["error_count"] = 1
-                errors.append(f"Analyze-Validierung ist kein gueltiges JSON: {validation_id} ({exc})")
+                errors.append(f"Analyze validation is not valid JSON: {validation_id} ({exc})")
                 validations[validation_id] = validation_report
                 continue
 
@@ -985,7 +985,7 @@ class FunctionalMldsAdapter:
             warnings.extend(f"{validation_id}: {warning}" for warning in report_warnings)
             if status != "valid":
                 errors.append(
-                    f"Analyze-Validierung ist nicht valid: {validation_id} "
+                    f"Analyze validation is not valid: {validation_id} "
                     f"(status={status or 'missing'}, errors={len(report_errors)})"
                 )
                 errors.extend(f"{validation_id}: {error}" for error in report_errors)
@@ -1069,7 +1069,7 @@ class FunctionalMldsAdapter:
                     artifact_report["json_status"] = "valid"
                 except Exception as exc:
                     artifact_report["json_status"] = "invalid"
-                    errors.append(f"Commit-Artefakt ist kein gueltiges JSON: {artifact_id} ({exc})")
+                    errors.append(f"Commit artifact is not valid JSON: {artifact_id} ({exc})")
             artifacts[artifact_id] = artifact_report
 
         for validation_id, relative_path in COMMIT_VALIDATION_ARTIFACTS.items():
@@ -1079,7 +1079,7 @@ class FunctionalMldsAdapter:
                 errors.append(f"Commit-Validierung fehlt: {validation_id} ({relative_path})")
             elif validation_report["status"] != "valid":
                 errors.append(
-                    f"Commit-Validierung ist nicht valid: {validation_id} "
+                    f"Commit validation is not valid: {validation_id} "
                     f"(status={validation_report['status']}, errors={validation_report['error_count']})"
                 )
                 errors.extend(f"{validation_id}: {error}" for error in validation_report["errors"])
@@ -1208,7 +1208,7 @@ def find_workspace_root(start: Optional[Path] = None) -> Path:
     for candidate in (current, *current.parents):
         if (candidate / "tools" / "case_study_pipeline").is_dir() and (candidate / BACKEND_RELATIVE_ROOT).is_dir():
             return candidate
-    raise FileNotFoundError("Workspace-Root mit tools/case_study_pipeline und InteractiveAgents-Backend nicht gefunden.")
+    raise FileNotFoundError("Workspace root containing tools/case_study_pipeline and the InteractiveAgents backend was not found.")
 
 
 def require_safe_case_id(case_id: str) -> str:
@@ -1216,9 +1216,9 @@ def require_safe_case_id(case_id: str) -> str:
     if not value:
         raise ValueError("case_id fehlt.")
     if not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_.-]*", value):
-        raise ValueError("case_id darf nur Buchstaben, Zahlen, Punkt, Unterstrich und Bindestrich enthalten.")
+        raise ValueError("case_id may contain only letters, numbers, periods, underscores, and hyphens.")
     if ".." in value:
-        raise ValueError("case_id darf keine '..'-Sequenz enthalten.")
+        raise ValueError("case_id must not contain a '..' sequence.")
     return value
 
 
@@ -1230,7 +1230,7 @@ def derive_case_id(
     include_hash: bool = True,
 ) -> str:
     if not isinstance(payload, dict):
-        raise ValueError("MLDS-Payload muss ein Objekt sein.")
+        raise ValueError("The MLDS payload must be an object.")
 
     explicit = ascii_slug(project_id_hint, fallback="")
     if explicit:

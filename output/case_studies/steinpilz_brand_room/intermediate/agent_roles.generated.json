@@ -34,7 +34,7 @@
       "voice": "fable",
       "voice_style": "warm and approachable",
       "tts_model": "gpt-4o-mini-tts",
-      "voice_gender": "maennlich"
+      "voice_gender": "male"
     },
     {
       "id": "product_specialist_agent",
@@ -73,7 +73,7 @@
       "voice": "sage",
       "voice_style": "enthusiastic and clear",
       "tts_model": "gpt-4o-mini-tts",
-      "voice_gender": "weiblich"
+      "voice_gender": "female"
     },
     {
       "id": "production_expert_agent",
@@ -106,7 +106,7 @@
       "voice": "onyx",
       "voice_style": "professional and informative",
       "tts_model": "gpt-4o-mini-tts",
-      "voice_gender": "maennlich"
+      "voice_gender": "male"
     },
     {
       "id": "digital_interaction_agent",
@@ -137,7 +137,7 @@
       "voice": "coral",
       "voice_style": "clear and supportive",
       "tts_model": "gpt-4o-mini-tts",
-      "voice_gender": "weiblich"
+      "voice_gender": "female"
     },
     {
       "id": "career_advisor_agent",
@@ -169,7 +169,7 @@
       "voice": "ballad",
       "voice_style": "motivational and empathetic",
       "tts_model": "gpt-4o-mini-tts",
-      "voice_gender": "maennlich"
+      "voice_gender": "male"
     },
     {
       "id": "lounge_host_agent",
@@ -200,7 +200,7 @@
       "voice": "ash",
       "voice_style": "relaxed and friendly",
       "tts_model": "gpt-4o-mini-tts",
-      "voice_gender": "maennlich"
+      "voice_gender": "male"
     }
   ],
   "handoffs": [

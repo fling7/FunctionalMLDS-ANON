@@ -9,7 +9,7 @@
   "sourceContract": {
     "schema": "functionalmlds_case_study",
     "metamodelVersion": "v0.5",
-    "semanticProjectionSha256": "b17e3a89c92af3aabda36ec3ad0d4771c35d012297da17ca04604c35e81d6e74"
+    "semanticProjectionSha256": "a00be15b6c21815d7ce00ba08521eeacbbb10f5001573677717aae32a696a787"
   },
   "objects": [
     {
@@ -1221,7 +1221,7 @@
         "navigation"
       ],
       "voice": "sage",
-      "voiceGender": "weiblich",
+      "voiceGender": "female",
       "voiceStyle": "warm and clear",
       "ttsModel": "gpt-4o-mini-tts",
       "playsActor": [
@@ -1270,7 +1270,7 @@
         "interactive_terminals"
       ],
       "voice": "coral",
-      "voiceGender": "weiblich",
+      "voiceGender": "female",
       "voiceStyle": "informative and friendly",
       "ttsModel": "gpt-4o-mini-tts",
       "playsActor": [
@@ -1320,7 +1320,7 @@
         "career_opportunities"
       ],
       "voice": "onyx",
-      "voiceGender": "maennlich",
+      "voiceGender": "male",
       "voiceStyle": "professional and clear",
       "ttsModel": "gpt-4o-mini-tts",
       "playsActor": [
@@ -1369,7 +1369,7 @@
         "interactive_kiosks"
       ],
       "voice": "fable",
-      "voiceGender": "maennlich",
+      "voiceGender": "male",
       "voiceStyle": "enthusiastic and engaging",
       "ttsModel": "gpt-4o-mini-tts",
       "playsActor": [
@@ -1428,7 +1428,7 @@
         "lounge_services"
       ],
       "voice": "ash",
-      "voiceGender": "maennlich",
+      "voiceGender": "male",
       "voiceStyle": "warm and caring",
       "ttsModel": "gpt-4o-mini-tts",
       "playsActor": [

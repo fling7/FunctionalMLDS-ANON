@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" width="2506" height="1576" viewBox="0 0 2506 1576" role="img" aria-label="EAST-ADL Function/System/Behavior – verwendeter Ausschnitt">
+<svg xmlns="http://www.w3.org/2000/svg" width="2506" height="1576" viewBox="0 0 2506 1576" role="img" aria-label="EAST-ADL Function/System/Behavior – selected subset">
 <defs>
 <marker id="triangle" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto"><path d="M 1 1 L 13 7 L 1 13 z" fill="#FFFFFF" stroke="#354B64" stroke-width="1.5"/></marker>
 <marker id="arrow" markerWidth="11" markerHeight="11" refX="10" refY="5.5" orient="auto"><path d="M 0 0 L 10 5.5 L 0 11 z" fill="#5D7189"/></marker>
 <marker id="diamond" markerWidth="15" markerHeight="11" refX="2" refY="5.5" orient="auto"><path d="M 1 5.5 L 7 1 L 13 5.5 L 7 10 z" fill="#263A52"/></marker>
 </defs>
 <rect width="2506" height="1576" fill="#F9FBFD"/>
-<text x="30.0" y="38.0" text-anchor="start" font-family="Arial, sans-serif" font-size="26" font-weight="700" fill="#1E324A">EAST-ADL Function/System/Behavior – verwendeter Ausschnitt</text>
+<text x="30.0" y="38.0" text-anchor="start" font-family="Arial, sans-serif" font-size="26" font-weight="700" fill="#1E324A">EAST-ADL Function/System/Behavior – selected subset</text>
 <text x="30.0" y="68.0" text-anchor="start" font-family="Arial, sans-serif" font-size="15" font-weight="400" fill="#52677F">Exact type/prototype, FAA/FDA root, connector and behavior semantics.</text>
 <rect x="34.0" y="117.0" width="2438.0" height="202.0" rx="9" fill="#FFFFFF" stroke="#DCE5EE" stroke-width="1.5"/>
-<text x="52.0" y="146.0" text-anchor="start" font-family="Arial, sans-serif" font-size="18" font-weight="700" fill="#283D55">EAST-ADL-Basen</text>
+<text x="52.0" y="146.0" text-anchor="start" font-family="Arial, sans-serif" font-size="18" font-weight="700" fill="#283D55">EAST-ADL bases</text>
 <rect x="34.0" y="375.0" width="2438.0" height="211.0" rx="9" fill="#FFFFFF" stroke="#DCE5EE" stroke-width="1.5"/>
-<text x="52.0" y="404.0" text-anchor="start" font-family="Arial, sans-serif" font-size="18" font-weight="700" fill="#283D55">Generische Funktionsstruktur</text>
+<text x="52.0" y="404.0" text-anchor="start" font-family="Arial, sans-serif" font-size="18" font-weight="700" fill="#283D55">Generic function structure</text>
 <rect x="34.0" y="642.0" width="2438.0" height="202.0" rx="9" fill="#FFFFFF" stroke="#DCE5EE" stroke-width="1.5"/>
-<text x="52.0" y="671.0" text-anchor="start" font-family="Arial, sans-serif" font-size="18" font-weight="700" fill="#283D55">Analysis und Design</text>
+<text x="52.0" y="671.0" text-anchor="start" font-family="Arial, sans-serif" font-size="18" font-weight="700" fill="#283D55">Analysis and design</text>
 <rect x="34.0" y="900.0" width="2438.0" height="202.0" rx="9" fill="#FFFFFF" stroke="#DCE5EE" stroke-width="1.5"/>
-<text x="52.0" y="929.0" text-anchor="start" font-family="Arial, sans-serif" font-size="18" font-weight="700" fill="#283D55">Architekturkontexte</text>
+<text x="52.0" y="929.0" text-anchor="start" font-family="Arial, sans-serif" font-size="18" font-weight="700" fill="#283D55">Architecture contexts</text>
 <polyline points="1217.0,417.5 1217.0,385.0 969.0,385.0 969.0,417.5" fill="none" stroke="#62778F" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="8 6" marker-end="url(#arrow)"/>
 <rect x="1062.4" y="365.0" width="61.2" height="18" rx="3" fill="#F9FBFD" fill-opacity="0.96"/>
 <text x="1093.0" y="378.0" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" font-weight="400" fill="#3F556D">port [2]</text>
@@ -45,14 +45,14 @@
 <text x="585.0" y="173.0" text-anchor="end" font-family="Arial, sans-serif" font-size="9" font-weight="400" fill="#766A50">«abstract»</text>
 <text x="453.0" y="198.0" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="700" fill="#20354D">EAType</text>
 <line x1="310.0" y1="213.0" x2="596.0" y2="213.0" stroke="#315C96" stroke-width="1" opacity="0.5"/>
-<text x="321.0" y="233.0" text-anchor="start" font-family="Consolas, monospace" font-size="11" font-weight="400" fill="#334A62">keine lokalen Attribute</text>
+<text x="321.0" y="233.0" text-anchor="start" font-family="Consolas, monospace" font-size="11" font-weight="400" fill="#334A62">no local attributes</text>
 </g>
 <g><rect x="630.0" y="155.0" width="286.0" height="126.0" rx="7" fill="#EEF5FF" stroke="#315C96" stroke-width="2"/>
 <text x="641.0" y="173.0" text-anchor="start" font-family="Arial, sans-serif" font-size="10" font-weight="400" fill="#60758B">EA::Elements</text>
 <text x="905.0" y="173.0" text-anchor="end" font-family="Arial, sans-serif" font-size="9" font-weight="400" fill="#766A50">«abstract»</text>
 <text x="773.0" y="198.0" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="700" fill="#20354D">EAPrototype</text>
 <line x1="630.0" y1="213.0" x2="916.0" y2="213.0" stroke="#315C96" stroke-width="1" opacity="0.5"/>
-<text x="641.0" y="233.0" text-anchor="start" font-family="Consolas, monospace" font-size="11" font-weight="400" fill="#334A62">keine lokalen Attribute</text>
+<text x="641.0" y="233.0" text-anchor="start" font-family="Consolas, monospace" font-size="11" font-weight="400" fill="#334A62">no local attributes</text>
 </g>
 <g><rect x="950.0" y="155.0" width="286.0" height="126.0" rx="7" fill="#EEF5FF" stroke="#315C96" stroke-width="2"/>
 <text x="961.0" y="173.0" text-anchor="start" font-family="Arial, sans-serif" font-size="10" font-weight="400" fill="#60758B">EA::Elements</text>
@@ -67,14 +67,14 @@
 <text x="1545.0" y="173.0" text-anchor="end" font-family="Arial, sans-serif" font-size="9" font-weight="400" fill="#766A50">«abstract»</text>
 <text x="1413.0" y="198.0" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="700" fill="#20354D">EAPort</text>
 <line x1="1270.0" y1="213.0" x2="1556.0" y2="213.0" stroke="#315C96" stroke-width="1" opacity="0.5"/>
-<text x="1281.0" y="233.0" text-anchor="start" font-family="Consolas, monospace" font-size="11" font-weight="400" fill="#334A62">keine lokalen Attribute</text>
+<text x="1281.0" y="233.0" text-anchor="start" font-family="Consolas, monospace" font-size="11" font-weight="400" fill="#334A62">no local attributes</text>
 </g>
 <g><rect x="1590.0" y="155.0" width="286.0" height="126.0" rx="7" fill="#EEF5FF" stroke="#315C96" stroke-width="2"/>
 <text x="1601.0" y="173.0" text-anchor="start" font-family="Arial, sans-serif" font-size="10" font-weight="400" fill="#60758B">EA::Elements</text>
 <text x="1865.0" y="173.0" text-anchor="end" font-family="Arial, sans-serif" font-size="9" font-weight="400" fill="#766A50">«abstract»</text>
 <text x="1733.0" y="198.0" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="700" fill="#20354D">EAConnector</text>
 <line x1="1590.0" y1="213.0" x2="1876.0" y2="213.0" stroke="#315C96" stroke-width="1" opacity="0.5"/>
-<text x="1601.0" y="233.0" text-anchor="start" font-family="Consolas, monospace" font-size="11" font-weight="400" fill="#334A62">keine lokalen Attribute</text>
+<text x="1601.0" y="233.0" text-anchor="start" font-family="Consolas, monospace" font-size="11" font-weight="400" fill="#334A62">no local attributes</text>
 </g>
 <g><rect x="1910.0" y="155.0" width="286.0" height="126.0" rx="7" fill="#EEF5FF" stroke="#315C96" stroke-width="2"/>
 <text x="1921.0" y="173.0" text-anchor="start" font-family="Arial, sans-serif" font-size="10" font-weight="400" fill="#60758B">EA::Elements</text>
@@ -173,7 +173,7 @@
 </g>
 <line x1="34" y1="1204" x2="2472" y2="1204" stroke="#C5D2DF"/>
 <text x="34.0" y="1235.0" text-anchor="start" font-family="Arial, sans-serif" font-size="18" font-weight="700" fill="#263B53">Beziehungsnachweis</text>
-<text x="34.0" y="1258.0" text-anchor="start" font-family="Arial, sans-serif" font-size="12" font-weight="400" fill="#60758B">[Diagramm] sichtbar geroutet · [Sicht] im exakten Modell enthalten · [Vererbung] in den Kartenköpfen</text>
+<text x="34.0" y="1258.0" text-anchor="start" font-family="Arial, sans-serif" font-size="12" font-weight="400" fill="#60758B">[Diagram] visibly routed · [View] included in the exact model · [Inheritance] shown in card headers</text>
 <text x="34.0" y="1286.0" text-anchor="start" font-family="Consolas, monospace" font-size="11" font-weight="400" fill="#3F566E">[Diagramm] → FunctionConnector.port [2] → FunctionPort</text>
 <text x="34.0" y="1309.0" text-anchor="start" font-family="Consolas, monospace" font-size="11" font-weight="400" fill="#3F566E">[Diagramm] ◆ FunctionType.port [*] → FunctionPort</text>
 <text x="34.0" y="1332.0" text-anchor="start" font-family="Consolas, monospace" font-size="11" font-weight="400" fill="#3F566E">[Diagramm] ◆ FunctionType.connector [*] → FunctionConnector</text>
@@ -187,21 +187,21 @@
 <text x="846.7" y="1286.0" text-anchor="start" font-family="Consolas, monospace" font-size="11" font-weight="400" fill="#3F566E">[Sicht] ◆ AnalysisLevel.functionalAnalysisArchitecture [0..1] → AnalysisFunctionPrototype</text>
 <text x="846.7" y="1309.0" text-anchor="start" font-family="Consolas, monospace" font-size="11" font-weight="400" fill="#3F566E">[Sicht] ◆ DesignLevel.functionalDesignArchitecture [0..1] → DesignFunctionPrototype</text>
 <text x="846.7" y="1332.0" text-anchor="start" font-family="Consolas, monospace" font-size="11" font-weight="400" fill="#3F566E">[Sicht] → FunctionBehavior.function [0..1] → FunctionType</text>
-<text x="846.7" y="1355.0" text-anchor="start" font-family="Consolas, monospace" font-size="11" font-weight="400" fill="#3F566E">[Vererbung] FunctionType → EAType</text>
-<text x="846.7" y="1378.0" text-anchor="start" font-family="Consolas, monospace" font-size="11" font-weight="400" fill="#3F566E">[Vererbung] FunctionType → Context</text>
-<text x="846.7" y="1401.0" text-anchor="start" font-family="Consolas, monospace" font-size="11" font-weight="400" fill="#3F566E">[Vererbung] FunctionPrototype → EAElement</text>
-<text x="846.7" y="1424.0" text-anchor="start" font-family="Consolas, monospace" font-size="11" font-weight="400" fill="#3F566E">[Vererbung] FunctionPrototype → EAPrototype</text>
-<text x="846.7" y="1447.0" text-anchor="start" font-family="Consolas, monospace" font-size="11" font-weight="400" fill="#3F566E">[Vererbung] FunctionPort → EAPort</text>
-<text x="846.7" y="1470.0" text-anchor="start" font-family="Consolas, monospace" font-size="11" font-weight="400" fill="#3F566E">[Vererbung] FunctionPort → EAElement</text>
-<text x="846.7" y="1493.0" text-anchor="start" font-family="Consolas, monospace" font-size="11" font-weight="400" fill="#3F566E">[Vererbung] FunctionConnector → EAConnector</text>
-<text x="1659.3" y="1286.0" text-anchor="start" font-family="Consolas, monospace" font-size="11" font-weight="400" fill="#3F566E">[Vererbung] FunctionConnector → EAElement</text>
-<text x="1659.3" y="1309.0" text-anchor="start" font-family="Consolas, monospace" font-size="11" font-weight="400" fill="#3F566E">[Vererbung] PortGroup → EAElement</text>
-<text x="1659.3" y="1332.0" text-anchor="start" font-family="Consolas, monospace" font-size="11" font-weight="400" fill="#3F566E">[Vererbung] FunctionFlowPort → FunctionPort</text>
-<text x="1659.3" y="1355.0" text-anchor="start" font-family="Consolas, monospace" font-size="11" font-weight="400" fill="#3F566E">[Vererbung] FunctionBehavior → Context</text>
-<text x="1659.3" y="1378.0" text-anchor="start" font-family="Consolas, monospace" font-size="11" font-weight="400" fill="#3F566E">[Vererbung] AnalysisFunctionType → FunctionType</text>
-<text x="1659.3" y="1401.0" text-anchor="start" font-family="Consolas, monospace" font-size="11" font-weight="400" fill="#3F566E">[Vererbung] AnalysisFunctionPrototype → FunctionPrototype</text>
-<text x="1659.3" y="1424.0" text-anchor="start" font-family="Consolas, monospace" font-size="11" font-weight="400" fill="#3F566E">[Vererbung] DesignFunctionType → FunctionType</text>
-<text x="1659.3" y="1447.0" text-anchor="start" font-family="Consolas, monospace" font-size="11" font-weight="400" fill="#3F566E">[Vererbung] DesignFunctionPrototype → FunctionPrototype</text>
-<text x="1659.3" y="1470.0" text-anchor="start" font-family="Consolas, monospace" font-size="11" font-weight="400" fill="#3F566E">[Vererbung] AnalysisLevel → Context</text>
-<text x="1659.3" y="1493.0" text-anchor="start" font-family="Consolas, monospace" font-size="11" font-weight="400" fill="#3F566E">[Vererbung] DesignLevel → Context</text>
+<text x="846.7" y="1355.0" text-anchor="start" font-family="Consolas, monospace" font-size="11" font-weight="400" fill="#3F566E">[Inheritance] FunctionType → EAType</text>
+<text x="846.7" y="1378.0" text-anchor="start" font-family="Consolas, monospace" font-size="11" font-weight="400" fill="#3F566E">[Inheritance] FunctionType → Context</text>
+<text x="846.7" y="1401.0" text-anchor="start" font-family="Consolas, monospace" font-size="11" font-weight="400" fill="#3F566E">[Inheritance] FunctionPrototype → EAElement</text>
+<text x="846.7" y="1424.0" text-anchor="start" font-family="Consolas, monospace" font-size="11" font-weight="400" fill="#3F566E">[Inheritance] FunctionPrototype → EAPrototype</text>
+<text x="846.7" y="1447.0" text-anchor="start" font-family="Consolas, monospace" font-size="11" font-weight="400" fill="#3F566E">[Inheritance] FunctionPort → EAPort</text>
+<text x="846.7" y="1470.0" text-anchor="start" font-family="Consolas, monospace" font-size="11" font-weight="400" fill="#3F566E">[Inheritance] FunctionPort → EAElement</text>
+<text x="846.7" y="1493.0" text-anchor="start" font-family="Consolas, monospace" font-size="11" font-weight="400" fill="#3F566E">[Inheritance] FunctionConnector → EAConnector</text>
+<text x="1659.3" y="1286.0" text-anchor="start" font-family="Consolas, monospace" font-size="11" font-weight="400" fill="#3F566E">[Inheritance] FunctionConnector → EAElement</text>
+<text x="1659.3" y="1309.0" text-anchor="start" font-family="Consolas, monospace" font-size="11" font-weight="400" fill="#3F566E">[Inheritance] PortGroup → EAElement</text>
+<text x="1659.3" y="1332.0" text-anchor="start" font-family="Consolas, monospace" font-size="11" font-weight="400" fill="#3F566E">[Inheritance] FunctionFlowPort → FunctionPort</text>
+<text x="1659.3" y="1355.0" text-anchor="start" font-family="Consolas, monospace" font-size="11" font-weight="400" fill="#3F566E">[Inheritance] FunctionBehavior → Context</text>
+<text x="1659.3" y="1378.0" text-anchor="start" font-family="Consolas, monospace" font-size="11" font-weight="400" fill="#3F566E">[Inheritance] AnalysisFunctionType → FunctionType</text>
+<text x="1659.3" y="1401.0" text-anchor="start" font-family="Consolas, monospace" font-size="11" font-weight="400" fill="#3F566E">[Inheritance] AnalysisFunctionPrototype → FunctionPrototype</text>
+<text x="1659.3" y="1424.0" text-anchor="start" font-family="Consolas, monospace" font-size="11" font-weight="400" fill="#3F566E">[Inheritance] DesignFunctionType → FunctionType</text>
+<text x="1659.3" y="1447.0" text-anchor="start" font-family="Consolas, monospace" font-size="11" font-weight="400" fill="#3F566E">[Inheritance] DesignFunctionPrototype → FunctionPrototype</text>
+<text x="1659.3" y="1470.0" text-anchor="start" font-family="Consolas, monospace" font-size="11" font-weight="400" fill="#3F566E">[Inheritance] AnalysisLevel → Context</text>
+<text x="1659.3" y="1493.0" text-anchor="start" font-family="Consolas, monospace" font-size="11" font-weight="400" fill="#3F566E">[Inheritance] DesignLevel → Context</text>
 </svg>

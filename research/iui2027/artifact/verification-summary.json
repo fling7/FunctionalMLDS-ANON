@@ -4,7 +4,7 @@
   "checks": [
     {
       "facts": {
-        "artifact_set_sha256": "AF6B248D133F41583B3EE0644825B96B1BF0F913168F5B3499BD3B3457B7F5F8",
+        "artifact_set_sha256": "E469A6A219D129FCDF2A5FFE654A320E24C7D331273BABD9176C68ACFD96B11B",
         "association_count": 157,
         "class_count": 118,
         "diagram_status": "PASS",
@@ -53,21 +53,21 @@
         "cases": [
           {
             "case_id": "fitness_career_fair",
-            "fresh_v2_sha256": "db8f2787bc86ed3cf0c89f0e1d9aefe82627429ae9e9de773bfd49d394420139",
+            "fresh_v2_sha256": "916483325c522f745f92d07e27c457f3c4fbd3c32e7aac9382f8336a5ae20876",
             "object_count": 1227,
             "validation_error_count": 0,
             "validation_status": "valid"
           },
           {
             "case_id": "classroom_dinosaur",
-            "fresh_v2_sha256": "18a7dfbcad21919edbf156f64f90b3fd4cf9f7655b6f3094da34153082d5a90a",
+            "fresh_v2_sha256": "3cd9ccba853f2855e91c291c61ef7e243efbffa069689d4fa1e74bc6c662af34",
             "object_count": 1539,
             "validation_error_count": 0,
             "validation_status": "valid"
           },
           {
             "case_id": "steinpilz_brand_room",
-            "fresh_v2_sha256": "85d9dd8bdd91fa885c9720ae5f8f7dc58088e0cd1ce82f8e250881db398d9433",
+            "fresh_v2_sha256": "d13b9af6f31068d39f2347644baa87c2709ac4a712c0ab273afef166c8ef9751",
             "object_count": 1337,
             "validation_error_count": 0,
             "validation_status": "valid"

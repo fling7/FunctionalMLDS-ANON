@@ -5152,11 +5152,11 @@
         "EAValue_type"
       ],
       "row_labels": [
-        "Element- und Typbasen",
-        "Werte und Datentypen",
-        "Identifizierbare Elemente",
-        "Paketierbare Elemente",
-        "Kontexte"
+        "Element and type bases",
+        "Values and datatypes",
+        "Identifiable elements",
+        "Packageable elements",
+        "Contexts"
       ],
       "rows": [
         [
@@ -5189,7 +5189,7 @@
           "EAST-ADL::Elements::TraceableSpecification"
         ]
       ],
-      "title": "EAST-ADL V2.1.12 – verwendeter Infrastruktur-Ausschnitt"
+      "title": "EAST-ADL V2.1.12 – selected infrastructure subset"
     },
     "02_east_adl_requirements_usecases": {
       "description": "Unmodified Requirements and UseCases metaclasses plus their exact infrastructure bases.",
@@ -5201,10 +5201,10 @@
         "Extend_extensionLocation"
       ],
       "row_labels": [
-        "EAST-ADL-Basen",
-        "Requirements und UseCases",
-        "UseCase-Beziehungen",
-        "Requirements-Beziehungen"
+        "EAST-ADL bases",
+        "Requirements and use cases",
+        "Use-case relations",
+        "Requirement relations"
       ],
       "rows": [
         [
@@ -5232,7 +5232,7 @@
           "EAST-ADL::VerificationValidation::Verify"
         ]
       ],
-      "title": "EAST-ADL Requirements/UseCases – verwendeter Ausschnitt"
+      "title": "EAST-ADL Requirements/UseCases – selected subset"
     },
     "03_east_adl_function_system_behavior": {
       "description": "Exact type/prototype, FAA/FDA root, connector and behavior semantics.",
@@ -5247,10 +5247,10 @@
         "DesignFunctionType_part"
       ],
       "row_labels": [
-        "EAST-ADL-Basen",
-        "Generische Funktionsstruktur",
-        "Analysis und Design",
-        "Architekturkontexte"
+        "EAST-ADL bases",
+        "Generic function structure",
+        "Analysis and design",
+        "Architecture contexts"
       ],
       "rows": [
         [
@@ -5281,7 +5281,7 @@
           "EAST-ADL::SystemModeling::DesignLevel"
         ]
       ],
-      "title": "EAST-ADL Function/System/Behavior – verwendeter Ausschnitt"
+      "title": "EAST-ADL Function/System/Behavior – selected subset"
     },
     "04_dfmlds_scenario_flow": {
       "adjacent_route_shifts": {
@@ -5300,13 +5300,13 @@
         "StepRelation_probability"
       ],
       "row_labels": [
-        "EAST-ADL-Basen",
-        "UseCase- und Rollenbindung",
-        "Szenario",
-        "Ablauf",
-        "Ereignisse, Bedingungen und Wahrscheinlichkeiten",
-        "Abstrakte Aussagebasis",
-        "Spezialisierte Aussagearten"
+        "EAST-ADL bases",
+        "Use-case and role binding",
+        "Scenario",
+        "Control flow",
+        "Events, conditions, and probabilities",
+        "Abstract assertion base",
+        "Specialized assertion types"
       ],
       "rows": [
         [
@@ -5359,7 +5359,7 @@
       "source_port_shifts": {
         "StepRelation_probability": 120.0
       },
-      "title": "DFMLDS V2 – konservativer Szenario- und Ablaufkern"
+      "title": "DFMLDS V2 – conservative scenario and control-flow core"
     },
     "05_dfmlds_capability_runtime": {
       "description": "EAType/EAPrototype capability pattern, optional exact function mapping and ordered runtime realization.",
@@ -5378,11 +5378,11 @@
       ],
       "layout": "capability_runtime",
       "row_labels": [
-        "EAST-ADL-Basen",
-        "Capability-Kern",
-        "Technische Runtime-Realisierung",
-        "Verhaltens- und Funktionsabbildung",
-        "EAST-ADL-Funktionsziele"
+        "EAST-ADL bases",
+        "Capability core",
+        "Technical runtime realization",
+        "Behavior and function mapping",
+        "EAST-ADL function targets"
       ],
       "rows": [
         [
@@ -5422,7 +5422,7 @@
           "EAST-ADL::FunctionModeling::DesignFunctionPrototype"
         ]
       ],
-      "title": "DFMLDS V2 – Capability-, Function- und Runtime-Bridge"
+      "title": "DFMLDS V2 – capability, function, and runtime bridge"
     },
     "06_east_adl_dfmlds_verification_validation": {
       "description": "Exact V&V container ownership with DFMLDS specializations, logs and distinct subject/target semantics.",
@@ -5440,11 +5440,11 @@
         "ValidationCaseUseCaseBinding_useCase"
       ],
       "row_labels": [
-        "Requirements- und Infrastrukturbezug",
-        "EAST-ADL V&V-Container",
-        "EAST-ADL V&V-Ablauf",
-        "DFMLDS-Spezialisierungen",
-        "Bindungen, Aussagen und Ergebnisse"
+        "Requirements and infrastructure",
+        "EAST-ADL V&V container",
+        "EAST-ADL V&V flow",
+        "DFMLDS specializations",
+        "Bindings, assertions, and results"
       ],
       "rows": [
         [
@@ -5510,10 +5510,10 @@
       ],
       "layout": "optional_modules",
       "row_labels": [
-        "Kern-Anker",
-        "Optionale Brücken",
+        "Core anchors",
+        "Optional bridges",
         "Annex C",
-        "Zielmodelle und Wissen"
+        "Target models and knowledge"
       ],
       "rows": [
         [
@@ -5552,10 +5552,10 @@
           "DFMLDS::V2::AgentKnowledge::KnowledgeSource"
         ]
       ],
-      "title": "DFMLDS V2 – optionale Annex-C-, Feature- und Wissensmodule"
+      "title": "DFMLDS V2 – optional Annex C, feature, and knowledge modules"
     },
     "dynamic_functional_mlds_v2_metamodel": {
-      "description": "Zentrale EAST-ADL-konforme A/B/C-Gesamtansicht; die sieben Fachsichten liefern die vollständigen Details.",
+      "description": "Central EAST-ADL-conformant A/B/C overview; the seven detailed views provide the complete specification.",
       "kind": "overview",
       "rows": [
         [
@@ -5604,7 +5604,7 @@
           "DFMLDS::V2::Core::AssertionResult"
         ]
       ],
-      "title": "Kompaktes Metamodell für Dynamic Functional MLDS (V2.0)"
+      "title": "Compact metamodel for Dynamic Functional MLDS (V2.0)"
     }
   }
 }

@@ -48,7 +48,7 @@
       "voice": "sage",
       "voice_style": "clear and encouraging",
       "tts_model": "gpt-4o-mini-tts",
-      "voice_gender": "weiblich"
+      "voice_gender": "female"
     },
     {
       "id": "reading_area_guide",
@@ -81,7 +81,7 @@
       "voice": "fable",
       "voice_style": "warm and inviting",
       "tts_model": "gpt-4o-mini-tts",
-      "voice_gender": "maennlich"
+      "voice_gender": "male"
     },
     {
       "id": "exhibit_interpreter",
@@ -108,7 +108,7 @@
       "voice": "nova",
       "voice_style": "enthusiastic and clear",
       "tts_model": "gpt-4o-mini-tts",
-      "voice_gender": "weiblich"
+      "voice_gender": "female"
     },
     {
       "id": "decorative_zone_ambassador",
@@ -140,7 +140,7 @@
       "voice": "coral",
       "voice_style": "soft and pleasant",
       "tts_model": "gpt-4o-mini-tts",
-      "voice_gender": "weiblich"
+      "voice_gender": "female"
     }
   ],
   "handoffs": [

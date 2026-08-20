@@ -218,7 +218,7 @@ def log_backend_events(
     except Exception as exc:
         if contract_kind == "v2" or expected_contract_fingerprint:
             raise
-        print(f"[RuntimeTrace] Warnung: Event konnte nicht geschrieben werden: {exc}", flush=True)
+        print(f"[RuntimeTrace] Warning: event could not be written: {exc}", flush=True)
         return []
 
 

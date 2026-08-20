@@ -131,7 +131,7 @@ def _parse_bool(value: Any, default: bool = False) -> bool:
         return True
     if raw in {"0", "false", "no", "n", "off"}:
         return False
-    raise ValueError(f"Ungueltiger Boolean-Wert: {value}.")
+    raise ValueError(f"Invalid Boolean value: {value}.")
 
 
 def _as_str_list(value: Any) -> List[str]:
@@ -485,7 +485,7 @@ class SessionStore:
         path = (self._project_root() / rel_path).resolve()
         # Safety: ensure file is inside project
         if self._project_root() not in path.parents and path != self._project_root():
-            raise ValueError("Ungültiger Pfad (außerhalb Projekt).")
+            raise ValueError("Invalid path outside the project.")
         return json.loads(path.read_text(encoding="utf-8"))
 
     def create_session(
@@ -747,7 +747,7 @@ class SessionStore:
         session_id = str(session_id or "").strip()
         st = self.sessions.get(session_id)
         if st is None:
-            raise ValueError("Unbekannte session_id. Bitte /setup erneut aufrufen.")
+            raise ValueError("Unknown session_id. Call /setup again.")
         if st.functionalmlds_contract_kind != "v2":
             return {
                 "kind": st.functionalmlds_contract_kind,
@@ -796,7 +796,7 @@ class SessionStore:
 
         st = self.sessions.get(str(session_id or "").strip())
         if st is None:
-            raise ValueError("Unbekannte session_id. Bitte /setup erneut aufrufen.")
+            raise ValueError("Unknown session_id. Call /setup again.")
         return {
             "history": copy.deepcopy(st.history),
             "agent_histories": copy.deepcopy(st.agent_histories),
@@ -827,7 +827,7 @@ class SessionStore:
         self.project_manager._require_project(project_id)
         contract = load_project_contract(self.project_manager._project_dir(project_id))
         if contract.get("kind") != "v2":
-            raise ValueError("Projekt stellt keine native FunctionalMLDS-V2-Instanz bereit.")
+            raise ValueError("The project does not provide a native FunctionalMLDS V2 instance.")
         model_path = Path(str(contract.get("instance_path") or ""))
         if not model_path.is_file():
             raise ValueError("Native FunctionalMLDS-V2-Instanz fehlt.")
@@ -841,7 +841,7 @@ class SessionStore:
         tts_model = str(payload.get("tts_model") or "").strip() or "gpt-4o-mini-tts"
         response_format = str(payload.get("response_format") or "mp3").strip() or "mp3"
         print(
-            "[TTS] Anfrage vorbereiten: "
+            "[TTS] Preparing request: "
             f"text_len={len(text)}, voice={voice}, model={tts_model}, format={response_format}",
             flush=True,
         )
@@ -854,7 +854,7 @@ class SessionStore:
             timeout_seconds=self.openai.timeout_seconds,
         )
         print(
-            "[TTS] Antwort erhalten: "
+            "[TTS] Response received: "
             f"bytes={len(audio)}, content_type={content_type}",
             flush=True,
         )
@@ -867,9 +867,9 @@ class SessionStore:
 
         audio = file_info.get("content") or b""
         if not isinstance(audio, (bytes, bytearray)) or not audio:
-            raise ValueError("audio ist leer.")
+            raise ValueError("audio is empty.")
         if len(audio) > self.stt_max_audio_bytes:
-            raise ValueError(f"audio ist zu groß ({len(audio)} Bytes, Limit {self.stt_max_audio_bytes}).")
+            raise ValueError(f"audio is too large ({len(audio)} bytes; limit {self.stt_max_audio_bytes}).")
 
         model = str(payload.get("model") or self.stt_model or "whisper-1").strip()
         language = str(payload.get("language") or self.stt_language or "").strip() or None
@@ -878,7 +878,7 @@ class SessionStore:
         content_type = str(file_info.get("content_type") or "audio/wav").strip() or "audio/wav"
 
         print(
-            "[STT] Anfrage vorbereiten: "
+            "[STT] Preparing request: "
             f"bytes={len(audio)}, filename={filename}, content_type={content_type}, model={model}, language={language or ''}",
             flush=True,
         )
@@ -894,7 +894,7 @@ class SessionStore:
         )
 
         text = str(result.get("text") or "").strip()
-        print(f"[STT] Transkript erhalten: text_len={len(text)}", flush=True)
+        print(f"[STT] Transcript received: text_len={len(text)}", flush=True)
         return {
             "text": text,
             "model": model,
@@ -927,14 +927,14 @@ class SessionStore:
         if value is None:
             text = ""
         elif not isinstance(value, str):
-            raise ValueError(f"spatial_context.{field_name} muss ein String sein.")
+            raise ValueError(f"spatial_context.{field_name} must be a string.")
         else:
             text = value.strip()
         if required and not text:
             raise ValueError(f"spatial_context.{field_name} fehlt.")
         if len(text) > maximum:
             raise ValueError(
-                f"spatial_context.{field_name} ueberschreitet das Limit "
+                f"spatial_context.{field_name} exceeds the limit "
                 f"von {maximum} Zeichen."
             )
         return text
@@ -951,7 +951,7 @@ class SessionStore:
             or not isinstance(value, (int, float))
             or not math.isfinite(float(value))
         ):
-            raise ValueError(f"spatial_context.{field_name} muss eine endliche JSON-Zahl sein.")
+            raise ValueError(f"spatial_context.{field_name} must be a finite JSON number.")
         number = float(value)
         if abs(number) > absolute_limit:
             raise ValueError(
@@ -992,13 +992,13 @@ class SessionStore:
         raw_mode = payload.get("interaction_mode")
         if not isinstance(raw_mode, str) or not raw_mode.strip():
             raise ValueError(
-                "interaction_mode fehlt fuer FunctionalMLDS V2; erlaubt sind "
-                "'deictic' und 'non_deictic'."
+                "interaction_mode is missing for FunctionalMLDS V2; allowed values are "
+                "'deictic' and 'non_deictic'."
             )
         mode = raw_mode.strip().lower()
         if mode not in modeled_modes:
             raise ValueError(
-                f"Ungueltiger interaction_mode {mode!r}; erlaubt sind "
+                f"Invalid interaction_mode {mode!r}; allowed values are "
                 + ", ".join(modeled_modes)
                 + "."
             )
@@ -1142,10 +1142,10 @@ class SessionStore:
         if raw_context is None:
             return None
         if not isinstance(raw_context, dict):
-            raise ValueError("spatial_context muss ein JSON-Objekt sein.")
+            raise ValueError("spatial_context must be a JSON object.")
         if st.functionalmlds_contract_kind != "v2":
             raise ValueError(
-                "spatial_context wird nur fuer eine gepinnte FunctionalMLDS-V2-Session akzeptiert."
+                "spatial_context is accepted only for a pinned FunctionalMLDS V2 session."
             )
         allowed_fields = {
             "model_sha256",
@@ -1187,7 +1187,7 @@ class SessionStore:
         supplied_synonyms = raw_context.get("synonyms")
         if supplied_synonyms is not None:
             if not isinstance(supplied_synonyms, list):
-                raise ValueError("spatial_context.synonyms muss eine Liste sein.")
+                raise ValueError("spatial_context.synonyms must be a list.")
             if len(supplied_synonyms) > 32:
                 raise ValueError("spatial_context.synonyms enthaelt zu viele Eintraege.")
             for synonym in supplied_synonyms:
@@ -1207,7 +1207,7 @@ class SessionStore:
         expected_hash = str(st.functionalmlds_model_sha256 or "").strip().upper()
         if not expected_hash or supplied_hash != expected_hash:
             raise FunctionalMldsContractError(
-                "Stale spatial_context: model_sha256 stimmt nicht mit dem "
+                "Stale spatial_context: model_sha256 does not match the "
                 "bei /setup gepinnten FunctionalMLDS-V2-Modell ueberein."
             )
 
@@ -1220,7 +1220,7 @@ class SessionStore:
         ambiguity = raw_context.get("ambiguity")
         ambiguous_value = raw_context.get("ambiguous")
         if ambiguous_value is not None and not isinstance(ambiguous_value, bool):
-            raise ValueError("spatial_context.ambiguous muss ein Boolean sein.")
+            raise ValueError("spatial_context.ambiguous must be a Boolean.")
         ambiguity_flag = bool(ambiguous_value)
         if isinstance(ambiguity, bool):
             ambiguity_flag = ambiguity_flag or ambiguity
@@ -1232,7 +1232,7 @@ class SessionStore:
             for ambiguity_key, ambiguity_value in ambiguity.items():
                 if len(str(ambiguity_key)) > 64 or len(str(ambiguity_value)) > SPATIAL_REASON_MAX_LENGTH:
                     raise ValueError(
-                        "spatial_context.ambiguity enthaelt einen zu langen Wert."
+                        "spatial_context.ambiguity contains a value that is too long."
                     )
             ambiguity_flag = ambiguity_flag or bool(
                 ambiguity.get("ambiguous")
@@ -1241,7 +1241,7 @@ class SessionStore:
             )
         elif ambiguity is not None:
             raise ValueError(
-                "spatial_context.ambiguity muss ein Boolean oder Objekt sein."
+                "spatial_context.ambiguity must be a Boolean or object."
             )
         ambiguity_reason = self._bounded_spatial_text(
             raw_context.get("ambiguity_reason"),
@@ -1250,10 +1250,10 @@ class SessionStore:
         )
         if state != "resolved":
             raise ValueError(
-                "spatial_context.state muss 'resolved' sein; none/ambiguous wird fail-closed abgelehnt."
+                "spatial_context.state must be 'resolved'; none/ambiguous is rejected fail-closed."
             )
         if ambiguity_flag or ambiguity_reason:
-            raise ValueError("Mehrdeutiger spatial_context wird fail-closed abgelehnt.")
+            raise ValueError("Ambiguous spatial_context is rejected fail-closed.")
 
         runtime_context = st.functionalmlds_runtime_context or {}
         spatial_entities = [
@@ -1282,7 +1282,7 @@ class SessionStore:
         )
         if not supplied_entity_id and not supplied_source_id:
             raise ValueError(
-                "spatial_context benoetigt entity_id oder source_object_id."
+                "spatial_context requires entity_id or source_object_id."
             )
 
         selected: Optional[Dict[str, Any]] = None
@@ -1303,24 +1303,24 @@ class SessionStore:
             if len(source_matches) != 1:
                 qualifier = "unbekannt" if not source_matches else "mehrdeutig"
                 raise ValueError(
-                    f"spatial_context.source_object_id ist im gepinnten Modell {qualifier}: "
+                    f"spatial_context.source_object_id is {qualifier} in the pinned model: "
                     f"{supplied_source_id!r}."
                 )
             if selected is not None and selected.get("entity_id") != source_matches[0].get("entity_id"):
                 raise ValueError(
-                    "spatial_context.entity_id und source_object_id bezeichnen "
+                    "spatial_context.entity_id and source_object_id identify "
                     "unterschiedliche Modellobjekte."
                 )
             selected = source_matches[0]
 
         if selected is None:
-            raise ValueError("spatial_context konnte nicht aufgeloest werden.")
+            raise ValueError("spatial_context could not be resolved.")
         if (
             str(selected.get("kind") or "").strip() != "asset"
             or str(selected.get("entity_role") or "").strip() != "sceneObject"
         ):
             raise ValueError(
-                "spatial_context muss ein konkretes Szeneobjekt (asset/sceneObject) referenzieren."
+                "spatial_context must reference a concrete scene object (asset/sceneObject)."
             )
 
         selected_entity_id = str(selected.get("entity_id") or "")
@@ -1329,11 +1329,11 @@ class SessionStore:
         if candidate_ids_raw is None:
             candidate_ids: List[str] = []
         elif not isinstance(candidate_ids_raw, list):
-            raise ValueError("spatial_context.candidate_entity_ids muss eine Liste sein.")
+            raise ValueError("spatial_context.candidate_entity_ids must be a list.")
         else:
             if len(candidate_ids_raw) > SPATIAL_CANDIDATE_LIMIT:
                 raise ValueError(
-                    "spatial_context.candidate_entity_ids ueberschreitet das "
+                    "spatial_context.candidate_entity_ids exceeds the "
                     f"Limit von {SPATIAL_CANDIDATE_LIMIT}."
                 )
             candidate_ids = []
@@ -1355,14 +1355,14 @@ class SessionStore:
         if len(candidate_ids) > 1 or (
             candidate_ids and candidate_ids[0] != selected_entity_id
         ):
-            raise ValueError("Mehrdeutige spatial_context-Kandidaten werden fail-closed abgelehnt.")
+            raise ValueError("Ambiguous spatial_context candidates are rejected fail-closed.")
 
         hit_position_raw = raw_context.get("hit_position")
         if not isinstance(hit_position_raw, dict):
-            raise ValueError("spatial_context.hit_position muss ein Objekt mit x/y/z sein.")
+            raise ValueError("spatial_context.hit_position must be an object with x/y/z.")
         if set(hit_position_raw) != {"x", "y", "z"}:
             raise ValueError(
-                "spatial_context.hit_position darf nur x, y und z enthalten."
+                "spatial_context.hit_position may contain only x, y, and z."
             )
         hit_position = {
             axis: self._finite_spatial_number(
@@ -1377,7 +1377,7 @@ class SessionStore:
             absolute_limit=SPATIAL_DISTANCE_LIMIT_METERS,
         )
         if distance_m < 0:
-            raise ValueError("spatial_context.distance_m darf nicht negativ sein.")
+            raise ValueError("spatial_context.distance_m must not be negative.")
         selection_modality = self._bounded_spatial_text(
             raw_context.get("selection_modality"),
             "selection_modality",
@@ -1395,7 +1395,7 @@ class SessionStore:
             )
         if selection_modality not in SPATIAL_SELECTION_MODALITIES:
             raise ValueError(
-                "spatial_context.selection_modality ist unbekannt; erlaubt sind "
+                "spatial_context.selection_modality is unknown; allowed values are "
                 + ", ".join(sorted(SPATIAL_SELECTION_MODALITIES))
                 + "."
             )
@@ -1409,7 +1409,7 @@ class SessionStore:
                 or str(group.get("kind") or "") != "asset"
             ):
                 raise FunctionalMldsContractError(
-                    f"Szeneobjekt {selected_entity_id!r} referenziert eine ungueltige "
+                    f"Scene object {selected_entity_id!r} references an invalid "
                     f"Objektgruppe {group_id!r}."
                 )
             if str(group_id) not in group_ids:
@@ -1538,10 +1538,10 @@ class SessionStore:
         object_name = str(
             (grounding or {}).get("selected_name")
             or (grounding or {}).get("selected_source_object_id")
-            or "dieses Objekt"
+            or "this object"
         ).strip()
         return (
-            f"Für {object_name} ist {target.display_name} zuständig. "
+            f"{target.display_name} is responsible for {object_name}. "
             f"Ich leite dich jetzt zu {target.display_name} weiter."
         )
 
@@ -1600,8 +1600,8 @@ class SessionStore:
                 break
         if not candidate_agent_ids:
             raise FunctionalMldsContractError(
-                f"Das gepinnte V2-Modell weist dem Szeneobjekt "
-                f"{selected_entity_id!r} keinen verantwortlichen Agenten zu."
+                f"The pinned V2 model assigns no responsible agent to scene object "
+                f"{selected_entity_id!r}."
             )
 
         requested_agent = st.agents[requested_agent_id]
@@ -1611,7 +1611,7 @@ class SessionStore:
         else:
             if self.max_handoffs <= 0:
                 raise FunctionalMldsContractError(
-                    "Das raeumliche Routing erfordert einen Handoff, aber Handoffs sind deaktiviert."
+                    "Spatial routing requires a handoff, but handoffs are disabled."
                 )
             allowed_targets = self._allowed_handoff_ids(st, requested_agent)
             selected_agent_id = next(
@@ -1624,8 +1624,8 @@ class SessionStore:
             )
             if not selected_agent_id:
                 raise FunctionalMldsContractError(
-                    f"Kein modellierter Handoff von {requested_agent_id!r} erreicht "
-                    f"einen fuer {selected_entity_id!r} verantwortlichen Agenten."
+                    f"No modeled handoff from {requested_agent_id!r} reaches "
+                    f"an agent responsible for {selected_entity_id!r}."
                 )
 
         relation_label = {
@@ -1722,8 +1722,8 @@ class SessionStore:
             return brief
         reason = str(res.get("handoff_reason") or "").strip()
         if reason:
-            return f"Nutzerfrage: {user_text}\nWeiterleitungsgrund: {reason}"
-        return f"Nutzerfrage: {user_text}"
+            return f"User question: {user_text}\nHandoff reason: {reason}"
+        return f"User question: {user_text}"
 
     def _handoff_user_context(
         self,
@@ -1734,8 +1734,8 @@ class SessionStore:
     ) -> str:
         lines = [f"Uebergabekontext von {from_agent.display_name}: {handoff_brief}"]
         if handoff_reason:
-            lines.append(f"Weiterleitungsgrund: {handoff_reason}")
-        lines.append(f"Aktuelle Nutzerfrage: {user_text}")
+            lines.append(f"Handoff reason: {handoff_reason}")
+        lines.append(f"Current user question: {user_text}")
         return "\n".join(lines)
 
     def _build_developer_prompt(
@@ -1747,7 +1747,7 @@ class SessionStore:
         grounding: Optional[Dict[str, Any]] = None,
     ) -> str:
         lines: List[str] = []
-        lines.append(f"Du bist ein virtueller Gesprächspartner (NPC) in Unity.")
+        lines.append("You are a virtual conversation partner (NPC) in Unity.")
         lines.append(f"Name: {agent.display_name} (id: {agent.id})")
         if agent.persona:
             lines.append(f"Persona:\n{agent.persona}")
@@ -1755,30 +1755,30 @@ class SessionStore:
             lines.append("Expertise (Schwerpunkte): " + ", ".join(agent.expertise))
         lines.append("")
         lines.append("Kommunikationsstil:")
-        lines.append("- Antworte auf Deutsch.")
-        lines.append("- Kurz, natürlich, hilfreich (Messestand/Showroom-Stil).")
-        lines.append("- Wenn Informationen fehlen, stelle 1 kurze Rückfrage (statt zu raten), sofern es in deinem Bereich liegt.")
+        lines.append("- Answer in English.")
+        lines.append("- Be concise, natural, and helpful in a booth or showroom style.")
+        lines.append("- If relevant information is missing, ask one short clarifying question instead of guessing when the topic is in your area.")
         lines.append("")
         if allow_handoff and others:
             lines.append("Handoff-Regel:")
-            lines.append("- Wenn der Nutzer ausdruecklich um eine Weiterleitung bittet (z. B. 'Leite mich an ...'), fuehre den Handoff sofort aus und stelle vorher keine Rueckfrage.")
-            lines.append("- Wenn du weiterleitest, setze 'handoff_brief' auf 1-2 kurze Saetze fuer den Zielagenten: Thema, wichtige Nutzerangaben und offene Frage.")
-            lines.append("- Wenn du nicht weiterleitest, setze 'handoff_to', 'handoff_reason' und 'handoff_brief' auf null.")
-            lines.append("- Wenn die Nutzerfrage deutlich außerhalb deiner Expertise liegt oder du unsicher bist (confidence < 0.55), leite an den am besten passenden anderen Agenten weiter.")
-            lines.append("- Setze dann 'handoff_to' auf dessen id, und 'say' ist nur eine kurze Weiterleitungsformulierung (ohne ausführliche Antwort).")
-            lines.append("- Eine Wegbeschreibung oder die bloße Empfehlung, einen anderen Agenten aufzusuchen, ist KEIN Ersatz fuer den Handoff.")
-            lines.append("- Sobald du dem Nutzer sagst, er solle einen anderen Agenten aufsuchen, fragen oder mit ihm sprechen, MUSST du 'handoff_to' auf dessen id setzen.")
-            lines.append("- Antworte nie nur mit 'Gehe zu ...', 'Frage ...' oder einer Ortsbeschreibung, wenn ein passender modellierter Handoff verfuegbar ist.")
+            lines.append("- If the user explicitly requests a transfer, perform the handoff immediately without asking a clarifying question first.")
+            lines.append("- For a handoff, set 'handoff_brief' to one or two short sentences for the target agent: topic, important user details, and the open question.")
+            lines.append("- Without a handoff, set 'handoff_to', 'handoff_reason', and 'handoff_brief' to null.")
+            lines.append("- If the user's question is clearly outside your expertise or confidence is below 0.55, hand off to the best-matching other agent.")
+            lines.append("- Set 'handoff_to' to that agent's id; 'say' must contain only a short transfer statement, not a detailed answer.")
+            lines.append("- Directions or a recommendation to visit another agent do NOT replace a structured handoff.")
+            lines.append("- If you tell the user to visit, ask, or speak with another agent, you MUST set 'handoff_to' to that agent's id.")
+            lines.append("- Never answer only with 'Go to ...', 'Ask ...', or directions when an appropriate modeled handoff is available.")
             lines.append("")
-            lines.append("Verfügbare andere Agenten:")
+            lines.append("Available other agents:")
             for o in others:
                 lines.append(f"- {o.id}: {o.display_name} | Expertise: {', '.join(o.expertise) if o.expertise else '—'}")
         else:
-            lines.append("Handoff: deaktiviert. Antworte selbst so gut wie möglich oder bitte um Klärung.")
+            lines.append("Handoff is disabled. Answer as well as possible or ask for clarification.")
         lines.append("")
         if grounding:
             lines.append(
-                "Vertrauenswürdiger räumlicher Bezug "
+                "Trusted spatial reference "
                 "(serverseitig aus dem gepinnten FunctionalMLDS-V2-Modell):"
             )
             lines.append(
@@ -1788,26 +1788,26 @@ class SessionStore:
             )
             if grounding.get("object_group_ids"):
                 lines.append(
-                    "- Modellierte Objektgruppen: "
+                    "- Modeled object groups: "
                     + ", ".join(grounding.get("object_group_ids") or [])
                 )
             if grounding.get("zone_ids"):
                 lines.append(
-                    "- Modellierte Zonen: "
+                    "- Modeled zones: "
                     + ", ".join(grounding.get("zone_ids") or [])
                 )
             lines.append(
-                "- Löse Wörter wie 'dies', 'das' oder 'hier' auf dieses Szeneobjekt auf. "
-                "Erfinde keine abweichende Objektidentität."
+                "- Resolve expressions such as 'this', 'that', or 'here' to this scene object. "
+                "Do not invent a different object identity."
             )
             lines.append("")
         if kb_snippets:
-            lines.append("Lokale Wissensauszüge (nur nutzen, wenn relevant; nicht erfinden):")
+            lines.append("Local knowledge excerpts (use only when relevant; do not invent content):")
             for s in kb_snippets:
                 meta = f"[{s.get('tag')}/{s.get('file')}#{s.get('chunk_index')}]"
                 lines.append(f"- {meta} {s.get('text')}")
             lines.append("")
-        lines.append("WICHTIG: Du MUSST deine Antwort als JSON ausgeben und genau das Schema erfüllen (Structured Output).")
+        lines.append("IMPORTANT: Return the answer as JSON and satisfy the structured-output schema exactly.")
         return "\n".join(lines).strip()
 
     def _agent_match_score(self, agent: AgentSpec, query_tokens: set[str]) -> float:
@@ -2007,7 +2007,7 @@ class SessionStore:
             )
         else:
             prefix = (
-                "Die genannte Rolle ist keinem eindeutigen modellierten "
+                "The named role does not map to a unique modeled "
                 "Spezialisten zuordenbar. "
                 "Ich bleibe dein Ansprechpartner."
             )
@@ -2018,7 +2018,7 @@ class SessionStore:
             user_text,
             grounding=grounding,
         ).strip()
-        trusted_prefix = "Offline-Fallback aus FunctionalMLDS-Raumwissen: "
+        trusted_prefix = "Offline fallback from FunctionalMLDS room knowledge: "
         if fallback.startswith(trusted_prefix):
             fallback = fallback[len(trusted_prefix):].strip()
         elif fallback.startswith("Offline-Fallback"):
@@ -2125,9 +2125,9 @@ class SessionStore:
         This parser is intentionally narrow: it only decides whether the named
         target and referral language already detected by the caller occur in a
         negated or explicitly rejected clause.  Clause boundaries keep an
-        unrelated statement such as ``Ich bin nicht sicher, bitte leite mich ...``
+        unrelated statement such as ``I am not sure, please transfer me ...``
         from cancelling the later positive request.  A contrast correction such
-        as ``nicht zum Empfang, sondern zum Kaeseexperten`` remains positive for
+        as ``not to reception, but to the cheese expert`` remains positive for
         the target after ``sondern``.
         """
         normalized = str(text or "").lower()
@@ -2302,8 +2302,8 @@ class SessionStore:
         snippets = self._fallback_snippets(st, agent, user_text, grounding=grounding)
         if not snippets:
             return (
-                "Offline-Fallback aus FunctionalMLDS: Fuer diesen Agenten liegt kein "
-                "passender Wissensausschnitt im Projekt-KB vor."
+                "Offline FunctionalMLDS fallback: no matching project knowledge "
+                "excerpt is available for this agent."
             )
 
         facts: List[str] = []
@@ -2319,10 +2319,10 @@ class SessionStore:
 
         if not facts:
             return (
-                "Offline-Fallback aus FunctionalMLDS: Die KB-Treffer waren leer, "
-                "daher kann ich die Raumfrage nicht belastbar beantworten."
+                "Offline FunctionalMLDS fallback: knowledge retrieval returned no content, "
+                "so the room question cannot be answered reliably."
             )
-        return "Offline-Fallback aus FunctionalMLDS-Raumwissen: " + " ".join(facts)
+        return "Offline fallback from FunctionalMLDS room knowledge: " + " ".join(facts)
 
     def _fallback_agent_response(
         self,
@@ -2337,14 +2337,14 @@ class SessionStore:
         target = self._select_fallback_handoff_target(st, agent, user_text, allow_handoff)
         if target is not None:
             reason = (
-                f"FunctionalMLDS-Fallback: {target.display_name} ist anhand von "
-                "Expertise, Knowledge-Tags und verantwortlichen Raumobjekten passender."
+                f"FunctionalMLDS fallback: {target.display_name} is a better match based on "
+                "expertise, knowledge tags, and responsible room objects."
             )
             return {
-                "say": f"Ich leite die Frage an {target.display_name} weiter.",
+                "say": f"I am handing the question to {target.display_name}.",
                 "handoff_to": target.id,
                 "handoff_reason": reason,
-                "handoff_brief": f"Nutzerfrage: {user_text}",
+                "handoff_brief": f"User question: {user_text}",
                 "confidence": 0.7,
                 "_runtime_fallback": True,
                 "_openai_error": str(error),
@@ -2413,7 +2413,7 @@ class SessionStore:
                 context += f" Grund: {forwarded_reason}"
             if forwarded_brief:
                 context += f" Uebergabekontext: {forwarded_brief}"
-            context += " Antworte direkt auf die Nutzerfrage."
+            context += " Answer the user's question directly."
             input_msgs.append(
                 {
                     "role": "developer",
@@ -2490,7 +2490,7 @@ class SessionStore:
             elif handoff_to not in allowed:
                 if not used_unstructured_json_fallback:
                     raise ValueError(
-                        f"Agent {agent.id!r} versuchte einen nicht modellierten Handoff "
+                        f"Agent {agent.id!r} attempted an unmodeled handoff "
                         f"an {handoff_to!r}."
                     )
 
@@ -2506,14 +2506,14 @@ class SessionStore:
                 if recovered_target is not None and recovered_target.id in allowed:
                     result["handoff_to"] = recovered_target.id
                     result["say"] = (
-                        f"Ich leite deine Frage an {recovered_target.display_name} weiter."
+                        f"I am handing your question to {recovered_target.display_name}."
                     )
                     result["handoff_reason"] = (
-                        "Das unstrukturierte Modellziel wurde eindeutig einem "
-                        "modellierten Spezialisten zugeordnet."
+                        "The unstructured model target was mapped uniquely to a "
+                        "modeled specialist."
                     )
                     result["handoff_brief"] = (
-                        f"Nutzerfrage: {history_with_user[-1]['content']}"
+                        f"User question: {history_with_user[-1]['content']}"
                     )
                 else:
                     result["handoff_to"] = None
@@ -2548,23 +2548,23 @@ class SessionStore:
             )
             if narrated_target is not None:
                 result["say"] = (
-                    f"Ich leite deine Frage an {narrated_target.display_name} weiter."
+                    f"I am handing your question to {narrated_target.display_name}."
                 )
                 result["handoff_to"] = narrated_target.id
                 if requested_target is not None:
                     result["handoff_reason"] = (
-                        "Der Nutzer bat ausdruecklich um diesen modellierten "
-                        "Spezialisten; die Weiterleitung wurde als strukturierter "
+                        "The user explicitly requested this modeled specialist; "
+                        "the transfer was recovered as a structured "
                         "Handoff erzwungen."
                     )
                 else:
                     result["handoff_reason"] = (
-                        "Der Modelltext verwies den Nutzer bereits an diesen "
-                        "modellierten Spezialisten; die Weiterleitung wurde als "
+                        "The model text already directed the user to this modeled "
+                        "specialist; the transfer was recovered as a structured "
                         "strukturierter Handoff normalisiert."
                     )
                 result["handoff_brief"] = (
-                    f"Nutzerfrage: {history_with_user[-1]['content']}"
+                    f"User question: {history_with_user[-1]['content']}"
                 )
 
         return result
@@ -2577,24 +2577,24 @@ class SessionStore:
     ) -> Dict[str, Any]:
         session_id = str(payload.get("session_id") or "").strip()
         if not session_id:
-            raise ValueError("session_id fehlt. Bitte zuerst /setup aufrufen.")
+            raise ValueError("session_id is missing. Call /setup first.")
         st = self.sessions.get(session_id)
         if not st:
-            raise ValueError("Unbekannte session_id. Bitte /setup erneut aufrufen.")
+            raise ValueError("Unknown session_id. Call /setup again.")
 
         active_agent_id = str(payload.get("active_agent_id") or "").strip()
         if not active_agent_id or active_agent_id not in st.agents:
             if st.functionalmlds_contract_kind == "v2":
                 raise ValueError(
-                    "active_agent_id fehlt oder ist nicht im gepinnten "
-                    "FunctionalMLDS-V2-Modell enthalten."
+                    "active_agent_id is missing or not present in the pinned "
+                    "FunctionalMLDS V2 model."
                 )
             # Preserve the legacy endpoint contract.
             active_agent_id = next(iter(st.agents.keys()))
 
         user_text = str(payload.get("user_text") or "").strip()
         if not user_text:
-            raise ValueError("user_text ist leer.")
+            raise ValueError("user_text is empty.")
 
         # Selection below happens before an OpenAI call or any history mutation.
         # Multi-Scenario V2 requests are bound to one concrete provider/target
@@ -2617,13 +2617,13 @@ class SessionStore:
             has_spatial_context = payload.get("spatial_context") is not None
             if interaction_mode == "deictic" and not has_spatial_context:
                 raise ValueError(
-                    "interaction_mode 'deictic' erfordert einen validen "
+                    "interaction_mode 'deictic' requires a valid "
                     "spatial_context."
                 )
             if interaction_mode == "non_deictic" and has_spatial_context:
                 raise ValueError(
-                    "interaction_mode 'non_deictic' darf keinen "
-                    "spatial_context enthalten."
+                    "interaction_mode 'non_deictic' must not include a "
+                    "spatial_context."
                 )
 
         grounding = self._validate_spatial_context(
@@ -2742,7 +2742,7 @@ class SessionStore:
             "active_agent_id": active_agent_id,
             "memory_mode": MEMORY_MODE_SHARED,
             "events": [
-                {"type": "say", "agent_id": active_agent_id, "text": f"[Backend] OpenAI Fehler: {error}"},
+                {"type": "say", "agent_id": active_agent_id, "text": f"[Backend] OpenAI error: {error}"},
             ],
             "error": {"status": error.status, "details": error.details},
         }
@@ -2772,7 +2772,7 @@ class SessionStore:
                 forwarded_from=requested_agent if spatial_handoff else None,
                 forwarded_reason=str((routing or {}).get("reason") or ""),
                 forwarded_brief=(
-                    f"Räumlich ausgewähltes Objekt: "
+                    f"Spatially selected object: "
                     f"{(grounding or {}).get('selected_source_object_id')}"
                     if spatial_handoff
                     else None
@@ -2810,7 +2810,7 @@ class SessionStore:
                 "to": agent_a.id,
                 "reason": (routing or {}).get("reason"),
                 "brief": (
-                    f"Räumlich ausgewähltes Objekt: "
+                    f"Spatially selected object: "
                     f"{(grounding or {}).get('selected_source_object_id')}"
                 ),
                 "kind": "spatial_route",
@@ -2901,7 +2901,7 @@ class SessionStore:
                 forwarded_from=requested_agent if spatial_handoff else None,
                 forwarded_reason=str((routing or {}).get("reason") or ""),
                 forwarded_brief=(
-                    f"Räumlich ausgewähltes Objekt: "
+                    f"Spatially selected object: "
                     f"{(grounding or {}).get('selected_source_object_id')}"
                     if spatial_handoff
                     else None
@@ -2939,7 +2939,7 @@ class SessionStore:
                 "to": agent_a.id,
                 "reason": (routing or {}).get("reason"),
                 "brief": (
-                    f"Räumlich ausgewähltes Objekt: "
+                    f"Spatially selected object: "
                     f"{(grounding or {}).get('selected_source_object_id')}"
                 ),
                 "kind": "spatial_route",
@@ -3037,7 +3037,7 @@ class SessionStore:
             except json.JSONDecodeError as exc:
                 raise ValueError(f"arrow_json ungÃ¼ltig: {exc}") from exc
         if not isinstance(arrow_payload, dict):
-            raise ValueError("arrow_json muss ein Objekt sein.")
+            raise ValueError("arrow_json must be an object.")
         case_id = derive_case_id(
             arrow_payload,
             project_id_hint=str(payload.get("project_id_hint") or "").strip(),
@@ -3055,18 +3055,18 @@ class SessionStore:
             try:
                 max_repair_attempts = int(max_repair_attempts_raw)
             except (TypeError, ValueError) as exc:
-                raise ValueError("max_repair_attempts muss eine ganze Zahl sein.") from exc
+                raise ValueError("max_repair_attempts must be an integer.") from exc
             if max_repair_attempts < 0:
-                raise ValueError("max_repair_attempts darf nicht negativ sein.")
+                raise ValueError("max_repair_attempts must not be negative.")
 
         arrow_payload = payload.get("arrow_json")
         if isinstance(arrow_payload, str):
             try:
                 arrow_payload = json.loads(arrow_payload)
             except json.JSONDecodeError as exc:
-                raise ValueError(f"arrow_json ungültig: {exc}") from exc
+                raise ValueError(f"arrow_json is invalid: {exc}") from exc
         if not isinstance(arrow_payload, dict):
-            raise ValueError("arrow_json muss ein Objekt sein.")
+            raise ValueError("arrow_json must be an object.")
         case_id = derive_case_id(arrow_payload, project_id_hint=project_id_hint)
 
         draft_meta: Dict[str, Any] = {}
@@ -3141,12 +3141,12 @@ class SessionStore:
 
         user_text = str(payload.get("user_text") or "").strip()
         if not user_text:
-            raise ValueError("user_text ist leer.")
+            raise ValueError("user_text is empty.")
         if session.generation_mode == GENERATION_MODE_FUNCTIONALMLDS:
             session.assistant_message = (
-                "Diese Freitextnachricht wurde nicht auf das FunctionalMLDS-Modell angewendet. "
-                "Nutze den strukturierten Platzierungseditor: Änderung prüfen, anwenden und "
-                "validieren, danach akzeptieren oder verwerfen."
+                "This free-text message was not applied to the FunctionalMLDS model. "
+                "Use the structured placement editor to preview, apply, and validate the change, "
+                "then accept or discard it."
             )
             session.history = self._trim_history(
                 session.history
@@ -3194,23 +3194,23 @@ class SessionStore:
             raise ValueError("Unbekannte session_id.")
         if session.generation_mode != GENERATION_MODE_FUNCTIONALMLDS:
             raise ValueError(
-                "Der strukturierte Authoring-Loop ist ausschließlich für "
-                "FunctionalMLDS-Platzierungen verfügbar."
+                "The structured authoring loop is available only for "
+                "FunctionalMLDS placements."
             )
         requested_mode = payload.get("generation_mode")
         if requested_mode not in (None, ""):
             normalized_mode = normalize_generation_mode(requested_mode)
             if normalized_mode != session.generation_mode:
                 raise ValueError(
-                    "generation_mode passt nicht zur Session: "
+                    "generation_mode does not match the session: "
                     f"{normalized_mode} != {session.generation_mode}."
                 )
         if session.validation_stale:
             raise ValueError(
-                "Der FunctionalMLDS-Draft ist nicht validiert. Bitte zuerst neu analysieren."
+                "The FunctionalMLDS draft is not validated. Run analysis first."
             )
         if not session.case_id or not session.case_dir:
-            raise ValueError("FunctionalMLDS-Case-Verzeichnis fehlt in der Session.")
+            raise ValueError("The FunctionalMLDS case directory is missing from the session.")
         return session
 
     @staticmethod
@@ -3241,7 +3241,7 @@ class SessionStore:
                 relative = path.relative_to(root).as_posix()
             except ValueError as exc:
                 raise ValueError(
-                    "Authoring-Transaktionspfad liegt außerhalb des Case-Verzeichnisses."
+                    "The authoring transaction path is outside the case directory."
                 ) from exc
             digest.update(relative.encode("utf-8"))
             digest.update(b"\0")
@@ -3265,7 +3265,7 @@ class SessionStore:
                 relative_paths.append(path.resolve().relative_to(case_dir).as_posix())
             except ValueError as exc:
                 raise ValueError(
-                    "Authoring-Transaktionspfad liegt außerhalb des Case-Verzeichnisses."
+                    "The authoring transaction path is outside the case directory."
                 ) from exc
         return case_dir, paths, relative_paths
 
@@ -3349,7 +3349,7 @@ class SessionStore:
     def _expected_authoring_revision(payload: Dict[str, Any]) -> str:
         revision = str(payload.get("expected_revision") or "").strip()
         if not revision:
-            raise ValueError("expected_revision fehlt. Bitte Authoring-Stand neu laden.")
+            raise ValueError("expected_revision is missing. Reload the authoring state.")
         return revision
 
     def _authoring_conflict_response(
@@ -3365,9 +3365,9 @@ class SessionStore:
             status="conflict",
             change=change,
             errors=[
-                "Der Authoring-Stand wurde zwischenzeitlich geändert. "
+                "The authoring state changed in the meantime. "
                 f"Erwartete Revision {expected}, aktuelle Revision {actual}. "
-                "Bitte den Stand neu laden."
+                "Reload the state."
             ],
         )
 
@@ -3426,8 +3426,8 @@ class SessionStore:
                     "before": compact_before,
                     "after": compact_after,
                     "explanation": (
-                        f"Platzierung von {display_name} [{agent_id}] wird "
-                        "auf die angezeigte Position und Blickrichtung geändert."
+                        f"Placement of {display_name} [{agent_id}] will be changed "
+                        "to the displayed position and facing direction."
                     ),
                 }
             )
@@ -3456,7 +3456,7 @@ class SessionStore:
         except Exception as exc:
             return {
                 "status": "invalid",
-                "errors": [f"Placement-Artefakte konnten nicht geladen werden: {exc}"],
+                "errors": [f"Placement artifacts could not be loaded: {exc}"],
                 "warnings": [],
                 "metrics": {},
             }
@@ -3519,8 +3519,8 @@ class SessionStore:
                 status="conflict",
                 change=pending,
                 errors=[
-                    "Es gibt bereits eine offene Placement-Änderung. "
-                    "Bitte diese zuerst anwenden, akzeptieren oder verwerfen."
+                    "A placement change is already open. "
+                    "Apply, accept, or discard it first."
                 ],
             )
 
@@ -3536,23 +3536,23 @@ class SessionStore:
 
         change_payload = payload.get("change")
         if not isinstance(change_payload, dict):
-            raise ValueError("change muss ein Objekt sein.")
+            raise ValueError("change must be an object.")
         unknown_fields = sorted(
             set(change_payload) - {"kind", "rationale", "agent_placements"}
         )
         if unknown_fields:
             raise ValueError(
-                "change enthält unbekannte Felder: " + ", ".join(unknown_fields) + "."
+                "change contains unknown fields: " + ", ".join(unknown_fields) + "."
             )
         if str(change_payload.get("kind") or "").strip() != "agent_placement":
             raise ValueError(
-                "Dieser Loop unterstützt ausschließlich kind='agent_placement'."
+                "This loop supports only kind='agent_placement'."
             )
         rationale = str(change_payload.get("rationale") or "").strip()
         if len(rationale) > 500:
-            raise ValueError("change.rationale darf höchstens 500 Zeichen enthalten.")
+            raise ValueError("change.rationale must contain at most 500 characters.")
         if not rationale:
-            rationale = "Manuelle Platzierungsänderung im Unity-Wizard."
+            rationale = "Manual placement change in the Unity wizard."
 
         placements, shape_validation = self._validate_requested_arrow_placements(
             session,
@@ -3570,7 +3570,7 @@ class SessionStore:
         if not diffs:
             no_change_validation = {
                 "status": "invalid",
-                "errors": ["Die strukturierte Placement-Änderung enthält keinen Unterschied."],
+                "errors": ["The structured placement change contains no difference."],
                 "warnings": [],
                 "metrics": shape_validation.get("metrics") or {},
             }
@@ -3624,7 +3624,7 @@ class SessionStore:
             raise ValueError("change_id fehlt.")
         pending = self._pending_authoring_change(session.session_id)
         if not pending or pending.change_id != change_id:
-            raise ValueError("Die angegebene Placement-Änderung ist nicht offen.")
+            raise ValueError("The specified placement change is not open.")
         return pending
 
     def apply_arrow_authoring(self, payload: Dict[str, Any]) -> Dict[str, Any]:
@@ -3635,7 +3635,7 @@ class SessionStore:
         ):
             change = self._required_pending_authoring_change(session, payload)
             if change.lifecycle != "previewed":
-                raise ValueError("Nur eine geprüfte Preview kann angewendet werden.")
+                raise ValueError("Only a validated preview can be applied.")
             case_dir, paths, _ = self._authoring_paths(session)
             current_revision = self._authoring_revision(case_dir, paths)
             expected_revision = self._expected_authoring_revision(payload)
@@ -3705,8 +3705,8 @@ class SessionStore:
             change = self._required_pending_authoring_change(session, payload)
             if change.lifecycle != "applied_pending_accept":
                 raise ValueError(
-                    "Die Placement-Änderung muss vor dem Akzeptieren angewendet "
-                    "und validiert werden."
+                    "The placement change must be applied and validated before "
+                    "it can be accepted."
                 )
             case_dir, paths, _ = self._authoring_paths(session)
             current_revision = self._authoring_revision(case_dir, paths)
@@ -3764,14 +3764,14 @@ class SessionStore:
             )
             if not valid:
                 errors.extend(
-                    "Validierung nach Wiederherstellung: " + str(error)
-                    for error in report.get("errors") or ["Analyze-Status ist nicht valid."]
+                    "Validation after restoration: " + str(error)
+                    for error in report.get("errors") or ["Analyze status is not valid."]
                 )
         if errors:
             recovery_errors = self._restore_files(applied_files)
             self._restore_authoring_session_snapshot(session, applied_session)
             errors.extend(
-                "Wiederherstellung des angewendeten Stands: " + error
+                "Restoring the applied state: " + error
                 for error in recovery_errors
             )
             return False, errors
@@ -3831,7 +3831,7 @@ class SessionStore:
                         mutation_applied=True,
                         change=change,
                         errors=[
-                            "Discard konnte den bytegenauen Ausgangsstand nicht wiederherstellen."
+                            "Discard could not restore the byte-exact initial state."
                         ],
                     )
 
@@ -3854,14 +3854,14 @@ class SessionStore:
         ):
             if self._pending_authoring_change(session.session_id):
                 raise ValueError(
-                    "Eine offene Placement-Änderung muss zuerst akzeptiert oder verworfen werden."
+                    "An open placement change must be accepted or discarded first."
                 )
             change = self._undo_authoring_change(session.session_id)
             if not change or change.lifecycle != "accepted":
-                raise ValueError("Es gibt keine akzeptierte Placement-Änderung zum Rückgängigmachen.")
+                raise ValueError("There is no accepted placement change to undo.")
             requested_change_id = str(payload.get("change_id") or "").strip()
             if requested_change_id and requested_change_id != change.change_id:
-                raise ValueError("change_id bezeichnet nicht die letzte akzeptierte Änderung.")
+                raise ValueError("change_id does not identify the last accepted change.")
 
             case_dir, paths, _ = self._authoring_paths(session)
             current_revision = self._authoring_revision(case_dir, paths)
@@ -3903,7 +3903,7 @@ class SessionStore:
                     mutation_applied=True,
                     change=change,
                     errors=[
-                        "Undo konnte den bytegenauen Ausgangsstand nicht wiederherstellen."
+                        "Undo could not restore the byte-exact initial state."
                     ],
                 )
 
@@ -3941,7 +3941,7 @@ class SessionStore:
             normalized_mode = normalize_generation_mode(requested_generation_mode)
             if normalized_mode != session.generation_mode:
                 raise ValueError(
-                    "generation_mode passt nicht zur Session: "
+                    "generation_mode does not match the session: "
                     f"{normalized_mode} != {session.generation_mode}."
                 )
 
@@ -3954,8 +3954,8 @@ class SessionStore:
                 invalid = {
                     "status": "invalid",
                     "errors": [
-                        "Es gibt eine offene strukturierte Placement-Änderung. "
-                        "Bitte diese zuerst akzeptieren oder verwerfen."
+                        "A structured placement change is open. "
+                        "Accept or discard it first."
                     ],
                     "warnings": [],
                     "metrics": {},
@@ -3974,7 +3974,7 @@ class SessionStore:
             except Exception as exc:
                 invalid = {
                     "status": "invalid",
-                    "errors": [f"Placement-Vertrag konnte nicht geladen werden: {exc}"],
+                    "errors": [f"Placement contract could not be loaded: {exc}"],
                     "warnings": [],
                     "metrics": {},
                 }
@@ -4005,7 +4005,7 @@ class SessionStore:
             invalid = {
                 "status": "invalid",
                 "errors": [
-                    "Der FunctionalMLDS-Draft enthält ausstehende Refinements und muss vor einem Placement-Update neu analysiert werden."
+                    "The FunctionalMLDS draft contains pending refinements and must be analyzed again before a placement update."
                 ],
                 "warnings": [],
                 "metrics": validation.get("metrics") or {},
@@ -4014,7 +4014,7 @@ class SessionStore:
         if not session.case_dir:
             invalid = {
                 "status": "invalid",
-                "errors": ["FunctionalMLDS-Case-Verzeichnis fehlt in der Session."],
+                "errors": ["The FunctionalMLDS case directory is missing from the session."],
                 "warnings": [],
                 "metrics": validation.get("metrics") or {},
             }
@@ -4052,12 +4052,12 @@ class SessionStore:
         seen_ids: set[str] = set()
 
         if not isinstance(raw_placements, list):
-            errors.append("agent_placements muss eine Liste sein.")
+            errors.append("agent_placements must be a list.")
             raw_placements = []
 
         for index, raw in enumerate(raw_placements):
             if not isinstance(raw, dict):
-                errors.append(f"agent_placements[{index}] muss ein Objekt sein.")
+                errors.append(f"agent_placements[{index}] must be an object.")
                 continue
             agent_id = str(raw.get("id") or "").strip()
             if not agent_id:
@@ -4073,14 +4073,14 @@ class SessionStore:
             for field_name in ("position", "forward"):
                 raw_vector = raw.get(field_name)
                 if not isinstance(raw_vector, dict):
-                    errors.append(f"agent_placements[{index}].{field_name} muss ein Vektorobjekt sein.")
+                    errors.append(f"agent_placements[{index}].{field_name} must be a vector object.")
                     continue
                 vector: Dict[str, float] = {}
                 for component in ("x", "y", "z"):
                     value = raw_vector.get(component)
                     if isinstance(value, bool) or not isinstance(value, (int, float)):
                         errors.append(
-                            f"agent_placements[{index}].{field_name}.{component} muss eine endliche Zahl sein."
+                            f"agent_placements[{index}].{field_name}.{component} must be a finite number."
                         )
                         continue
                     try:
@@ -4089,7 +4089,7 @@ class SessionStore:
                         numeric = math.nan
                     if not math.isfinite(numeric):
                         errors.append(
-                            f"agent_placements[{index}].{field_name}.{component} muss eine endliche Zahl sein."
+                            f"agent_placements[{index}].{field_name}.{component} must be a finite number."
                         )
                         continue
                     vector[component] = numeric
@@ -4099,14 +4099,14 @@ class SessionStore:
             forward = canonical_vectors.get("forward")
             position = canonical_vectors.get("position")
             if position is not None and abs(position["y"]) > planar_tolerance:
-                errors.append(f"agent_placements[{index}].position muss auf der Bodenebene liegen (y=0).")
+                errors.append(f"agent_placements[{index}].position must lie on the floor plane (y=0).")
             if forward is not None:
                 if abs(forward["y"]) > planar_tolerance:
-                    errors.append(f"agent_placements[{index}].forward muss planar sein (y=0).")
+                    errors.append(f"agent_placements[{index}].forward must be planar (y=0).")
                 planar_length = math.hypot(forward["x"], forward["z"])
                 if abs(planar_length - 1.0) > PLACEMENT_FORWARD_TOLERANCE:
                     errors.append(
-                        f"agent_placements[{index}].forward muss normalisiert sein (XZ-Länge=1)."
+                        f"agent_placements[{index}].forward must be normalized (XZ length=1)."
                     )
 
             if len(canonical_vectors) == 2:
@@ -4120,12 +4120,12 @@ class SessionStore:
         missing = sorted(expected_set - received_set)
         extra = sorted(received_set - expected_set)
         if missing:
-            errors.append("Placements fehlen für Agenten: " + ", ".join(missing) + ".")
+            errors.append("Placements are missing for agents: " + ", ".join(missing) + ".")
         if extra:
-            errors.append("Placements enthalten unbekannte Agenten: " + ", ".join(extra) + ".")
+            errors.append("Placements contain unknown agents: " + ", ".join(extra) + ".")
         if len(raw_placements) != len(expected_ids):
             errors.append(
-                f"Es werden exakt {len(expected_ids)} Agentenplacements erwartet; erhalten: {len(raw_placements)}."
+                f"Exactly {len(expected_ids)} agent placements are expected; received {len(raw_placements)}."
             )
 
         metrics = {
@@ -4218,7 +4218,7 @@ class SessionStore:
         except Exception as exc:
             invalid = {
                 "status": "invalid",
-                "errors": [f"Placement-Artefakte konnten nicht geladen werden: {exc}"],
+                "errors": [f"Placement artifacts could not be loaded: {exc}"],
                 "warnings": [],
                 "metrics": {},
             }
@@ -4294,12 +4294,12 @@ class SessionStore:
                 if str(stage_result.get("status") or "").lower() not in {"success", "valid"}:
                     stage_errors = [str(item) for item in stage_result.get("errors") or []]
                     detail = "; ".join(stage_errors) or f"status={stage_result.get('status')}"
-                    raise RuntimeError(f"{stage_id} ist fehlgeschlagen: {detail}")
+                    raise RuntimeError(f"{stage_id} failed: {detail}")
 
             analyze_report = adapter.validate_analyze_case(case_dir)
             if analyze_report.get("status") != "valid":
                 detail = "; ".join(str(item) for item in analyze_report.get("errors") or [])
-                raise RuntimeError("Analyze-Validierung nach Placement-Update ist ungültig: " + detail)
+                raise RuntimeError("Analyze validation after placement update is invalid: " + detail)
             analyze_summary = adapter.summarize_analyze_validation(analyze_report)
             session_values = self._functionalmlds_session_values_after_placement(
                 session,
@@ -4311,9 +4311,9 @@ class SessionStore:
             )
         except Exception as exc:
             rollback_errors = self._restore_files(snapshots)
-            error_text = f"Placement-Update wurde vollständig zurückgerollt: {exc}"
+            error_text = f"The placement update was rolled back completely: {exc}"
             if rollback_errors:
-                error_text += " | Rollback-Fehler: " + "; ".join(rollback_errors)
+                error_text += " | Rollback errors: " + "; ".join(rollback_errors)
             invalid = {
                 "status": "invalid",
                 "errors": [error_text],
@@ -4457,7 +4457,7 @@ class SessionStore:
         except Exception as exc:
             return {
                 "status": "invalid",
-                "errors": [f"Placement-Commit-Guard konnte Artefakte nicht laden: {exc}"],
+                "errors": [f"The placement commit guard could not load artifacts: {exc}"],
                 "warnings": [],
                 "metrics": {},
             }
@@ -4470,7 +4470,7 @@ class SessionStore:
         for field_name, expected in expected_headers.items():
             if placements.get(field_name) != expected:
                 errors.append(
-                    f"Placement-Artefakt {field_name} ist nicht aktuell: "
+                    f"Placement artifact {field_name} is not current: "
                     f"erwartet {expected!r}, gefunden {placements.get(field_name)!r}."
                 )
         origin = str(placements.get("origin") or "")
@@ -4480,7 +4480,7 @@ class SessionStore:
         try:
             artifact_sha256 = placement_module.placement_artifact_sha256(placements)
         except Exception as exc:
-            errors.append(f"Placement-Artefakt kann nicht kanonisch gehasht werden: {exc}")
+            errors.append(f"Placement artifact cannot be hashed canonically: {exc}")
 
         strict_validation = placement_module.validate_agent_placements(
             placements,
@@ -4494,16 +4494,16 @@ class SessionStore:
             )
         warnings.extend(str(item) for item in strict_validation.get("warnings") or [])
         if artifact_sha256 and strict_validation.get("placement_artifact_sha256") != artifact_sha256:
-            errors.append("Aktuelle Placement-Validierung meldet nicht den kanonischen Artefakt-Hash.")
+            errors.append("The current placement validation does not report the canonical artifact hash.")
 
         if stored_validation.get("status") != "valid":
-            errors.append("Gespeicherte Agent-Placement-Validierung ist nicht valid.")
+            errors.append("The stored agent-placement validation is not valid.")
         if artifact_sha256 and stored_validation.get("placement_artifact_sha256") != artifact_sha256:
             errors.append(
-                "Gespeicherte Agent-Placement-Validierung gehÃ¶rt nicht zum aktuellen Artefakt-Hash."
+                "The stored agent-placement validation does not belong to the current artifact hash."
             )
         if stored_validation.get("placement_algorithm_version") != placement_module.PLACEMENT_ALGORITHM_VERSION:
-            errors.append("Gespeicherte Agent-Placement-Validierung nutzt nicht die aktuelle Algorithmusversion.")
+            errors.append("The stored agent-placement validation does not use the current algorithm version.")
 
         manifest = common.load_manifest(case_dir)
 
@@ -4525,7 +4525,7 @@ class SessionStore:
             label: str,
         ) -> None:
             if not stage or stage.get("status") != "success":
-                errors.append(f"Manifest-Stage {label} fehlt oder ist nicht success.")
+                errors.append(f"Manifest stage {label} is missing or does not have status success.")
                 return
             record = next(
                 (
@@ -4537,11 +4537,11 @@ class SessionStore:
                 None,
             )
             if not record:
-                errors.append(f"Manifest-Stage {label} referenziert {path.name} nicht.")
+                errors.append(f"Manifest stage {label} does not reference {path.name}.")
                 return
             actual_file_sha = common.sha256_file(path) if path.is_file() else ""
             if record.get("sha256") != actual_file_sha:
-                errors.append(f"Manifest-Hash fÃ¼r {path.name} ist nicht aktuell.")
+                errors.append(f"The manifest hash for {path.name} is not current.")
 
         placement_stage = stage_entry("agent_placement")
         verify_manifest_file(
@@ -4560,10 +4560,10 @@ class SessionStore:
         try:
             metrics_report = common.read_json(metrics_path)
         except Exception as exc:
-            errors.append(f"Placement-Metriken fehlen oder sind ungÃ¼ltig: {exc}")
+            errors.append(f"Placement metrics are missing or invalid: {exc}")
             metrics_report = {}
         if metrics_report.get("status") != "valid":
-            errors.append("Placement-Metriken sind nicht valid.")
+            errors.append("Placement metrics are not valid.")
         metrics_stage = stage_entry("placement_metrics")
         verify_manifest_file(
             metrics_stage,
@@ -4612,7 +4612,7 @@ class SessionStore:
             requested_generation_mode = normalize_generation_mode(requested_generation_mode_raw)
             if requested_generation_mode != session.generation_mode:
                 raise ValueError(
-                    f"generation_mode passt nicht zur Session: "
+                    f"generation_mode does not match the session: "
                     f"{requested_generation_mode} != {session.generation_mode}."
                 )
         display_name = str(payload.get("display_name") or session.project.get("display_name") or "").strip()
@@ -4711,8 +4711,8 @@ class SessionStore:
                 session,
                 status="needs_repair",
                 validation_summary=self._commit_error_summary(
-                    "FunctionalMLDS-Projekt-ID muss vor Analyze feststehen. "
-                    f"Commit-ID '{project_id}' passt nicht zur Case-ID '{session.case_id}'."
+                    "The FunctionalMLDS project ID must be fixed before analysis. "
+                    f"Commit ID '{project_id}' does not match case ID '{session.case_id}'."
                 ),
             )
         pending_change = self._pending_authoring_change(session.session_id)
@@ -4721,9 +4721,9 @@ class SessionStore:
                 session,
                 status="needs_authoring_decision",
                 validation_summary=self._commit_error_summary(
-                    "Es gibt eine offene strukturierte Placement-Änderung "
+                    "A structured placement change is open "
                     f"({pending_change.change_id}, Status {pending_change.lifecycle}). "
-                    "Bitte die Änderung zuerst akzeptieren oder verwerfen."
+                    "Accept or discard the change first."
                 ),
             )
         if session.validation_stale:
@@ -4731,15 +4731,15 @@ class SessionStore:
                 session,
                 status="needs_regeneration",
                 validation_summary=self._commit_error_summary(
-                    "Der FunctionalMLDS-Draft enthaelt vorgemerkte Chat-Aenderungen und ist nicht final validiert. "
-                    "Bitte Analyze/Regeneration erneut ausfuehren, bevor ein Runtime-Projekt final committet wird."
+                    "The FunctionalMLDS draft contains pending chat changes and is not finally validated. "
+                    "Run analysis/regeneration again before committing a runtime project."
                 ),
             )
         if not session.case_dir:
             return self._functionalmlds_commit_response(
                 session,
                 status="needs_repair",
-                validation_summary=self._commit_error_summary("FunctionalMLDS-Case-Verzeichnis fehlt in der Session."),
+                validation_summary=self._commit_error_summary("The FunctionalMLDS case directory is missing from the session."),
             )
 
         adapter = FunctionalMldsAdapter.discover(backend_root=self._project_root())
@@ -4926,7 +4926,7 @@ class SessionStore:
         if not functionalmlds_instance:
             validation_summary = self._mark_functionalmlds_analyze_invalid(
                 validation_summary,
-                "FunctionalMLDS-Instanz wurde nicht erzeugt. Die Analyse darf nicht als Legacy-Draft interpretiert werden.",
+                "The FunctionalMLDS instance was not generated. The analysis must not be interpreted as a legacy draft.",
             )
 
         agents = [dict(agent) for agent in agent_roles.get("agents") or [] if isinstance(agent, dict)]
@@ -5033,12 +5033,12 @@ class SessionStore:
     def _functionalmlds_analyze_message(validation_summary: Dict[str, Any]) -> str:
         if validation_summary.get("status") == "valid":
             return (
-                "FunctionalMLDS-Analyze abgeschlossen. Der Draft ist validiert und als Preview sichtbar; "
-                "es wurden noch keine Runtime-Projektdateien committet."
+                "FunctionalMLDS analysis completed. The draft is validated and visible as a preview; "
+                "no runtime project files have been committed yet."
             )
         return (
-            "FunctionalMLDS-Analyze abgeschlossen, aber die Validierung ist nicht gueltig. "
-            "Bitte die angezeigten Fehler beheben; es werden keine Projektdateien committet."
+            "FunctionalMLDS analysis completed, but validation is not valid. "
+            "Fix the reported errors; no project files will be committed."
         )
 
     @staticmethod
@@ -5050,11 +5050,11 @@ class SessionStore:
         lines = [
             f"FunctionalMLDS-Case: {case_id}",
             f"Analyze-Status: {validation_summary.get('status')}",
-            f"Schema/Semantik/Rollen/Wissen/Placement: {validation_summary.get('schema_status')}",
+            f"Schema/semantics/roles/knowledge/placement: {validation_summary.get('schema_status')}",
             f"FunctionalMLDS-Invarianten: {validation_summary.get('invariant_status')}",
             f"Handoff-Ableitung: {validation_summary.get('handoff_status')}",
-            f"Fehler: {validation_summary.get('error_count', 0)}",
-            f"Warnungen: {validation_summary.get('warning_count', 0)}",
+            f"Errors: {validation_summary.get('error_count', 0)}",
+            f"Warnings: {validation_summary.get('warning_count', 0)}",
         ]
         if stage_results:
             lines.append("Ausgefuehrte Stages: " + ", ".join(str(item.get("stage_id")) for item in stage_results))
@@ -5228,23 +5228,21 @@ class SessionStore:
             )
 
         dev_prompt = (
-            "Du bist ein Projekt-Assistent für Unity. Analysiere die folgende MLDSI-Datei (JSON) "
-            "und leite daraus eine Projektbeschreibung, passende Agenten (mit Personas), und benötigte "
-            "Wissenseinträge ab. Antworte präzise, strukturiert und auf Deutsch. "
-            "Die Agentenauswahl soll sich am Raumtyp orientieren (z. B. Klassenraum -> Lehrer, Schüler, Rektor; "
-            "Firmenpräsentation -> PR, Marketing, Vertrieb, Technik). Nutze die Raum-Beschreibung/Metadaten "
-            "aus der MLDSI-Datei als primäre Leitlinie für Rollen, Ton und Expertise. "
-            "Gib außerdem für jeden Agenten passende Voice-Settings an: "
-            "voice_gender (\"weiblich\" oder \"männlich\"), voice (Stimm-ID passend zum Geschlecht), "
-            "voice_style (z. B. klar, kreativ, präzise, warm, neutral) und tts_model (gpt-4o-mini-tts). "
-            "Verwende nach Möglichkeit folgende Stimm-IDs: weiblich = coral, nova, shimmer; "
-            "männlich = alloy, verse, onyx, fable, echo. "
-            "Gib eine kurze assistant_message, die dem Nutzer die Analyse und evtl. Rückfragen zusammenfasst. "
-            "Erstelle zusätzlich eine placement_preview mit:\n"
-            "- room_objects: nur Objekte am Boden (y nahe 0) mit id, name, position (x,y,z) und radius.\n"
-            "- agent_placements: sinnvolle, kontextbezogene Agentenpositionen (x,y,z; y=0).\n"
-            "Achte darauf, dass Agenten nicht mit room_objects überlappen und untereinander "
-            "einen Mindestabstand halten. Verwende nur die MLDSI-Informationen für Objektlage."
+            "You are a Unity project assistant. Analyze the following MLDSI JSON file "
+            "and derive a project description, suitable agents with personas, and required "
+            "knowledge entries. Answer precisely, structurally, and in English. "
+            "Select agents based on the room type, for example classroom roles such as teacher, student, and principal, "
+            "or company-presentation roles such as public relations, marketing, sales, and technical support. Use the room "
+            "description and metadata from the MLDSI file as the primary guide for roles, tone, and expertise. "
+            "Provide suitable voice settings for each agent: voice_gender (\"female\" or \"male\"), "
+            "voice (a fitting voice identifier), voice_style (for example clear, creative, precise, warm, or neutral), "
+            "and tts_model (gpt-4o-mini-tts). Where possible use female voices coral, nova, or shimmer, and male voices "
+            "alloy, verse, onyx, fable, or echo. Provide a short assistant_message summarizing the analysis and any "
+            "clarifying questions for the user. Also create a placement_preview with:\n"
+            "- room_objects: only objects on the floor (y near 0), with id, name, position (x,y,z), and radius.\n"
+            "- agent_placements: meaningful, context-aware agent positions (x,y,z; y=0).\n"
+            "Ensure that agents do not overlap room_objects and maintain a minimum distance from one another. "
+            "Use only the MLDSI information for object positions."
             "\n\nMLDSI JSON:\n"
             f"{arrow_text}"
         )
@@ -5254,7 +5252,7 @@ class SessionStore:
             input_msgs.append(
                 {
                     "role": "developer",
-                    "content": "Aktueller Entwurf (bei Aktualisierung berücksichtigen):\n" + current_summary,
+                    "content": "Current draft (take it into account when updating):\n" + current_summary,
                 }
             )
         for m in history:
@@ -5294,7 +5292,7 @@ class SessionStore:
         analysis = str(parsed.get("analysis") or fallback.analysis if fallback else "").strip()
 
         project_data = parsed.get("project") or {}
-        display_name = str(project_data.get("display_name") or fallback_project.get("display_name") or "Neues Projekt").strip()
+        display_name = str(project_data.get("display_name") or fallback_project.get("display_name") or "New project").strip()
         description = str(project_data.get("description") or fallback_project.get("description") or "").strip()
 
         agents_raw = parsed.get("agents")
@@ -5319,15 +5317,15 @@ class SessionStore:
                 knowledge_tags = [knowledge_tags]
             if not voice_gender and voice:
                 if voice in {"coral", "nova", "shimmer"}:
-                    voice_gender = "weiblich"
+                    voice_gender = "female"
                 elif voice in {"alloy", "verse", "onyx", "fable", "echo"}:
-                    voice_gender = "männlich"
+                    voice_gender = "male"
             if not voice and voice_gender:
-                voice = "coral" if voice_gender == "weiblich" else "alloy"
+                voice = "coral" if voice_gender == "female" else "alloy"
             if not voice:
                 voice = "alloy"
             if not voice_gender:
-                voice_gender = "weiblich" if voice in {"coral", "nova", "shimmer"} else "männlich"
+                voice_gender = "female" if voice in {"coral", "nova", "shimmer"} else "male"
             if not voice_style:
                 voice_style = "neutral"
             if tts_model.lower() == "standard":

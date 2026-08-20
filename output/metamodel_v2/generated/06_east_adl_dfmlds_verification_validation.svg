@@ -9,15 +9,15 @@
 <text x="30.0" y="38.0" text-anchor="start" font-family="Arial, sans-serif" font-size="26" font-weight="700" fill="#1E324A">EAST-ADL / DFMLDS V2 – Verification &amp; Validation</text>
 <text x="30.0" y="68.0" text-anchor="start" font-family="Arial, sans-serif" font-size="15" font-weight="400" fill="#52677F">Exact V&amp;V container ownership with DFMLDS specializations, logs and distinct subject/target semantics.</text>
 <rect x="34.0" y="117.0" width="2758.0" height="211.0" rx="9" fill="#FFFFFF" stroke="#DCE5EE" stroke-width="1.5"/>
-<text x="52.0" y="146.0" text-anchor="start" font-family="Arial, sans-serif" font-size="18" font-weight="700" fill="#283D55">Requirements- und Infrastrukturbezug</text>
+<text x="52.0" y="146.0" text-anchor="start" font-family="Arial, sans-serif" font-size="18" font-weight="700" fill="#283D55">Requirements and infrastructure</text>
 <rect x="34.0" y="384.0" width="2758.0" height="202.0" rx="9" fill="#FFFFFF" stroke="#DCE5EE" stroke-width="1.5"/>
-<text x="52.0" y="413.0" text-anchor="start" font-family="Arial, sans-serif" font-size="18" font-weight="700" fill="#283D55">EAST-ADL V&amp;V-Container</text>
+<text x="52.0" y="413.0" text-anchor="start" font-family="Arial, sans-serif" font-size="18" font-weight="700" fill="#283D55">EAST-ADL V&amp;V container</text>
 <rect x="34.0" y="642.0" width="2758.0" height="202.0" rx="9" fill="#FFFFFF" stroke="#DCE5EE" stroke-width="1.5"/>
-<text x="52.0" y="671.0" text-anchor="start" font-family="Arial, sans-serif" font-size="18" font-weight="700" fill="#283D55">EAST-ADL V&amp;V-Ablauf</text>
+<text x="52.0" y="671.0" text-anchor="start" font-family="Arial, sans-serif" font-size="18" font-weight="700" fill="#283D55">EAST-ADL V&amp;V flow</text>
 <rect x="34.0" y="900.0" width="2758.0" height="211.0" rx="9" fill="#FFFFFF" stroke="#DCE5EE" stroke-width="1.5"/>
-<text x="52.0" y="929.0" text-anchor="start" font-family="Arial, sans-serif" font-size="18" font-weight="700" fill="#283D55">DFMLDS-Spezialisierungen</text>
+<text x="52.0" y="929.0" text-anchor="start" font-family="Arial, sans-serif" font-size="18" font-weight="700" fill="#283D55">DFMLDS specializations</text>
 <rect x="34.0" y="1167.0" width="2758.0" height="230.0" rx="9" fill="#FFFFFF" stroke="#DCE5EE" stroke-width="1.5"/>
-<text x="52.0" y="1196.0" text-anchor="start" font-family="Arial, sans-serif" font-size="18" font-weight="700" fill="#283D55">Bindungen, Aussagen und Ergebnisse</text>
+<text x="52.0" y="1196.0" text-anchor="start" font-family="Arial, sans-serif" font-size="18" font-weight="700" fill="#283D55">Bindings, assertions, and results</text>
 <polyline points="1377.0,548.0 1377.0,587.0 809.0,587.0 809.0,680.0" fill="none" stroke="#62778F" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" marker-start="url(#diamond)"/>
 <rect x="1056.0" y="567.0" width="74.0" height="18" rx="3" fill="#F9FBFD" fill-opacity="0.96"/>
 <text x="1093.0" y="580.0" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" font-weight="400" fill="#3F556D">vvCase [*]</text>
@@ -235,7 +235,7 @@
 <text x="2185.0" y="1237.0" text-anchor="end" font-family="Arial, sans-serif" font-size="9" font-weight="400" fill="#766A50">«abstract, atpPrototype»</text>
 <text x="2053.0" y="1262.0" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="700" fill="#20354D">EAValue</text>
 <line x1="1910.0" y1="1277.0" x2="2196.0" y2="1277.0" stroke="#315C96" stroke-width="1" opacity="0.5"/>
-<text x="1921.0" y="1297.0" text-anchor="start" font-family="Consolas, monospace" font-size="11" font-weight="400" fill="#334A62">keine lokalen Attribute</text>
+<text x="1921.0" y="1297.0" text-anchor="start" font-family="Consolas, monospace" font-size="11" font-weight="400" fill="#334A62">no local attributes</text>
 </g>
 <g><rect x="2230.0" y="1205.0" width="286.0" height="154.0" rx="7" fill="#EAF8EF" stroke="#27734D" stroke-width="2"/>
 <text x="2241.0" y="1223.0" text-anchor="start" font-family="Arial, sans-serif" font-size="10" font-weight="400" fill="#60758B">DF::Core</text>
@@ -248,7 +248,7 @@
 </g>
 <line x1="34" y1="1499" x2="2792" y2="1499" stroke="#C5D2DF"/>
 <text x="34.0" y="1530.0" text-anchor="start" font-family="Arial, sans-serif" font-size="18" font-weight="700" fill="#263B53">Beziehungsnachweis</text>
-<text x="34.0" y="1553.0" text-anchor="start" font-family="Arial, sans-serif" font-size="12" font-weight="400" fill="#60758B">[Diagramm] sichtbar geroutet · [Sicht] im exakten Modell enthalten · [Vererbung] in den Kartenköpfen</text>
+<text x="34.0" y="1553.0" text-anchor="start" font-family="Arial, sans-serif" font-size="12" font-weight="400" fill="#60758B">[Diagram] visibly routed · [View] included in the exact model · [Inheritance] shown in card headers</text>
 <text x="34.0" y="1581.0" text-anchor="start" font-family="Consolas, monospace" font-size="11" font-weight="400" fill="#3F566E">[Diagramm] ◆ VerificationValidation.vvCase [*] → VVCase</text>
 <text x="34.0" y="1604.0" text-anchor="start" font-family="Consolas, monospace" font-size="11" font-weight="400" fill="#3F566E">[Diagramm] → VVCase.vvTarget [*] → VVTarget</text>
 <text x="34.0" y="1627.0" text-anchor="start" font-family="Consolas, monospace" font-size="11" font-weight="400" fill="#3F566E">[Diagramm] ◆ VVLog.vvActualOutcome [*] → VVActualOutcome</text>
@@ -276,25 +276,25 @@
 <text x="953.3" y="1765.0" text-anchor="start" font-family="Consolas, monospace" font-size="11" font-weight="400" fill="#3F566E">[Sicht] → VVTarget.element [*] → Identifiable</text>
 <text x="953.3" y="1788.0" text-anchor="start" font-family="Consolas, monospace" font-size="11" font-weight="400" fill="#3F566E">[Sicht] → Assertion.subject [1] → Identifiable</text>
 <text x="953.3" y="1811.0" text-anchor="start" font-family="Consolas, monospace" font-size="11" font-weight="400" fill="#3F566E">[Sicht] → ValidationCaseUseCaseBinding.validationCase [1] → ValidationCase</text>
-<text x="953.3" y="1834.0" text-anchor="start" font-family="Consolas, monospace" font-size="11" font-weight="400" fill="#3F566E">[Vererbung] Requirement → TraceableSpecification</text>
-<text x="953.3" y="1857.0" text-anchor="start" font-family="Consolas, monospace" font-size="11" font-weight="400" fill="#3F566E">[Vererbung] Verify → RequirementsRelationship</text>
-<text x="953.3" y="1880.0" text-anchor="start" font-family="Consolas, monospace" font-size="11" font-weight="400" fill="#3F566E">[Vererbung] VerificationValidation → Context</text>
-<text x="953.3" y="1903.0" text-anchor="start" font-family="Consolas, monospace" font-size="11" font-weight="400" fill="#3F566E">[Vererbung] VVTarget → TraceableSpecification</text>
-<text x="953.3" y="1926.0" text-anchor="start" font-family="Consolas, monospace" font-size="11" font-weight="400" fill="#3F566E">[Vererbung] VVCase → TraceableSpecification</text>
-<text x="1872.7" y="1581.0" text-anchor="start" font-family="Consolas, monospace" font-size="11" font-weight="400" fill="#3F566E">[Vererbung] VVProcedure → TraceableSpecification</text>
-<text x="1872.7" y="1604.0" text-anchor="start" font-family="Consolas, monospace" font-size="11" font-weight="400" fill="#3F566E">[Vererbung] VVStimuli → TraceableSpecification</text>
-<text x="1872.7" y="1627.0" text-anchor="start" font-family="Consolas, monospace" font-size="11" font-weight="400" fill="#3F566E">[Vererbung] VVIntendedOutcome → TraceableSpecification</text>
-<text x="1872.7" y="1650.0" text-anchor="start" font-family="Consolas, monospace" font-size="11" font-weight="400" fill="#3F566E">[Vererbung] VVLog → TraceableSpecification</text>
-<text x="1872.7" y="1673.0" text-anchor="start" font-family="Consolas, monospace" font-size="11" font-weight="400" fill="#3F566E">[Vererbung] VVActualOutcome → TraceableSpecification</text>
-<text x="1872.7" y="1696.0" text-anchor="start" font-family="Consolas, monospace" font-size="11" font-weight="400" fill="#3F566E">[Vererbung] RuntimeValidationTarget → VVTarget</text>
-<text x="1872.7" y="1719.0" text-anchor="start" font-family="Consolas, monospace" font-size="11" font-weight="400" fill="#3F566E">[Vererbung] ValidationCase → VVCase</text>
-<text x="1872.7" y="1742.0" text-anchor="start" font-family="Consolas, monospace" font-size="11" font-weight="400" fill="#3F566E">[Vererbung] RuntimeValidationProcedure → VVProcedure</text>
-<text x="1872.7" y="1765.0" text-anchor="start" font-family="Consolas, monospace" font-size="11" font-weight="400" fill="#3F566E">[Vererbung] RuntimeStimulus → VVStimuli</text>
-<text x="1872.7" y="1788.0" text-anchor="start" font-family="Consolas, monospace" font-size="11" font-weight="400" fill="#3F566E">[Vererbung] AssertionOutcome → VVIntendedOutcome</text>
-<text x="1872.7" y="1811.0" text-anchor="start" font-family="Consolas, monospace" font-size="11" font-weight="400" fill="#3F566E">[Vererbung] StateAssertionOutcome → AssertionOutcome</text>
-<text x="1872.7" y="1834.0" text-anchor="start" font-family="Consolas, monospace" font-size="11" font-weight="400" fill="#3F566E">[Vererbung] RuntimeValidationLog → VVLog</text>
-<text x="1872.7" y="1857.0" text-anchor="start" font-family="Consolas, monospace" font-size="11" font-weight="400" fill="#3F566E">[Vererbung] RuntimeActualOutcome → VVActualOutcome</text>
-<text x="1872.7" y="1880.0" text-anchor="start" font-family="Consolas, monospace" font-size="11" font-weight="400" fill="#3F566E">[Vererbung] UseCase → TraceableSpecification</text>
-<text x="1872.7" y="1903.0" text-anchor="start" font-family="Consolas, monospace" font-size="11" font-weight="400" fill="#3F566E">[Vererbung] StateAssertion → Assertion</text>
-<text x="1872.7" y="1926.0" text-anchor="start" font-family="Consolas, monospace" font-size="11" font-weight="400" fill="#3F566E">[Vererbung] Assertion → TraceableSpecification</text>
+<text x="953.3" y="1834.0" text-anchor="start" font-family="Consolas, monospace" font-size="11" font-weight="400" fill="#3F566E">[Inheritance] Requirement → TraceableSpecification</text>
+<text x="953.3" y="1857.0" text-anchor="start" font-family="Consolas, monospace" font-size="11" font-weight="400" fill="#3F566E">[Inheritance] Verify → RequirementsRelationship</text>
+<text x="953.3" y="1880.0" text-anchor="start" font-family="Consolas, monospace" font-size="11" font-weight="400" fill="#3F566E">[Inheritance] VerificationValidation → Context</text>
+<text x="953.3" y="1903.0" text-anchor="start" font-family="Consolas, monospace" font-size="11" font-weight="400" fill="#3F566E">[Inheritance] VVTarget → TraceableSpecification</text>
+<text x="953.3" y="1926.0" text-anchor="start" font-family="Consolas, monospace" font-size="11" font-weight="400" fill="#3F566E">[Inheritance] VVCase → TraceableSpecification</text>
+<text x="1872.7" y="1581.0" text-anchor="start" font-family="Consolas, monospace" font-size="11" font-weight="400" fill="#3F566E">[Inheritance] VVProcedure → TraceableSpecification</text>
+<text x="1872.7" y="1604.0" text-anchor="start" font-family="Consolas, monospace" font-size="11" font-weight="400" fill="#3F566E">[Inheritance] VVStimuli → TraceableSpecification</text>
+<text x="1872.7" y="1627.0" text-anchor="start" font-family="Consolas, monospace" font-size="11" font-weight="400" fill="#3F566E">[Inheritance] VVIntendedOutcome → TraceableSpecification</text>
+<text x="1872.7" y="1650.0" text-anchor="start" font-family="Consolas, monospace" font-size="11" font-weight="400" fill="#3F566E">[Inheritance] VVLog → TraceableSpecification</text>
+<text x="1872.7" y="1673.0" text-anchor="start" font-family="Consolas, monospace" font-size="11" font-weight="400" fill="#3F566E">[Inheritance] VVActualOutcome → TraceableSpecification</text>
+<text x="1872.7" y="1696.0" text-anchor="start" font-family="Consolas, monospace" font-size="11" font-weight="400" fill="#3F566E">[Inheritance] RuntimeValidationTarget → VVTarget</text>
+<text x="1872.7" y="1719.0" text-anchor="start" font-family="Consolas, monospace" font-size="11" font-weight="400" fill="#3F566E">[Inheritance] ValidationCase → VVCase</text>
+<text x="1872.7" y="1742.0" text-anchor="start" font-family="Consolas, monospace" font-size="11" font-weight="400" fill="#3F566E">[Inheritance] RuntimeValidationProcedure → VVProcedure</text>
+<text x="1872.7" y="1765.0" text-anchor="start" font-family="Consolas, monospace" font-size="11" font-weight="400" fill="#3F566E">[Inheritance] RuntimeStimulus → VVStimuli</text>
+<text x="1872.7" y="1788.0" text-anchor="start" font-family="Consolas, monospace" font-size="11" font-weight="400" fill="#3F566E">[Inheritance] AssertionOutcome → VVIntendedOutcome</text>
+<text x="1872.7" y="1811.0" text-anchor="start" font-family="Consolas, monospace" font-size="11" font-weight="400" fill="#3F566E">[Inheritance] StateAssertionOutcome → AssertionOutcome</text>
+<text x="1872.7" y="1834.0" text-anchor="start" font-family="Consolas, monospace" font-size="11" font-weight="400" fill="#3F566E">[Inheritance] RuntimeValidationLog → VVLog</text>
+<text x="1872.7" y="1857.0" text-anchor="start" font-family="Consolas, monospace" font-size="11" font-weight="400" fill="#3F566E">[Inheritance] RuntimeActualOutcome → VVActualOutcome</text>
+<text x="1872.7" y="1880.0" text-anchor="start" font-family="Consolas, monospace" font-size="11" font-weight="400" fill="#3F566E">[Inheritance] UseCase → TraceableSpecification</text>
+<text x="1872.7" y="1903.0" text-anchor="start" font-family="Consolas, monospace" font-size="11" font-weight="400" fill="#3F566E">[Inheritance] StateAssertion → Assertion</text>
+<text x="1872.7" y="1926.0" text-anchor="start" font-family="Consolas, monospace" font-size="11" font-weight="400" fill="#3F566E">[Inheritance] Assertion → TraceableSpecification</text>
 </svg>

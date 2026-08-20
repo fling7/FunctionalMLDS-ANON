@@ -1,48 +1,48 @@
-# Dynamic Functional MLDS V2 – Metamodell-Spezifikation
+# Dynamic Functional MLDS V2 – metamodel specification
 
-Modellversion: `2.0.0-model`  
-Namespace: `DFMLDS::V2`  
-Status: `accepted-model-release`  
-EAST-ADL-Bezug: V2.1.12  
-Kanonische Quelle: `tools/dynamic_functional_mlds_v2_model.py`
+Model version: `2.0.0-model`
+Namespace: `DFMLDS::V2`
+Status: `accepted-model-release`
+EAST-ADL reference: V2.1.12
+Canonical source: `tools/dynamic_functional_mlds_v2_model.py`
 
-## 1. Abgrenzung und Konformitätsregel
+## 1. Scope and conformance rule
 
-Die blau dargestellten EAST-ADL-Metaklassen sind ein ausgewählter, unverändert übernommener Ausschnitt der EAST-ADL-Spezifikation V2.1.12. Auslassungen sind Auslassungen des Ausschnitts, keine Änderungen an EAST-ADL. Sämtliche projektspezifischen Klassen und Beziehungen liegen im Namespace `DFMLDS::V2`.
+The EAST-ADL metaclasses shown in blue form a selected, unmodified subset of the EAST-ADL V2.1.12 specification. Omissions delimit the subset and do not modify EAST-ADL. All project-specific classes and relations are located in the `DFMLDS::V2` namespace.
 
-Die Abhängigkeit ist strikt einseitig: DFMLDS importiert EAST-ADL. Keine EAST-ADL-Metaklasse erhält durch V2 eine neue Eigenschaft, Pflichtassoziation oder Rückabhängigkeit. Annex C, Feature-Mapping und AgentKnowledge sind optionale Module; Annex C ist in V2.1.12 vorläufig.
+The dependency is strictly one-way: DFMLDS imports EAST-ADL. V2 adds no property, mandatory association, or reverse dependency to an EAST-ADL metaclass. Annex C, feature mapping, and AgentKnowledge are optional modules; Annex C is preliminary in V2.1.12.
 
-V2 ist eine reine Modellfassung. Unity, Backend, Pipeline und die v0.5-Serialisierung werden nicht verändert.
+V2 is a model-only revision. It does not change Unity, the backend, the pipeline, or v0.5 serialization.
 
-## 2. Pakete
+## 2. Packages
 
-| Paket | Art | normativ | Imports | Zweck |
+| Package | Kind | Normative | Imports | Purpose |
 | --- | --- | --- | --- | --- |
-| `EAST-ADL::Elements` | imported-east-adl | ja | — | Selected exact EAST-ADL V2.1.12 infrastructure slice (section 25). |
-| `EAST-ADL::Datatypes` | imported-east-adl | ja | `EAST-ADL::Elements` | Selected exact EAST-ADL datatype slice (section 23). |
-| `EAST-ADL::Values` | imported-east-adl | ja | `EAST-ADL::Datatypes` | Selected exact EAST-ADL value slice (section 24). |
-| `EAST-ADL::Requirements` | imported-east-adl | ja | `EAST-ADL::Elements`, `EAST-ADL::UseCases`, `EAST-ADL::Behavior` | Selected exact EAST-ADL requirements slice (section 11). |
-| `EAST-ADL::UseCases` | imported-east-adl | ja | `EAST-ADL::Elements` | Exact EAST-ADL Actor, UseCase, Extend, Include and ExtensionPoint slice (section 12). |
-| `EAST-ADL::SystemModeling` | imported-east-adl | ja | `EAST-ADL::Elements`, `EAST-ADL::FunctionModeling` | Selected exact EAST-ADL abstraction-level slice (section 3). |
-| `EAST-ADL::FunctionModeling` | imported-east-adl | ja | `EAST-ADL::Elements`, `EAST-ADL::Datatypes`, `EAST-ADL::Values` | Selected exact EAST-ADL function type/prototype slice (section 6). |
-| `EAST-ADL::Behavior` | imported-east-adl | ja | `EAST-ADL::Elements`, `EAST-ADL::FunctionModeling`, `EAST-ADL::Values` | Selected exact EAST-ADL FunctionBehavior slice (section 9). |
-| `EAST-ADL::Timing` | imported-east-adl | ja | `EAST-ADL::Elements` | Selected exact EAST-ADL timing event slice (section 14). |
-| `EAST-ADL::Events` | imported-east-adl | ja | `EAST-ADL::Timing` | Selected exact EAST-ADL ExternalEvent slice (section 16). |
-| `EAST-ADL::VerificationValidation` | imported-east-adl | ja | `EAST-ADL::Elements`, `EAST-ADL::Requirements` | Exact EAST-ADL V&V container and element slice (section 13). |
-| `DFMLDS::V2::Core` | dfmlds-extension | ja | `EAST-ADL::Elements`, `EAST-ADL::Datatypes`, `EAST-ADL::Values`, `EAST-ADL::Requirements`, `EAST-ADL::UseCases`, `EAST-ADL::SystemModeling`, `EAST-ADL::FunctionModeling`, `EAST-ADL::Behavior`, `EAST-ADL::Timing`, `EAST-ADL::Events`, `EAST-ADL::VerificationValidation` | Conservative DFMLDS V2 extension; imported EAST-ADL packages never import it. |
-| `EAST-ADL::AnnexC::BehaviorDescription` | imported-east-adl-annex-c | nein; vorläufig | `EAST-ADL::Elements`, `EAST-ADL::FunctionModeling`, `EAST-ADL::Behavior`, `EAST-ADL::VehicleFeatureModeling` | Preliminary Annex C behavior-description slice. |
-| `EAST-ADL::AnnexC::AttributeQuantificationConstraint` | imported-east-adl-annex-c | nein; vorläufig | `EAST-ADL::Elements`, `EAST-ADL::Values` | Preliminary Annex C quantification slice. |
-| `EAST-ADL::AnnexC::ComputationConstraint` | imported-east-adl-annex-c | nein; vorläufig | `EAST-ADL::Elements`, `EAST-ADL::AnnexC::AttributeQuantificationConstraint` | Preliminary Annex C logical-computation slice. |
-| `EAST-ADL::AnnexC::TemporalConstraint` | imported-east-adl-annex-c | nein; vorläufig | `EAST-ADL::Elements`, `EAST-ADL::Values`, `EAST-ADL::Timing`, `EAST-ADL::AnnexC::BehaviorDescription`, `EAST-ADL::AnnexC::AttributeQuantificationConstraint` | Preliminary Annex C temporal-constraint slice; TransitionEvent is not Timing::Event. |
-| `DFMLDS::V2::AnnexCBridge` | optional-dfmlds-extension | nein; vorläufig | `EAST-ADL::Elements`, `DFMLDS::V2::Core`, `EAST-ADL::AnnexC::ComputationConstraint`, `EAST-ADL::AnnexC::TemporalConstraint`, `EAST-ADL::AnnexC::AttributeQuantificationConstraint`, `EAST-ADL::AnnexC::BehaviorDescription` | Optional semantic mapping onto preliminary Annex C; Core has no dependency on it. |
-| `EAST-ADL::FeatureModeling` | imported-east-adl-optional | ja | `EAST-ADL::Elements` | Minimal target slice for optional generic feature mapping. |
-| `EAST-ADL::VehicleFeatureModeling` | imported-east-adl-optional | ja | `EAST-ADL::FeatureModeling` | Automotive-only VehicleFeature target slice. |
-| `DFMLDS::V2::FeatureBridge` | optional-dfmlds-extension | nein | `EAST-ADL::Elements`, `DFMLDS::V2::Core`, `EAST-ADL::FeatureModeling`, `EAST-ADL::VehicleFeatureModeling` | Optional feature mapping; no VehicleFeature dependency in Core. |
-| `DFMLDS::V2::AgentKnowledge` | optional-dfmlds-extension | nein | `EAST-ADL::Elements`, `DFMLDS::V2::Core` | Optional perception, provenance, knowledge and modification-rights module. |
+| `EAST-ADL::Elements` | imported-east-adl | yes | — | Selected exact EAST-ADL V2.1.12 infrastructure slice (section 25). |
+| `EAST-ADL::Datatypes` | imported-east-adl | yes | `EAST-ADL::Elements` | Selected exact EAST-ADL datatype slice (section 23). |
+| `EAST-ADL::Values` | imported-east-adl | yes | `EAST-ADL::Datatypes` | Selected exact EAST-ADL value slice (section 24). |
+| `EAST-ADL::Requirements` | imported-east-adl | yes | `EAST-ADL::Elements`, `EAST-ADL::UseCases`, `EAST-ADL::Behavior` | Selected exact EAST-ADL requirements slice (section 11). |
+| `EAST-ADL::UseCases` | imported-east-adl | yes | `EAST-ADL::Elements` | Exact EAST-ADL Actor, UseCase, Extend, Include and ExtensionPoint slice (section 12). |
+| `EAST-ADL::SystemModeling` | imported-east-adl | yes | `EAST-ADL::Elements`, `EAST-ADL::FunctionModeling` | Selected exact EAST-ADL abstraction-level slice (section 3). |
+| `EAST-ADL::FunctionModeling` | imported-east-adl | yes | `EAST-ADL::Elements`, `EAST-ADL::Datatypes`, `EAST-ADL::Values` | Selected exact EAST-ADL function type/prototype slice (section 6). |
+| `EAST-ADL::Behavior` | imported-east-adl | yes | `EAST-ADL::Elements`, `EAST-ADL::FunctionModeling`, `EAST-ADL::Values` | Selected exact EAST-ADL FunctionBehavior slice (section 9). |
+| `EAST-ADL::Timing` | imported-east-adl | yes | `EAST-ADL::Elements` | Selected exact EAST-ADL timing event slice (section 14). |
+| `EAST-ADL::Events` | imported-east-adl | yes | `EAST-ADL::Timing` | Selected exact EAST-ADL ExternalEvent slice (section 16). |
+| `EAST-ADL::VerificationValidation` | imported-east-adl | yes | `EAST-ADL::Elements`, `EAST-ADL::Requirements` | Exact EAST-ADL V&V container and element slice (section 13). |
+| `DFMLDS::V2::Core` | dfmlds-extension | yes | `EAST-ADL::Elements`, `EAST-ADL::Datatypes`, `EAST-ADL::Values`, `EAST-ADL::Requirements`, `EAST-ADL::UseCases`, `EAST-ADL::SystemModeling`, `EAST-ADL::FunctionModeling`, `EAST-ADL::Behavior`, `EAST-ADL::Timing`, `EAST-ADL::Events`, `EAST-ADL::VerificationValidation` | Conservative DFMLDS V2 extension; imported EAST-ADL packages never import it. |
+| `EAST-ADL::AnnexC::BehaviorDescription` | imported-east-adl-annex-c | no; preliminary | `EAST-ADL::Elements`, `EAST-ADL::FunctionModeling`, `EAST-ADL::Behavior`, `EAST-ADL::VehicleFeatureModeling` | Preliminary Annex C behavior-description slice. |
+| `EAST-ADL::AnnexC::AttributeQuantificationConstraint` | imported-east-adl-annex-c | no; preliminary | `EAST-ADL::Elements`, `EAST-ADL::Values` | Preliminary Annex C quantification slice. |
+| `EAST-ADL::AnnexC::ComputationConstraint` | imported-east-adl-annex-c | no; preliminary | `EAST-ADL::Elements`, `EAST-ADL::AnnexC::AttributeQuantificationConstraint` | Preliminary Annex C logical-computation slice. |
+| `EAST-ADL::AnnexC::TemporalConstraint` | imported-east-adl-annex-c | no; preliminary | `EAST-ADL::Elements`, `EAST-ADL::Values`, `EAST-ADL::Timing`, `EAST-ADL::AnnexC::BehaviorDescription`, `EAST-ADL::AnnexC::AttributeQuantificationConstraint` | Preliminary Annex C temporal-constraint slice; TransitionEvent is not Timing::Event. |
+| `DFMLDS::V2::AnnexCBridge` | optional-dfmlds-extension | no; preliminary | `EAST-ADL::Elements`, `DFMLDS::V2::Core`, `EAST-ADL::AnnexC::ComputationConstraint`, `EAST-ADL::AnnexC::TemporalConstraint`, `EAST-ADL::AnnexC::AttributeQuantificationConstraint`, `EAST-ADL::AnnexC::BehaviorDescription` | Optional semantic mapping onto preliminary Annex C; Core has no dependency on it. |
+| `EAST-ADL::FeatureModeling` | imported-east-adl-optional | yes | `EAST-ADL::Elements` | Minimal target slice for optional generic feature mapping. |
+| `EAST-ADL::VehicleFeatureModeling` | imported-east-adl-optional | yes | `EAST-ADL::FeatureModeling` | Automotive-only VehicleFeature target slice. |
+| `DFMLDS::V2::FeatureBridge` | optional-dfmlds-extension | no | `EAST-ADL::Elements`, `DFMLDS::V2::Core`, `EAST-ADL::FeatureModeling`, `EAST-ADL::VehicleFeatureModeling` | Optional feature mapping; no VehicleFeature dependency in Core. |
+| `DFMLDS::V2::AgentKnowledge` | optional-dfmlds-extension | no | `EAST-ADL::Elements`, `DFMLDS::V2::Core` | Optional perception, provenance, knowledge and modification-rights module. |
 
-## 3. Enumerationen
+## 3. Enumerations
 
-| Enumeration | Literale | Quelle |
+| Enumeration | Literals | Source |
 | --- | --- | --- |
 | `EAST-ADL::Behavior::FunctionBehaviorKind` | `ASCET`, `MARTE`, `OTHER`, `SCADE`, `SCILAB`, `SDL`, `SIMULINK`, `STATEMATE`, `UML` | 9.2.3, pp. 70-71 |
 | `EAST-ADL::Behavior::TriggerPolicyKind` | `EVENT`, `TIME` | 9.2.7, p. 73 |
@@ -61,11 +61,11 @@ V2 ist eine reine Modellfassung. Unity, Backend, Pipeline und die v0.5-Serialisi
 | `DFMLDS::V2::AgentKnowledge::KnowledgePermission` | `perceive`, `know`, `explain`, `modify` | DFMLDS V2 |
 | `DFMLDS::V2::AgentKnowledge::KnowledgeProvenanceKind` | `authored`, `observed`, `imported`, `inferred` | DFMLDS V2 |
 
-## 4. Klassen und Datentypen
+## 4. Classes and datatypes
 
 ### EAST-ADL::Elements
 
-| Element | Basis/Basen | lokal definierte Attribute | Beschreibung | EAST-ADL-Quelle |
+| Element | Base(s) | Locally defined attributes | Description | EAST-ADL source |
 | --- | --- | --- | --- | --- |
 | `Comment` | — | `body: String [1]` | Textual annotation. | 25.2.1, pp. 188-189 |
 | `Context` (abstract) | `EAST-ADL::Elements::EAPackageableElement` | — | Owns relationships and identifies traceable specifications in a model context. | 25.2.2, p. 189 |
@@ -82,7 +82,7 @@ V2 ist eine reine Modellfassung. Unity, Backend, Pipeline und die v0.5-Serialisi
 
 ### EAST-ADL::Datatypes
 
-| Element | Basis/Basen | lokal definierte Attribute | Beschreibung | EAST-ADL-Quelle |
+| Element | Base(s) | Locally defined attributes | Description | EAST-ADL source |
 | --- | --- | --- | --- | --- |
 | `EABoolean` | `EAST-ADL::Datatypes::EADatatype` | — | Boolean datatype with true and false values. | 23.2.3, p. 177 |
 | `EADatatype` (abstract) | `EAST-ADL::Elements::TraceableSpecification` | — | Type whose instances are identified only by value. | 23.2.4, p. 178 |
@@ -91,7 +91,7 @@ V2 ist eine reine Modellfassung. Unity, Backend, Pipeline und die v0.5-Serialisi
 
 ### EAST-ADL::Values
 
-| Element | Basis/Basen | lokal definierte Attribute | Beschreibung | EAST-ADL-Quelle |
+| Element | Base(s) | Locally defined attributes | Description | EAST-ADL source |
 | --- | --- | --- | --- | --- |
 | `EAExpression` | `EAST-ADL::Values::EAValue` | — | Mixed-string expression capable of model references. | 24.2.5, p. 185 |
 | `EANumericalValue` | `EAST-ADL::Values::EAValue` | `value: Numerical [1]` | Numerical value typed by EANumerical or RangeableValueType. | 24.2.6, p. 185 |
@@ -99,7 +99,7 @@ V2 ist eine reine Modellfassung. Unity, Backend, Pipeline und die v0.5-Serialisi
 
 ### EAST-ADL::Requirements
 
-| Element | Basis/Basen | lokal definierte Attribute | Beschreibung | EAST-ADL-Quelle |
+| Element | Base(s) | Locally defined attributes | Description | EAST-ADL source |
 | --- | --- | --- | --- | --- |
 | `Refine` | `EAST-ADL::Requirements::RequirementsRelationship` | — | Exact requirement-to-EAElement refinement relationship. | 11.2.5, p. 94 |
 | `Requirement` | `EAST-ADL::Elements::TraceableSpecification` | `formalism: String [0..1]`<br>`url: String [0..1]` | Capability or condition to be satisfied; text is inherited and optional. | 11.2.6, pp. 94-95 |
@@ -109,7 +109,7 @@ V2 ist eine reine Modellfassung. Unity, Backend, Pipeline und die v0.5-Serialisi
 
 ### EAST-ADL::UseCases
 
-| Element | Basis/Basen | lokal definierte Attribute | Beschreibung | EAST-ADL-Quelle |
+| Element | Base(s) | Locally defined attributes | Description | EAST-ADL source |
 | --- | --- | --- | --- | --- |
 | `Actor` | `EAST-ADL::Elements::TraceableSpecification` | — | External role interacting with a UseCase, not a concrete physical entity. | 12.2.1, p. 101 |
 | `Extend` | `EAST-ADL::Elements::Relationship` | — | Extends a UseCase at one or more ExtensionPoints; EAST-ADL defines no condition property. | 12.2.2, pp. 101-102 |
@@ -120,14 +120,14 @@ V2 ist eine reine Modellfassung. Unity, Backend, Pipeline und die v0.5-Serialisi
 
 ### EAST-ADL::SystemModeling
 
-| Element | Basis/Basen | lokal definierte Attribute | Beschreibung | EAST-ADL-Quelle |
+| Element | Base(s) | Locally defined attributes | Description | EAST-ADL source |
 | --- | --- | --- | --- | --- |
 | `AnalysisLevel` | `EAST-ADL::Elements::Context` | — | Analysis abstraction level containing an optional FAA root prototype. | 3.2.1, pp. 20-21 |
 | `DesignLevel` | `EAST-ADL::Elements::Context` | — | Design abstraction level containing an optional FDA root prototype. | 3.2.2, pp. 21-22 |
 
 ### EAST-ADL::FunctionModeling
 
-| Element | Basis/Basen | lokal definierte Attribute | Beschreibung | EAST-ADL-Quelle |
+| Element | Base(s) | Locally defined attributes | Description | EAST-ADL source |
 | --- | --- | --- | --- | --- |
 | `AllocateableElement` (abstract) | — | — | Abstract marker for allocateable elements. | 6.2.1, p. 41 |
 | `AnalysisFunctionPrototype` | `EAST-ADL::FunctionModeling::FunctionPrototype` | — | Prototype typed by AnalysisFunctionType. | 6.2.3, p. 42 |
@@ -143,7 +143,7 @@ V2 ist eine reine Modellfassung. Unity, Backend, Pipeline und die v0.5-Serialisi
 
 ### EAST-ADL::Behavior
 
-| Element | Basis/Basen | lokal definierte Attribute | Beschreibung | EAST-ADL-Quelle |
+| Element | Base(s) | Locally defined attributes | Description | EAST-ADL source |
 | --- | --- | --- | --- | --- |
 | `FunctionBehavior` | `EAST-ADL::Elements::Context` | `path: String [1]`<br>`representation: FunctionBehaviorKind [1]` | Synchronous run-to-completion behavior assigned to at most one FunctionType. | 9.2.2, pp. 69-70 |
 | `FunctionTrigger` | `EAST-ADL::Values::EAExpression`, `EAST-ADL::Elements::EAElement` | `triggerPolicy: TriggerPolicyKind [1]` | Event- or time-driven trigger for a FunctionType or FunctionPrototype. | 9.2.4, pp. 71-72 |
@@ -151,20 +151,20 @@ V2 ist eine reine Modellfassung. Unity, Backend, Pipeline und die v0.5-Serialisi
 
 ### EAST-ADL::Timing
 
-| Element | Basis/Basen | lokal definierte Attribute | Beschreibung | EAST-ADL-Quelle |
+| Element | Base(s) | Locally defined attributes | Description | EAST-ADL source |
 | --- | --- | --- | --- | --- |
 | `Event` (abstract) | `EAST-ADL::Timing::TimingDescription` | — | Identifiable form of state change with semantic occurrences. | 14.2.1, pp. 113-114 |
 | `TimingDescription` (abstract) | `EAST-ADL::Elements::EAElement` | — | Abstract timing description. | 14.2.6, p. 116 |
 
 ### EAST-ADL::Events
 
-| Element | Basis/Basen | lokal definierte Attribute | Beschreibung | EAST-ADL-Quelle |
+| Element | Base(s) | Locally defined attributes | Description | EAST-ADL source |
 | --- | --- | --- | --- | --- |
 | `ExternalEvent` | `EAST-ADL::Timing::Event` | — | Particular externally described form of state change. | 16.2.8, p. 139 |
 
 ### EAST-ADL::VerificationValidation
 
-| Element | Basis/Basen | lokal definierte Attribute | Beschreibung | EAST-ADL-Quelle |
+| Element | Base(s) | Locally defined attributes | Description | EAST-ADL source |
 | --- | --- | --- | --- | --- |
 | `VVActualOutcome` | `EAST-ADL::Elements::TraceableSpecification` | — | Actual output captured by a VVLog. | 13.2.3, p. 107 |
 | `VVCase` | `EAST-ADL::Elements::TraceableSpecification` | — | Groups VVProcedures and identifies subjects and concrete test targets. | 13.2.4, pp. 107-108 |
@@ -178,7 +178,7 @@ V2 ist eine reine Modellfassung. Unity, Backend, Pipeline und die v0.5-Serialisi
 
 ### DFMLDS::V2::Core
 
-| Element | Basis/Basen | lokal definierte Attribute | Beschreibung | EAST-ADL-Quelle |
+| Element | Base(s) | Locally defined attributes | Description | EAST-ADL source |
 | --- | --- | --- | --- | --- |
 | `ActorParticipation` | `EAST-ADL::Elements::Relationship` | — | DFMLDS relationship assigning external Actor roles to UseCases. | DFMLDS V2 |
 | `Agent` | `DFMLDS::V2::Core::Entity` | `sourceAgentId: String [0..1]`<br>`displayName: String [0..1]`<br>`persona: String [0..1]`<br>`expertise: String [*] {ordered}`<br>`knowledgeTag: String [*] {ordered}`<br>`voice: String [0..1]`<br>`voiceGender: String [0..1]`<br>`voiceStyle: String [0..1]`<br>`ttsModel: String [0..1]` | Entity capable of providing capabilities, grounded runtime interaction and handoffs. | DFMLDS V2 |
@@ -227,7 +227,7 @@ V2 ist eine reine Modellfassung. Unity, Backend, Pipeline und die v0.5-Serialisi
 
 ### EAST-ADL::AnnexC::BehaviorDescription
 
-| Element | Basis/Basen | lokal definierte Attribute | Beschreibung | EAST-ADL-Quelle |
+| Element | Base(s) | Locally defined attributes | Description | EAST-ADL source |
 | --- | --- | --- | --- | --- |
 | `BehaviorConstraintParameter` (abstract, optional) | — | — | Abstract Annex C behavior-constraint parameter with no generalization. | Annex C 30.2.4, p. 217 |
 | `BehaviorConstraintTargetBinding` (optional) | `EAST-ADL::Elements::Relationship` | — | Preliminary Annex C relationship assigning a BehaviorConstraintType to behavior targets. | Annex C 30.2.6, pp. 218-219 |
@@ -235,13 +235,13 @@ V2 ist eine reine Modellfassung. Unity, Backend, Pipeline und die v0.5-Serialisi
 
 ### EAST-ADL::AnnexC::AttributeQuantificationConstraint
 
-| Element | Basis/Basen | lokal definierte Attribute | Beschreibung | EAST-ADL-Quelle |
+| Element | Base(s) | Locally defined attributes | Description | EAST-ADL source |
 | --- | --- | --- | --- | --- |
 | `Quantification` (optional) | `EAST-ADL::Elements::EAElement`, `EAST-ADL::Values::EAExpression` | — | Preliminary Annex C value-condition expression. | Annex C 31.2.5, pp. 223-224 |
 
 ### EAST-ADL::AnnexC::ComputationConstraint
 
-| Element | Basis/Basen | lokal definierte Attribute | Beschreibung | EAST-ADL-Quelle |
+| Element | Base(s) | Locally defined attributes | Description | EAST-ADL source |
 | --- | --- | --- | --- | --- |
 | `LogicalPath` (optional) | `EAST-ADL::Elements::EAElement` | — | Preliminary Annex C ordered/parallel logical cause-effect path. | Annex C 32.2.2, pp. 226-227 |
 | `LogicalTransformation` (optional) | `EAST-ADL::Elements::EAElement` | `isClientServerInterface: Boolean [1]` = `false` | Preliminary Annex C logical computation restriction. | Annex C 32.2.3, pp. 227-228 |
@@ -249,7 +249,7 @@ V2 ist eine reine Modellfassung. Unity, Backend, Pipeline und die v0.5-Serialisi
 
 ### EAST-ADL::AnnexC::TemporalConstraint
 
-| Element | Basis/Basen | lokal definierte Attribute | Beschreibung | EAST-ADL-Quelle |
+| Element | Base(s) | Locally defined attributes | Description | EAST-ADL source |
 | --- | --- | --- | --- | --- |
 | `LogicalTimeCondition` (optional) | `EAST-ADL::Elements::EAElement` | `isLogicalTimeSuspended: Boolean [1]` = `false` | Preliminary Annex C logical time interval condition. | Annex C 33.2.1, p. 232 |
 | `State` (optional) | `EAST-ADL::Elements::EAElement` | `isErrorState: Boolean [1]` = `false`<br>`isHazard: Boolean [1]` = `false`<br>`isInitState: Boolean [1]` = `false`<br>`isMode: Boolean [1]` = `false` | Preliminary Annex C discrete state. | Annex C 33.2.2, pp. 232-233 |
@@ -257,42 +257,42 @@ V2 ist eine reine Modellfassung. Unity, Backend, Pipeline und die v0.5-Serialisi
 
 ### DFMLDS::V2::AnnexCBridge
 
-| Element | Basis/Basen | lokal definierte Attribute | Beschreibung | EAST-ADL-Quelle |
+| Element | Base(s) | Locally defined attributes | Description | EAST-ADL source |
 | --- | --- | --- | --- | --- |
 | `ScenarioAnnexMapping` (optional) | `EAST-ADL::Elements::Relationship` | — | Optional bridge to preliminary Annex C constructs; never a Core prerequisite. | DFMLDS V2 |
 
 ### EAST-ADL::FeatureModeling
 
-| Element | Basis/Basen | lokal definierte Attribute | Beschreibung | EAST-ADL-Quelle |
+| Element | Base(s) | Locally defined attributes | Description | EAST-ADL source |
 | --- | --- | --- | --- | --- |
 | `Feature` (optional) | `EAST-ADL::FeatureModeling::FeatureTreeNode` | `cardinality: String [1]` | Generic EAST-ADL feature. | 4.2.3, pp. 28-29 |
 | `FeatureTreeNode` (abstract, optional) | `EAST-ADL::Elements::Context` | — | Abstract base for elements in a feature tree. | 4.2.8, p. 32 |
 
 ### EAST-ADL::VehicleFeatureModeling
 
-| Element | Basis/Basen | lokal definierte Attribute | Beschreibung | EAST-ADL-Quelle |
+| Element | Base(s) | Locally defined attributes | Description | EAST-ADL source |
 | --- | --- | --- | --- | --- |
 | `VehicleFeature` (optional) | `EAST-ADL::FeatureModeling::Feature` | `isCustomerVisible: Boolean [1]`<br>`isDesignVariabilityRationale: Boolean [1]`<br>`isRemoved: Boolean [1]` | Automotive VehicleLevel feature; never required by the domain-independent Core. | 5.2.3, pp. 38-39 |
 
 ### DFMLDS::V2::FeatureBridge
 
-| Element | Basis/Basen | lokal definierte Attribute | Beschreibung | EAST-ADL-Quelle |
+| Element | Base(s) | Locally defined attributes | Description | EAST-ADL source |
 | --- | --- | --- | --- | --- |
 | `CapabilityFeatureMapping` (optional) | `EAST-ADL::Elements::Relationship` | — | Optional mapping from Capability to generic Feature or automotive VehicleFeature. | DFMLDS V2 |
 
 ### DFMLDS::V2::AgentKnowledge
 
-| Element | Basis/Basen | lokal definierte Attribute | Beschreibung | EAST-ADL-Quelle |
+| Element | Base(s) | Locally defined attributes | Description | EAST-ADL source |
 | --- | --- | --- | --- | --- |
 | `AgentKnowledgeBinding` (optional) | `EAST-ADL::Elements::Relationship` | `permissions: KnowledgePermission [1..*]`<br>`provenanceKind: KnowledgeProvenanceKind [1]` | Optional permissions and provenance relationship for agent knowledge. | DFMLDS V2 |
 | `KnowledgeItem` (optional) | `EAST-ADL::Elements::TraceableSpecification` | — | Optional traceable knowledge item. | DFMLDS V2 |
 | `KnowledgeSource` (optional) | `EAST-ADL::Elements::TraceableSpecification` | `uri: String [0..1]` | Optional source/provenance record. | DFMLDS V2 |
 
-## 5. Assoziationen
+## 5. Associations
 
-Die Multiplizität steht jeweils am referenzierten Ende. `{ordered}` kennzeichnet eine semantisch geordnete Sammlung; `{composite}` genau einen Kompositionsbesitzer.
+Multiplicity is shown at the referenced end. `{ordered}` denotes a semantically ordered collection; `{composite}` denotes exactly one composition owner.
 
-| ID | Paket | Quelle | Ziel/Rolle | Multiplizitäten | Eigenschaften |
+| ID | Package | Source | Target/role | Multiplicities | Properties |
 | --- | --- | --- | --- | --- | --- |
 | `EAElement_ownedComment` | `EAST-ADL::Elements` | `EAElement.commentOwner` | `Comment.ownedComment` | `1 → *` | composite; owner=source |
 | `Context_ownedRelationship` | `EAST-ADL::Elements` | `Context.owningContext` | `Relationship.ownedRelationship` | `1 → *` | composite; owner=source |
@@ -452,11 +452,11 @@ Die Multiplizität steht jeweils am referenzierten Ende. `{ordered}` kennzeichne
 | `AgentKnowledgeBinding_source` | `DFMLDS::V2::AgentKnowledge` | `AgentKnowledgeBinding.knowledgeBinding` | `KnowledgeSource.source` | `* → 0..1` | optional module |
 | `AgentKnowledgeBinding_groundedEntity` | `DFMLDS::V2::AgentKnowledge` | `AgentKnowledgeBinding.knowledgeBinding` | `Entity.groundedEntity` | `* → *` | optional module |
 
-## 6. Nummerierte Invarianten
+## 6. Numbered invariants
 
-Die nachfolgende Liste ist kanonisch. Diagramme, Tests und Kompatibilitätsnachweise referenzieren diese IDs.
+The following list is canonical. Diagrams, tests, and compatibility evidence reference these identifiers.
 
-| ID | Profil | Scope | Prüfausdruck | Bedeutung |
+| ID | Profile | Scope | Check expression | Meaning |
 | --- | --- | --- | --- | --- |
 | **INV-001** | `core` | `PackageDependency` | `EAST_ADL.packages.imports->excludes(DFMLDS_V2)` | Dependencies are one-way: DFMLDS may import EAST-ADL; no EAST-ADL package imports DFMLDS. |
 | **INV-002** | `core` | `TraceableSpecification` | `localAttributes = {'text: String [0..1]'}` | The imported TraceableSpecification has exactly one local optional text attribute. |
@@ -533,16 +533,16 @@ Die nachfolgende Liste ist kanonisch. Diagramme, Tests und Kompatibilitätsnachw
 | **INV-073** | `core` | `StepRelation` | `probability->notEmpty() implies (kind=alternative or kind=exception)` | A control-flow probability is permitted only on alternative or exception edges. |
 | **INV-074** | `core` | `Scenario` | `completeProbabilisticBranches()->forAll(b \| abs(b.outgoing.probability.value->sum()-1.0)<0.000001)` | If every alternative/exception edge of a branch carries a probability, the complete branch probabilities sum to one. |
 
-## 7. Verlustfreie v0.5-Kompatibilitätssicht
+## 7. Lossless v0.5 compatibility view
 
-Die technische Sicht heißt `V05ProjectionLedger`. The v0.5 JSON schema and runtime implementation remain unchanged.
+The technical view is named `V05ProjectionLedger`. The v0.5 JSON schema and runtime implementation remain unchanged.
 
-Projektionsgesetze:
+Projection laws:
 
 - `exportV05(importV05(x, ledger), ledger) == x for every valid v0.5 instance`
 - `importV05(exportV05(y, ledger), ledger) == y only for the v0.5-representable V2 subset or a complete ledger`
 
-Der Ledger bewahrt:
+The ledger preserves:
 
 - complete envelope and unknown extension data
 - array order and main-scenario-first ordering
@@ -553,37 +553,37 @@ Der Ledger bewahrt:
 - legacy ValidationCase.level without deriving it from abstractVVCase
 - legacy endpoint/tool/topic slots while V2 uses one RuntimeActionLocator
 
-Verbindliche fachlich-technische Kette:
+Required domain-to-technical chain:
 
 ```text
 ScenarioStep -> CapabilityUse -> Capability -> RuntimeBinding -> RuntimeAction
 ```
 
-Verbotene Abkürzung: `ScenarioStep -> RuntimeAction`.
+Forbidden shortcut: `ScenarioStep -> RuntimeAction`.
 
-`CapabilityUse.provider` ist im rückwärtskompatiblen Core `[0..1]`, weil die vorhandenen v0.5-Daten keinen eindeutigen Anbieter enthalten. Das ausführbare Authoring-Profil fordert über `INV-065` genau einen Provider; dieser muss den owning `ScenarioStep` ausführen und den Capability-Typ bereitstellen. `CapabilityUse.target [*]` benennt die betroffenen identifizierbaren Objekte, ohne Parameter zu missbrauchen.
+`CapabilityUse.provider` is `[0..1]` in the backward-compatible core because existing v0.5 data does not identify a unique provider. Through `INV-065`, the executable authoring profile requires exactly one provider; it must perform the owning `ScenarioStep` and provide the capability type. `CapabilityUse.target [*]` identifies affected objects without misusing parameters.
 
-`Assertion` verallgemeinert prüfbare Zustands-, Ereignis-, Ausgabe-, Grounding- und Relationsaussagen. `StateAssertion` bleibt als verlustfrei projizierbare Spezialisierung erhalten. Effekte werden normativ durch `specifiedBy: Assertion [1..*]` beschrieben; das alte Feld `evidencedBy` bleibt ausschließlich der Name in der v0.5-Kompatibilitätssicht.
+`Assertion` generalizes verifiable state, event, output, grounding, and relation statements. `StateAssertion` remains a losslessly projectable specialization. Effects are normatively described through `specifiedBy: Assertion [1..*]`; the old field name `evidencedBy` exists only in the v0.5 compatibility view.
 
-`StepRelation` ist die einzige Quelle der Kontrollflusssemantik. `Scenario.step` ist Containment, `stepNumber` nur Anzeige. Wahrscheinlichkeiten sind normativ nur auf `alternative`-/`exception`-Kanten zulässig; vollständig annotierte, wechselseitig ausschließende Verzweigungen summieren sich auf 1. Nicht passende Legacy-Werte bleiben unverändert im Projektionsledger.
+`StepRelation` is the only source of control-flow semantics. `Scenario.step` is containment, and `stepNumber` is display-only. Probabilities are normatively allowed only on `alternative` or `exception` edges; fully annotated, mutually exclusive branches sum to 1. Nonconforming legacy values remain unchanged in the projection ledger.
 
 ## 8. Verification & Validation
 
-`DynamicFunctionalModel` besitzt genau einen unveränderten `VerificationValidation`-Container. Dieser besitzt `VVCase`- und `VVTarget`-Instanzen sowie `Verify`-Beziehungen. `ValidationCase` wird ausschließlich über `VerificationValidation.vvCase` komponiert. `RuntimeActualOutcome` liegt ausschließlich in einem `RuntimeValidationLog`/`VVLog`.
+`DynamicFunctionalModel` owns exactly one unmodified `VerificationValidation` container. It owns `VVCase` and `VVTarget` instances as well as `Verify` relations. `ValidationCase` is composed exclusively through `VerificationValidation.vvCase`. `RuntimeActualOutcome` exists exclusively in a `RuntimeValidationLog`/`VVLog`.
 
-`VVCase.vvSubject` bezeichnet das primäre Prüfobjekt. `VVTarget.element` bezeichnet Elemente, die die konkrete Testumgebung realisiert. Die Rollen sind semantisch getrennt, dürfen aber zufällig dieselben Elemente referenzieren.
+`VVCase.vvSubject` identifies the primary verification subject. `VVTarget.element` identifies elements realized by the concrete test environment. The roles are semantically distinct but may happen to reference the same elements.
 
-`RuntimeValidationTarget` konkretisiert die Testumgebung durch `platform [1]`, optionale `environmentRef` und die konfigurierten `runtimeBinding [*]`; diese Bindings sind zugleich Elemente des geerbten `VVTarget.element`. Zulässige DFMLDS-Subjects sind `ScenarioStep`, `Capability`, `RuntimeBinding` und `Entity`, ohne die EAST-ADL-Assoziation zu verändern.
+`RuntimeValidationTarget` specifies the test environment through `platform [1]`, optional `environmentRef`, and configured `runtimeBinding [*]`; these bindings are also elements of the inherited `VVTarget.element`. Valid DFMLDS subjects are `ScenarioStep`, `Capability`, `RuntimeBinding`, and `Entity`, without changing the EAST-ADL association.
 
-`RuntimeActualOutcome` enthält mindestens ein strukturiertes `AssertionResult`. Jedes Resultat referenziert genau eine Assertion und erfasst Verdict, optionalen typisierten Beobachtungswert, Evidence-Referenz und Zeitstempel.
+`RuntimeActualOutcome` contains at least one structured `AssertionResult`. Each result references exactly one assertion and records a verdict, optional typed observation value, evidence reference, and timestamp.
 
-Der v0.5-Wert `ValidationCase.level` wird nicht aus `abstractVVCase` geraten. Er bleibt explizit im Kompatibilitäts-Ledger erhalten.
+The v0.5 value `ValidationCase.level` is not inferred from `abstractVVCase`; it remains explicit in the compatibility ledger.
 
-## 9. Optionales Annex-C-Mapping
+## 9. Optional Annex C mapping
 
-Annex C ist in EAST-ADL V2.1.12 vorläufig. Die folgenden Abbildungen sind deshalb semantische Optionen und keine Core-Gültigkeitsbedingungen:
+Annex C is preliminary in EAST-ADL V2.1.12. The following mappings are therefore semantic options rather than core validity conditions:
 
-| DFMLDS-Quelle | Annex-C-Ziel | Abbildungsart | Status |
+| DFMLDS source | Annex C target | Mapping kind | Status |
 | --- | --- | --- | --- |
 | `ScenarioStep` | `LogicalTransformation / TransformationOccurrence` | optional-semantic | preliminary |
 | `StepRelation.sequence` | `LogicalPath.segment` | optional-semantic | preliminary |
@@ -594,23 +594,23 @@ Annex C ist in EAST-ADL V2.1.12 vorläufig. Die folgenden Abbildungen sind desha
 | `StateAssertion` | `State / Quantification / VVIntendedOutcome` | context-dependent | preliminary |
 | `Capability behavior` | `BehaviorConstraintType` | optional-semantic | preliminary |
 
-Wesentlich: Annex-C-`TransitionEvent` generalisiert `EAElement` und `BehaviorConstraintParameter`, **nicht** `Timing::Event`. Die Verbindung erfolgt ausschließlich über `TransitionEvent.occurredExecutionEvent: Timing::Event [*]`.
+Important: Annex C `TransitionEvent` generalizes `EAElement` and `BehaviorConstraintParameter`, **not** `Timing::Event`. The connection exists exclusively through `TransitionEvent.occurredExecutionEvent: Timing::Event [*]`.
 
-## 10. Generierte Sichten
+## 10. Generated views
 
-Jede Sicht wird aus derselben Modellbeschreibung als Mermaid, SVG und PNG erzeugt. Eine zentrale A/B/C-Gesamtansicht zeigt das kompakte Metamodell; sieben ergänzende Fachsichten liefern die vollständigen Details und Beziehungsnachweise.
+Every view is generated from the same model description as Mermaid, SVG, and PNG. A central A/B/C overview presents the compact metamodel; seven detailed views provide the complete detail and relation evidence.
 
-| Präfix | Titel | Zweck |
+| Prefix | Title | Purpose |
 | --- | --- | --- |
-| `dynamic_functional_mlds_v2_metamodel` | Kompaktes Metamodell für Dynamic Functional MLDS (V2.0) | Zentrale EAST-ADL-konforme A/B/C-Gesamtansicht; die sieben Fachsichten liefern die vollständigen Details. |
-| `01_east_adl_infrastructure` | EAST-ADL V2.1.12 – verwendeter Infrastruktur-Ausschnitt | Exact selected infrastructure, datatype and value inheritance. |
-| `02_east_adl_requirements_usecases` | EAST-ADL Requirements/UseCases – verwendeter Ausschnitt | Unmodified Requirements and UseCases metaclasses plus their exact infrastructure bases. |
-| `03_east_adl_function_system_behavior` | EAST-ADL Function/System/Behavior – verwendeter Ausschnitt | Exact type/prototype, FAA/FDA root, connector and behavior semantics. |
-| `04_dfmlds_scenario_flow` | DFMLDS V2 – konservativer Szenario- und Ablaufkern | UseCase binding, actor/entity separation, typed events/conditions and canonical control flow. |
-| `05_dfmlds_capability_runtime` | DFMLDS V2 – Capability-, Function- und Runtime-Bridge | EAType/EAPrototype capability pattern, optional exact function mapping and ordered runtime realization. |
+| `dynamic_functional_mlds_v2_metamodel` | Compact metamodel for Dynamic Functional MLDS (V2.0) | Central EAST-ADL-conformant A/B/C overview; the seven detailed views provide the complete specification. |
+| `01_east_adl_infrastructure` | EAST-ADL V2.1.12 – selected infrastructure subset | Exact selected infrastructure, datatype and value inheritance. |
+| `02_east_adl_requirements_usecases` | EAST-ADL Requirements/UseCases – selected subset | Unmodified Requirements and UseCases metaclasses plus their exact infrastructure bases. |
+| `03_east_adl_function_system_behavior` | EAST-ADL Function/System/Behavior – selected subset | Exact type/prototype, FAA/FDA root, connector and behavior semantics. |
+| `04_dfmlds_scenario_flow` | DFMLDS V2 – conservative scenario and control-flow core | UseCase binding, actor/entity separation, typed events/conditions and canonical control flow. |
+| `05_dfmlds_capability_runtime` | DFMLDS V2 – capability, function, and runtime bridge | EAType/EAPrototype capability pattern, optional exact function mapping and ordered runtime realization. |
 | `06_east_adl_dfmlds_verification_validation` | EAST-ADL / DFMLDS V2 – Verification & Validation | Exact V&V container ownership with DFMLDS specializations, logs and distinct subject/target semantics. |
-| `07_optional_annex_feature_knowledge` | DFMLDS V2 – optionale Annex-C-, Feature- und Wissensmodule | Optional one-way bridges; Annex C is preliminary and TransitionEvent is not Timing::Event. |
+| `07_optional_annex_feature_knowledge` | DFMLDS V2 – optional Annex C, feature, and knowledge modules | Optional one-way bridges; Annex C is preliminary and TransitionEvent is not Timing::Event. |
 
-## 11. Reproduzierbarkeit
+## 11. Reproducibility
 
-Der Generator validiert Referenzen, Paketabhängigkeiten, eindeutige Association-/Invariant-IDs, die lückenlose Invariantenfolge und alle View-Mitglieder vor dem Schreiben. JSON wird schlüsselsortiert ausgegeben; alle Artefakte enthalten keine Laufzeitstempel. `generation_manifest.sha256.json` enthält die SHA-256-Werte aller verwalteten Ausgaben.
+Before writing, the generator validates references, package dependencies, unique association and invariant identifiers, the gap-free invariant sequence, and every view member. JSON output is key-sorted, and artifacts contain no runtime timestamps. `generation_manifest.sha256.json` records the SHA-256 values of all managed outputs.

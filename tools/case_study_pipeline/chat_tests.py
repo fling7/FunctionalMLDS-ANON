@@ -136,7 +136,7 @@ def _answer_text(response: Mapping[str, Any]) -> str:
 def _looks_like_openai_error(response: Mapping[str, Any], answer_text: str) -> bool:
     if response.get("error"):
         return True
-    return "[Backend] OpenAI Fehler" in answer_text or "OpenAI HTTP" in answer_text
+    return "[Backend] OpenAI error" in answer_text or "OpenAI HTTP" in answer_text
 
 
 def _question_filter(questions: Sequence[Dict[str, Any]], question_kind: Optional[str], max_questions: Optional[int]) -> List[Dict[str, Any]]:

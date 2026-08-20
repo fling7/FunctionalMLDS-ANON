@@ -207,10 +207,10 @@ public class ProjectManagerUI : EditorWindow
     private string knowledgeTag = "";
     private string knowledgeName = "";
     private string knowledgeText = "";
-    private readonly string[] voiceGenderOptions = { "weiblich", "männlich" };
+    private readonly string[] voiceGenderOptions = { "female", "male" };
     private readonly string[] femaleVoices = { "coral", "nova", "shimmer" };
     private readonly string[] maleVoices = { "alloy", "verse", "onyx", "fable", "echo" };
-    private readonly string[] voiceStyleOptions = { "klar", "kreativ", "präzise", "warm", "neutral" };
+    private readonly string[] voiceStyleOptions = { "clear", "creative", "precise", "warm", "neutral" };
     private readonly string[] ttsModelOptions = { "gpt-4o-mini-tts", "tts-1", "tts-1-hd" };
 
     [MenuItem("Tools/Project Manager")]
@@ -229,7 +229,7 @@ public class ProjectManagerUI : EditorWindow
     private void OnGUI()
     {
         EditorGUILayout.Space(4f);
-        EditorGUILayout.LabelField("Projekt-Manager", EditorStyles.boldLabel);
+        EditorGUILayout.LabelField("Project Manager", EditorStyles.boldLabel);
 
         EditorGUILayout.Space(4f);
         backendBaseUrl = EditorGUILayout.TextField("Backend Base Url", backendBaseUrl);
@@ -239,7 +239,7 @@ public class ProjectManagerUI : EditorWindow
         }
 
         EditorGUILayout.Space(6f);
-        if (GUILayout.Button("Projekte aktualisieren"))
+        if (GUILayout.Button("Refresh projects"))
         {
             StartEditorCoroutine(RefreshProjects());
         }
@@ -247,20 +247,20 @@ public class ProjectManagerUI : EditorWindow
         scroll = EditorGUILayout.BeginScrollView(scroll);
 
         EditorGUILayout.Space(8f);
-        EditorGUILayout.LabelField("Neues Projekt", EditorStyles.boldLabel);
+        EditorGUILayout.LabelField("New project", EditorStyles.boldLabel);
         newProjectName = LabeledTextField("Name", newProjectName);
         newProjectId = LabeledTextField("ID (optional)", newProjectId);
-        newProjectDescription = LabeledTextField("Beschreibung", newProjectDescription);
-        if (GUILayout.Button("Projekt erstellen"))
+        newProjectDescription = LabeledTextField("Description", newProjectDescription);
+        if (GUILayout.Button("Create project"))
         {
             StartEditorCoroutine(CreateProject());
         }
 
         EditorGUILayout.Space(10f);
-        EditorGUILayout.LabelField("Vorhandene Projekte", EditorStyles.boldLabel);
+        EditorGUILayout.LabelField("Existing projects", EditorStyles.boldLabel);
         if (projects.Length == 0)
         {
-            EditorGUILayout.LabelField("Keine Projekte gefunden.");
+            EditorGUILayout.LabelField("No projects found.");
         }
         else
         {
@@ -268,7 +268,7 @@ public class ProjectManagerUI : EditorWindow
             {
                 EditorGUILayout.BeginHorizontal();
                 EditorGUILayout.LabelField($"{project.display_name} ({project.id})", GUILayout.Width(320));
-                if (GUILayout.Button("Laden"))
+                if (GUILayout.Button("Load"))
                 {
                     StartEditorCoroutine(LoadProject(project.id));
                 }
@@ -279,17 +279,17 @@ public class ProjectManagerUI : EditorWindow
         EditorGUILayout.Space(12f);
         if (currentProject != null)
         {
-            EditorGUILayout.LabelField("Aktuelles Projekt: " + currentProject.display_name, EditorStyles.boldLabel);
+            EditorGUILayout.LabelField("Current project: " + currentProject.display_name, EditorStyles.boldLabel);
             currentProject.display_name = LabeledTextField("Projektname", currentProject.display_name);
-            currentProject.description = LabeledTextField("Beschreibung", currentProject.description);
-            if (GUILayout.Button("Metadaten speichern"))
+            currentProject.description = LabeledTextField("Description", currentProject.description);
+            if (GUILayout.Button("Save metadata"))
             {
                 StartEditorCoroutine(SaveMetadata());
             }
 
             EditorGUILayout.Space(8f);
-            EditorGUILayout.LabelField("Agenten", EditorStyles.boldLabel);
-            if (GUILayout.Button("Agent hinzufügen"))
+            EditorGUILayout.LabelField("Agents", EditorStyles.boldLabel);
+            if (GUILayout.Button("Add agent"))
             {
                 agentUiList.Add(new AgentUi
                 {
@@ -327,35 +327,35 @@ public class ProjectManagerUI : EditorWindow
                 EditorGUILayout.LabelField("Persona");
                 agent.persona = EditorGUILayout.TextArea(agent.persona ?? "", GUILayout.MinHeight(60));
                 agent.expertiseCsv = LabeledTextField("Expertise (CSV)", agent.expertiseCsv);
-                agent.knowledgeTagsCsv = LabeledTextField("Wissen-Tags (CSV)", agent.knowledgeTagsCsv);
+                agent.knowledgeTagsCsv = LabeledTextField("Knowledge tags (CSV)", agent.knowledgeTagsCsv);
                 agent.preferredZoneIdsCsv = LabeledTextField("Bevorzugte Zonen (CSV)", agent.preferredZoneIdsCsv);
                 agent.preferredSpawnTagsCsv = LabeledTextField("Bevorzugte Spawn-Tags (CSV)", agent.preferredSpawnTagsCsv);
                 EditorGUILayout.Space(4f);
-                EditorGUILayout.LabelField("Stimme (TTS)", EditorStyles.boldLabel);
+                EditorGUILayout.LabelField("Voice (TTS)", EditorStyles.boldLabel);
                 DrawVoiceOptions(agent);
                 agent.voice = LabeledTextField("Voice", agent.voice);
                 agent.voiceStyle = LabeledTextField("Voice Style", agent.voiceStyle);
                 agent.ttsModel = LabeledTextField("TTS Model", agent.ttsModel);
                 EditorGUILayout.Space(4f);
-                EditorGUILayout.LabelField("Positionierung", EditorStyles.boldLabel);
+                EditorGUILayout.LabelField("Positioning", EditorStyles.boldLabel);
                 DrawPositionEditor(agent, i);
                 EditorGUILayout.EndVertical();
             }
 
-            if (GUILayout.Button("Agenten speichern"))
+            if (GUILayout.Button("Save agents"))
             {
                 StartEditorCoroutine(SaveAgents());
             }
 
             EditorGUILayout.Space(12f);
-            EditorGUILayout.LabelField("Wissensdatenbank", EditorStyles.boldLabel);
+            EditorGUILayout.LabelField("Knowledge base", EditorStyles.boldLabel);
             EditorGUILayout.BeginVertical("box");
             knowledgeTag = LabeledTextField("Tag", knowledgeTag);
             knowledgeName = LabeledTextField("Name", knowledgeName);
             EditorGUILayout.LabelField("Text");
             knowledgeText = EditorGUILayout.TextArea(knowledgeText ?? "", GUILayout.MinHeight(80));
             EditorGUILayout.BeginHorizontal();
-            if (GUILayout.Button("Wissen speichern"))
+            if (GUILayout.Button("Save knowledge"))
             {
                 StartEditorCoroutine(UpsertKnowledge());
             }
@@ -368,10 +368,10 @@ public class ProjectManagerUI : EditorWindow
             EditorGUILayout.EndHorizontal();
             EditorGUILayout.EndVertical();
 
-            EditorGUILayout.LabelField("Vorhandenes Wissen", EditorStyles.boldLabel);
+            EditorGUILayout.LabelField("Existing knowledge", EditorStyles.boldLabel);
             if (knowledgeEntries.Length == 0)
             {
-                EditorGUILayout.LabelField("Keine Einträge.");
+                EditorGUILayout.LabelField("No entries.");
             }
             else
             {
@@ -379,11 +379,11 @@ public class ProjectManagerUI : EditorWindow
                 {
                     EditorGUILayout.BeginHorizontal();
                     EditorGUILayout.LabelField($"{entry.tag}/{entry.name}", GUILayout.Width(220));
-                    if (GUILayout.Button("Laden", GUILayout.Width(70)))
+                    if (GUILayout.Button("Load", GUILayout.Width(70)))
                     {
                         StartEditorCoroutine(ReadKnowledge(entry.tag, entry.name));
                     }
-                    if (GUILayout.Button("Löschen", GUILayout.Width(70)))
+                    if (GUILayout.Button("Delete", GUILayout.Width(70)))
                     {
                         StartEditorCoroutine(DeleteKnowledge(entry.tag, entry.name));
                     }
@@ -459,7 +459,7 @@ public class ProjectManagerUI : EditorWindow
         }
 
         var voiceOptions = agent.voiceGender == voiceGenderOptions[1] ? maleVoices : femaleVoices;
-        DrawOptionButtons("Stimme", voiceOptions, agent.voice, selected => agent.voice = selected);
+        DrawOptionButtons("Voice", voiceOptions, agent.voice, selected => agent.voice = selected);
         DrawOptionButtons("Stil", voiceStyleOptions, agent.voiceStyle, selected => agent.voiceStyle = selected);
         DrawOptionButtons("TTS-Modell", ttsModelOptions, agent.ttsModel, selected => agent.ttsModel = selected);
     }
@@ -539,9 +539,9 @@ public class ProjectManagerUI : EditorWindow
         agent.position.y = LabeledFloatField("Y", agent.position.y);
         agent.position.z = LabeledFloatField("Z", agent.position.z);
 
-        EditorGUILayout.LabelField("2D-Vorschau (X/Z)", EditorStyles.miniBoldLabel);
+        EditorGUILayout.LabelField("2D preview (X/Z)", EditorStyles.miniBoldLabel);
         DrawPositionPreview(agentIndex);
-        EditorGUILayout.HelpBox("Im Vorschaubereich klicken/ziehen, um X/Z zu verschieben.", MessageType.None);
+        EditorGUILayout.HelpBox("Click or drag in the preview area to move on X/Z.", MessageType.None);
     }
 
     private void DrawPositionPreview(int agentIndex)
@@ -569,7 +569,7 @@ public class ProjectManagerUI : EditorWindow
             }
             else
             {
-                GUI.Label(rect, "Keine Positionsdaten verfügbar.", EditorStyles.centeredGreyMiniLabel);
+                GUI.Label(rect, "No position data available.", EditorStyles.centeredGreyMiniLabel);
                 return;
             }
         }
@@ -712,7 +712,7 @@ public class ProjectManagerUI : EditorWindow
 
     private IEnumerator RefreshProjects()
     {
-        LogStep("Projekte laden", "GET /projects");
+        LogStep("Load projects", "GET /projects");
         var url = $"{backendBaseUrl}/projects";
         using (var req = UnityWebRequest.Get(url))
         {
@@ -721,13 +721,13 @@ public class ProjectManagerUI : EditorWindow
             yield return req.SendWebRequest();
             if (req.result != UnityWebRequest.Result.Success)
             {
-                LogStatus("Fehler beim Laden der Projekte: " + req.error + " | " + req.downloadHandler.text);
+                LogStatus("Error loading projects: " + req.error + " | " + req.downloadHandler.text);
                 yield break;
             }
             LogResponse("GET /projects", req);
             var resp = JsonUtility.FromJson<ProjectListResponse>(req.downloadHandler.text);
             projects = resp?.projects ?? Array.Empty<ProjectSummary>();
-            LogStatus("Projekte geladen: " + projects.Length);
+            LogStatus("Projects loaded: " + projects.Length);
         }
     }
 
@@ -738,7 +738,7 @@ public class ProjectManagerUI : EditorWindow
             LogStatus("Projektname fehlt.");
             yield break;
         }
-        LogStep("Projekt erstellen", "POST /projects/create");
+        LogStep("Create project", "POST /projects/create");
         var payload = new CreateProjectRequest
         {
             display_name = newProjectName,
@@ -747,7 +747,7 @@ public class ProjectManagerUI : EditorWindow
         };
         var url = $"{backendBaseUrl}/projects/create";
         var ok = false;
-        yield return SendJson(url, payload, success => ok = success, "Projekt erstellen");
+        yield return SendJson(url, payload, success => ok = success, "Create project");
         if (!ok)
         {
             yield break;
@@ -760,7 +760,7 @@ public class ProjectManagerUI : EditorWindow
 
     private IEnumerator LoadProject(string projectId)
     {
-        LogStep("Projekt laden", $"GET /projects/{projectId}");
+        LogStep("Load project", $"GET /projects/{projectId}");
         var url = $"{backendBaseUrl}/projects/{projectId}";
         using (var req = UnityWebRequest.Get(url))
         {
@@ -769,20 +769,20 @@ public class ProjectManagerUI : EditorWindow
             yield return req.SendWebRequest();
             if (req.result != UnityWebRequest.Result.Success)
             {
-                LogStatus("Fehler beim Laden des Projekts: " + req.error + " | " + req.downloadHandler.text);
+                LogStatus("Error loading project: " + req.error + " | " + req.downloadHandler.text);
                 yield break;
             }
             LogResponse($"GET /projects/{projectId}", req);
             var resp = JsonUtility.FromJson<ProjectDetailResponse>(req.downloadHandler.text);
             if (resp == null || resp.project == null)
             {
-                LogStatus("Projekt konnte nicht geladen werden.");
+                LogStatus("Project could not be loaded.");
                 yield break;
             }
             currentProject = resp.project;
             knowledgeEntries = resp.knowledge ?? Array.Empty<KnowledgeEntrySummary>();
             LoadAgentsUi(resp.agents ?? Array.Empty<AgentSpec>());
-            LogStatus("Projekt geladen: " + currentProject.display_name);
+            LogStatus("Project loaded: " + currentProject.display_name);
         }
     }
 
@@ -822,7 +822,7 @@ public class ProjectManagerUI : EditorWindow
         {
             yield break;
         }
-        LogStep("Metadaten speichern", $"POST /projects/{currentProject.id}/metadata");
+        LogStep("Save metadata", $"POST /projects/{currentProject.id}/metadata");
         var url = $"{backendBaseUrl}/projects/{currentProject.id}/metadata";
         var payload = new MetadataSaveRequest
         {
@@ -830,7 +830,7 @@ public class ProjectManagerUI : EditorWindow
             description = currentProject.description,
         };
         var ok = false;
-        yield return SendJson(url, payload, success => ok = success, "Metadaten speichern");
+        yield return SendJson(url, payload, success => ok = success, "Save metadata");
         if (!ok)
         {
             yield break;
@@ -845,7 +845,7 @@ public class ProjectManagerUI : EditorWindow
         {
             yield break;
         }
-        LogStep("Agenten speichern", $"POST /projects/{currentProject.id}/agents");
+        LogStep("Save agents", $"POST /projects/{currentProject.id}/agents");
         var agents = new List<AgentSpec>();
         foreach (var agent in agentUiList)
         {
@@ -871,7 +871,7 @@ public class ProjectManagerUI : EditorWindow
         }
         var payload = new AgentsSaveRequest { agents = agents.ToArray() };
         var url = $"{backendBaseUrl}/projects/{currentProject.id}/agents";
-        yield return SendJson(url, payload, null, "Agenten speichern");
+        yield return SendJson(url, payload, null, "Save agents");
     }
 
     private IEnumerator UpsertKnowledge()
@@ -880,7 +880,7 @@ public class ProjectManagerUI : EditorWindow
         {
             yield break;
         }
-        LogStep("Wissen speichern", $"POST /projects/{currentProject.id}/knowledge");
+        LogStep("Save knowledge", $"POST /projects/{currentProject.id}/knowledge");
         var url = $"{backendBaseUrl}/projects/{currentProject.id}/knowledge";
         var payload = new KnowledgeUpsertRequest
         {
@@ -890,7 +890,7 @@ public class ProjectManagerUI : EditorWindow
             text = knowledgeText,
             overwrite = true,
         };
-        yield return SendJson(url, payload, null, "Wissen speichern");
+        yield return SendJson(url, payload, null, "Save knowledge");
         yield return RefreshKnowledge();
     }
 
@@ -900,7 +900,7 @@ public class ProjectManagerUI : EditorWindow
         {
             yield break;
         }
-        LogStep("Wissen löschen", $"POST /projects/{currentProject.id}/knowledge");
+        LogStep("Delete knowledge", $"POST /projects/{currentProject.id}/knowledge");
         var url = $"{backendBaseUrl}/projects/{currentProject.id}/knowledge";
         var payload = new KnowledgeUpsertRequest
         {
@@ -910,7 +910,7 @@ public class ProjectManagerUI : EditorWindow
             text = "",
             overwrite = true,
         };
-        yield return SendJson(url, payload, null, "Wissen löschen");
+        yield return SendJson(url, payload, null, "Delete knowledge");
         yield return RefreshKnowledge();
     }
 
@@ -920,7 +920,7 @@ public class ProjectManagerUI : EditorWindow
         {
             yield break;
         }
-        LogStep("Wissen laden", $"POST /projects/{currentProject.id}/knowledge/read");
+        LogStep("Load knowledge", $"POST /projects/{currentProject.id}/knowledge/read");
         var url = $"{backendBaseUrl}/projects/{currentProject.id}/knowledge/read";
         var payload = new KnowledgeReadRequest
         {
@@ -934,7 +934,7 @@ public class ProjectManagerUI : EditorWindow
             yield return req.SendWebRequest();
             if (req.result != UnityWebRequest.Result.Success)
             {
-                LogStatus("Fehler: " + req.error + " | " + req.downloadHandler.text);
+                LogStatus("Error: " + req.error + " | " + req.downloadHandler.text);
                 yield break;
             }
             LogResponse($"POST /projects/{currentProject.id}/knowledge/read", req);
@@ -947,7 +947,7 @@ public class ProjectManagerUI : EditorWindow
                 GUI.FocusControl(null);
                 Repaint();
             }
-            LogStatus("Wissen geladen.");
+            LogStatus("Knowledge loaded.");
         }
     }
 
@@ -957,7 +957,7 @@ public class ProjectManagerUI : EditorWindow
         {
             yield break;
         }
-        LogStep("Wissensliste laden", $"GET /projects/{currentProject.id}/knowledge");
+        LogStep("Load knowledge list", $"GET /projects/{currentProject.id}/knowledge");
         var url = $"{backendBaseUrl}/projects/{currentProject.id}/knowledge";
         using (var req = UnityWebRequest.Get(url))
         {
@@ -966,13 +966,13 @@ public class ProjectManagerUI : EditorWindow
             yield return req.SendWebRequest();
             if (req.result != UnityWebRequest.Result.Success)
             {
-                LogStatus("Fehler beim Laden der Wissensliste: " + req.error + " | " + req.downloadHandler.text);
+                LogStatus("Error loading the knowledge list: " + req.error + " | " + req.downloadHandler.text);
                 yield break;
             }
             LogResponse($"GET /projects/{currentProject.id}/knowledge", req);
             var resp = JsonUtility.FromJson<KnowledgeListResponse>(req.downloadHandler.text);
             knowledgeEntries = resp?.knowledge ?? Array.Empty<KnowledgeEntrySummary>();
-            LogStatus("Wissen aktualisiert.");
+            LogStatus("Knowledge updated.");
         }
     }
 
@@ -985,8 +985,8 @@ public class ProjectManagerUI : EditorWindow
             yield return req.SendWebRequest();
             if (req.result != UnityWebRequest.Result.Success)
             {
-                var label = string.IsNullOrEmpty(actionLabel) ? "Anfrage" : actionLabel;
-                LogStatus($"{label} fehlgeschlagen: {req.error} (HTTP {req.responseCode}) | {req.downloadHandler.text}");
+                var label = string.IsNullOrEmpty(actionLabel) ? "Request" : actionLabel;
+                LogStatus($"{label} failed: {req.error} (HTTP {req.responseCode}) | {req.downloadHandler.text}");
                 onComplete?.Invoke(false);
             }
             else
@@ -994,7 +994,7 @@ public class ProjectManagerUI : EditorWindow
                 LogResponse(actionLabel ?? "POST", req);
                 if (!string.IsNullOrEmpty(actionLabel))
                 {
-                    LogStatus($"{actionLabel} abgeschlossen.");
+                    LogStatus($"{actionLabel} completed.");
                 }
                 else
                 {

@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" width="3000" height="1788" viewBox="0 0 3000 1788" role="img" aria-label="DFMLDS V2 – optionale Annex-C-, Feature- und Wissensmodule">
+<svg xmlns="http://www.w3.org/2000/svg" width="3000" height="1788" viewBox="0 0 3000 1788" role="img" aria-label="DFMLDS V2 – optional Annex C, feature, and knowledge modules">
 <defs>
 <marker id="triangle" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto"><path d="M 1 1 L 13 7 L 1 13 z" fill="#FFFFFF" stroke="#354B64" stroke-width="1.5"/></marker>
 <marker id="arrow" markerWidth="11" markerHeight="11" refX="10" refY="5.5" orient="auto"><path d="M 0 0 L 10 5.5 L 0 11 z" fill="#5D7189"/></marker>
 <marker id="diamond" markerWidth="15" markerHeight="11" refX="2" refY="5.5" orient="auto"><path d="M 1 5.5 L 7 1 L 13 5.5 L 7 10 z" fill="#263A52"/></marker>
 </defs>
 <rect width="3000" height="1788" fill="#F9FBFD"/>
-<text x="30.0" y="38.0" text-anchor="start" font-family="Arial, sans-serif" font-size="26" font-weight="700" fill="#1E324A">DFMLDS V2 – optionale Annex-C-, Feature- und Wissensmodule</text>
+<text x="30.0" y="38.0" text-anchor="start" font-family="Arial, sans-serif" font-size="26" font-weight="700" fill="#1E324A">DFMLDS V2 – optional Annex C, feature, and knowledge modules</text>
 <text x="30.0" y="68.0" text-anchor="start" font-family="Arial, sans-serif" font-size="15" font-weight="400" fill="#52677F">Optional one-way bridges; Annex C is preliminary and TransitionEvent is not Timing::Event.</text>
 <rect x="25.0" y="90.0" width="1700.0" height="1240.0" rx="9" fill="#FFFCF4" stroke="#D7BD7B" stroke-width="1.5"/>
-<text x="43.0" y="119.0" text-anchor="start" font-family="Arial, sans-serif" font-size="18" font-weight="700" fill="#283D55">Annex C – optional und vorläufig</text>
+<text x="43.0" y="119.0" text-anchor="start" font-family="Arial, sans-serif" font-size="18" font-weight="700" fill="#283D55">Annex C – optional and preliminary</text>
 <rect x="1745.0" y="90.0" width="580.0" height="1240.0" rx="9" fill="#FFFDF7" stroke="#D7BD7B" stroke-width="1.5"/>
-<text x="1763.0" y="119.0" text-anchor="start" font-family="Arial, sans-serif" font-size="18" font-weight="700" fill="#283D55">Feature-Mapping – optionale Einbahnbrücke</text>
+<text x="1763.0" y="119.0" text-anchor="start" font-family="Arial, sans-serif" font-size="18" font-weight="700" fill="#283D55">Feature mapping – optional one-way bridge</text>
 <rect x="2345.0" y="90.0" width="630.0" height="1240.0" rx="9" fill="#FFFDF7" stroke="#D7BD7B" stroke-width="1.5"/>
 <text x="2363.0" y="119.0" text-anchor="start" font-family="Arial, sans-serif" font-size="18" font-weight="700" fill="#283D55">Agent Knowledge – optional</text>
 <polyline points="410.0,390.0 410.0,350.0 245.0,350.0 245.0,300.0" fill="none" stroke="#62778F" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="8 6" marker-end="url(#arrow)"/>
@@ -256,7 +256,7 @@
 </g>
 <line x1="34" y1="1370" x2="2966" y2="1370" stroke="#C5D2DF"/>
 <text x="34.0" y="1401.0" text-anchor="start" font-family="Arial, sans-serif" font-size="18" font-weight="700" fill="#263B53">Beziehungsnachweis</text>
-<text x="34.0" y="1424.0" text-anchor="start" font-family="Arial, sans-serif" font-size="12" font-weight="400" fill="#60758B">[Diagramm] sichtbar geroutet · [Sicht] im exakten Modell enthalten · [Vererbung] in den Kartenköpfen</text>
+<text x="34.0" y="1424.0" text-anchor="start" font-family="Arial, sans-serif" font-size="12" font-weight="400" fill="#60758B">[Diagram] visibly routed · [View] included in the exact model · [Inheritance] shown in card headers</text>
 <text x="34.0" y="1452.0" text-anchor="start" font-family="Consolas, monospace" font-size="11" font-weight="400" fill="#3F566E">[Diagramm] → BehaviorConstraintTargetBinding.behaviorConstraintType [1] optional → Behavi…</text>
 <text x="34.0" y="1475.0" text-anchor="start" font-family="Consolas, monospace" font-size="11" font-weight="400" fill="#3F566E">[Diagramm] → BehaviorConstraintTargetBinding.targetedFunctionType [*] optional → Function…</text>
 <text x="34.0" y="1498.0" text-anchor="start" font-family="Consolas, monospace" font-size="11" font-weight="400" fill="#3F566E">[Diagramm] ◆ LogicalPath.transformationOccurrence [0..1] optional → TransformationOccurrence</text>
@@ -290,7 +290,7 @@
 <text x="1988.7" y="1590.0" text-anchor="start" font-family="Consolas, monospace" font-size="11" font-weight="400" fill="#3F566E">[Sicht] → ScenarioAnnexMapping.capability [0..1] optional → Capability</text>
 <text x="1988.7" y="1613.0" text-anchor="start" font-family="Consolas, monospace" font-size="11" font-weight="400" fill="#3F566E">[Sicht] → AgentKnowledgeBinding.source [0..1] optional → KnowledgeSource</text>
 <text x="1988.7" y="1636.0" text-anchor="start" font-family="Consolas, monospace" font-size="11" font-weight="400" fill="#3F566E">[Sicht] → AgentKnowledgeBinding.groundedEntity [*] optional → Entity</text>
-<text x="1988.7" y="1659.0" text-anchor="start" font-family="Consolas, monospace" font-size="11" font-weight="400" fill="#3F566E">[Vererbung] ScenarioEvent → Event</text>
-<text x="1988.7" y="1682.0" text-anchor="start" font-family="Consolas, monospace" font-size="11" font-weight="400" fill="#3F566E">[Vererbung] Agent → Entity</text>
-<text x="1988.7" y="1705.0" text-anchor="start" font-family="Consolas, monospace" font-size="11" font-weight="400" fill="#3F566E">[Vererbung] VehicleFeature → Feature</text>
+<text x="1988.7" y="1659.0" text-anchor="start" font-family="Consolas, monospace" font-size="11" font-weight="400" fill="#3F566E">[Inheritance] ScenarioEvent → Event</text>
+<text x="1988.7" y="1682.0" text-anchor="start" font-family="Consolas, monospace" font-size="11" font-weight="400" fill="#3F566E">[Inheritance] Agent → Entity</text>
+<text x="1988.7" y="1705.0" text-anchor="start" font-family="Consolas, monospace" font-size="11" font-weight="400" fill="#3F566E">[Inheritance] VehicleFeature → Feature</text>
 </svg>

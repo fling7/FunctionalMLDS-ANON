@@ -38,11 +38,11 @@ mergeInto(LibraryManager.library, {
     }
 
     function sendError(message) {
-      send(errorMethod, message || "Browser-Mikrofonfehler.");
+      send(errorMethod, message || "Browser microphone error.");
     }
 
     if (!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia && window.MediaRecorder)) {
-      sendError("Browser unterstuetzt MediaRecorder/getUserMedia nicht.");
+      sendError("The browser does not support MediaRecorder/getUserMedia.");
       return;
     }
 
@@ -53,7 +53,7 @@ mergeInto(LibraryManager.library, {
 
     var state = window.InteractiveAgentsVoiceBridge || {};
     if (state.recorder && state.recorder.state === "recording") {
-      sendError("Aufnahme laeuft bereits.");
+      sendError("Recording is already in progress.");
       return;
     }
 
@@ -94,7 +94,7 @@ mergeInto(LibraryManager.library, {
       };
 
       recorder.onerror = function (event) {
-        sendError(event.error ? event.error.message : "MediaRecorder Fehler.");
+        sendError(event.error ? event.error.message : "MediaRecorder error.");
       };
 
       recorder.onstop = function () {
@@ -112,7 +112,7 @@ mergeInto(LibraryManager.library, {
         state.chunks = [];
 
         if (!blob.size) {
-          sendError("Keine Audiodaten aufgenommen.");
+          sendError("No audio data was recorded.");
           return;
         }
 
@@ -138,7 +138,7 @@ mergeInto(LibraryManager.library, {
         }).then(function (json) {
           send(successMethod, JSON.stringify(json || {}));
         }).catch(function (error) {
-          sendError(error && error.message ? error.message : "Transkription fehlgeschlagen.");
+          sendError(error && error.message ? error.message : "Transcription failed.");
         });
       };
 
@@ -151,7 +151,7 @@ mergeInto(LibraryManager.library, {
         }
       }, timeoutMs);
     }).catch(function (error) {
-      sendError(error && error.message ? error.message : "Mikrofonzugriff verweigert.");
+      sendError(error && error.message ? error.message : "Microphone access denied.");
     });
   },
 

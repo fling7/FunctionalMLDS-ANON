@@ -30,7 +30,7 @@
       "voice": "sage",
       "voice_style": "warm and clear",
       "tts_model": "gpt-4o-mini-tts",
-      "voice_gender": "weiblich"
+      "voice_gender": "female"
     },
     {
       "id": "benefits_expert",
@@ -63,7 +63,7 @@
       "voice": "coral",
       "voice_style": "informative and friendly",
       "tts_model": "gpt-4o-mini-tts",
-      "voice_gender": "weiblich"
+      "voice_gender": "female"
     },
     {
       "id": "recruiting_agent",
@@ -96,7 +96,7 @@
       "voice": "onyx",
       "voice_style": "professional and clear",
       "tts_model": "gpt-4o-mini-tts",
-      "voice_gender": "maennlich"
+      "voice_gender": "male"
     },
     {
       "id": "demo_technician",
@@ -136,7 +136,7 @@
       "voice": "fable",
       "voice_style": "enthusiastic and engaging",
       "tts_model": "gpt-4o-mini-tts",
-      "voice_gender": "maennlich"
+      "voice_gender": "male"
     },
     {
       "id": "hospitality_agent",
@@ -168,7 +168,7 @@
       "voice": "ash",
       "voice_style": "warm and caring",
       "tts_model": "gpt-4o-mini-tts",
-      "voice_gender": "maennlich"
+      "voice_gender": "male"
     }
   ],
   "handoffs": [
